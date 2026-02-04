@@ -1,0 +1,31 @@
+HƯỚNG DẪN SỬ DỤNG HÌNH ẢNH TỪ MÁY TÍNH
+=======================================
+
+Bạn có thể đặt hình ảnh từ máy tính vào thư mục này, sau đó sử dụng trong website.
+
+CÁCH SỬ DỤNG:
+-------------
+
+1. Copy file hình ảnh của bạn vào thư mục /public/images/
+   Ví dụ: hero-mockup.jpg, project-restaurant.png, v.v.
+
+2. Mở file /src/app/constants/images.ts
+
+3. Thay URL bằng đường dẫn local:
+   
+   Trước:  heroMockup: "https://images.unsplash.com/photo-123..."
+   Sau:    heroMockup: "/images/hero-mockup.jpg"
+
+4. Lưu file và website sẽ hiển thị hình ảnh của bạn!
+
+LƯU Ý:
+------
+- Đường dẫn bắt đầu bằng /images/ (không có /public/)
+- Hỗ trợ các định dạng: .jpg, .jpeg, .png, .webp, .svg
+- Nên tối ưu kích thước file trước khi upload (< 500KB)
+- Tên file không nên có dấu tiếng Việt, dùng gạch ngang thay vì khoảng trắng
+
+VÍ DỤ:
+------
+Tốt:  hero-mockup.jpg, project-1.png, my-photo.webp
+Tránh: ảnh hero.jpg, dự án 1.png, hình của tôi.jpg
