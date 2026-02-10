@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import JsonLd from "@/components/JsonLd"
+import GoogleAnalytics from "@/components/GoogleAnalytics"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,14 +41,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://nextchain.kr"),
+  metadataBase: new URL("https://www.nextchain.site"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    url: "https://nextchain.kr",
+    url: "https://www.nextchain.site",
     title: "Thiết kế Website Chuyên Nghiệp | Tăng Doanh Số Bán Hàng",
     description:
       "Thiết kế website chuyên nghiệp giúp doanh nghiệp tăng doanh số bán hàng. Landing page, website bán hàng, website doanh nghiệp với SEO tối ưu.",
@@ -107,6 +108,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <JsonLd />
+        <GoogleAnalytics gaId="G-Z8NT4N1ZKB" />
         {children}
       </body>
     </html>
