@@ -80,7 +80,7 @@ export default async function AdminUsersPage() {
                                         <TableCell>{new Date(u.created_at).toLocaleDateString()}</TableCell>
                                         <TableCell>
                                             {u.id !== user.id && (
-                                                <form action={deleteAdminUser.bind(null, u.id)}>
+                                                <form action={deleteAdminUser.bind(null, u.id) as any}>
                                                     <Button variant="destructive" size="sm">Delete</Button>
                                                 </form>
                                             )}
