@@ -82,6 +82,15 @@ export default function Home() {
   ])
   const activeSection = useActiveSection(sectionIds.current)
 
+  // Track section view in GA
+  useEffect(() => {
+    if (activeSection && typeof window !== "undefined" && (window as any).gtag) {
+      ; (window as any).gtag("event", "section_view", {
+        section_name: activeSection,
+      })
+    }
+  }, [activeSection])
+
   // Ref for pricing carousel to auto-scroll to popular card
   const pricingCarouselRef = useRef<HTMLDivElement>(null)
 
@@ -542,6 +551,14 @@ export default function Home() {
       })
 
       if (response.ok) {
+        // Send GA Event
+        if (typeof window !== "undefined" && (window as any).gtag) {
+          (window as any).gtag("event", "generate_lead", {
+            event_category: "form",
+            event_label: "consultation_request",
+          })
+        }
+
         toast.success("Gửi yêu cầu thành công! Chúng tôi sẽ liên hệ sớm.")
         setIsModalOpen(false)
         setFormData({ name: "", email: "", phone: "", message: "" })
