@@ -37,6 +37,7 @@ import Logo from "@/imports/Logo"
 import FooterLogo from "@/imports/Logo-8-285"
 import { IMAGES, IMAGE_ALT_TEXTS } from "@/constants/images"
 import { useState, useRef, useEffect } from "react"
+import { toast } from "sonner"
 import { useActiveSection } from "@/hooks/useActiveSection"
 import { useScrollAnimation } from "@/hooks/useScrollAnimation"
 import { useCounterAnimation } from "@/hooks/useCounterAnimation"
@@ -529,10 +530,28 @@ export default function Home() {
     },
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(formData)
-    setIsModalOpen(false)
+    try {
+      const response = await fetch("/api/consultation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        toast.success("Gửi yêu cầu thành công! Chúng tôi sẽ liên hệ sớm.")
+        setIsModalOpen(false)
+        setFormData({ name: "", email: "", phone: "", message: "" })
+      } else {
+        toast.error("Có lỗi xảy ra, vui lòng thử lại.")
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error)
+      toast.error("Có lỗi xảy ra, vui lòng thử lại.")
+    }
   }
 
   const handleInputChange = (
@@ -559,66 +578,58 @@ export default function Home() {
           <nav className="hidden md:flex items-center gap-8">
             <a
               href="#services"
-              className={`relative py-1 transition-colors font-medium group ${
-                activeSection === "services"
-                  ? "text-orange-600"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}>
+              className={`relative py-1 transition-colors font-medium group ${activeSection === "services"
+                ? "text-orange-600"
+                : "text-gray-600 hover:text-gray-900"
+                }`}>
               Dịch vụ
               <span
-                className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${
-                  activeSection === "services"
-                    ? "scale-x-100"
-                    : "scale-x-0 group-hover:scale-x-50"
-                }`}
+                className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${activeSection === "services"
+                  ? "scale-x-100"
+                  : "scale-x-0 group-hover:scale-x-50"
+                  }`}
               />
             </a>
             <a
               href="#process"
-              className={`relative py-1 transition-colors font-medium group ${
-                activeSection === "process"
-                  ? "text-orange-600"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}>
+              className={`relative py-1 transition-colors font-medium group ${activeSection === "process"
+                ? "text-orange-600"
+                : "text-gray-600 hover:text-gray-900"
+                }`}>
               Quy trình
               <span
-                className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${
-                  activeSection === "process"
-                    ? "scale-x-100"
-                    : "scale-x-0 group-hover:scale-x-50"
-                }`}
+                className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${activeSection === "process"
+                  ? "scale-x-100"
+                  : "scale-x-0 group-hover:scale-x-50"
+                  }`}
               />
             </a>
             <a
               href="#projects"
-              className={`relative py-1 transition-colors font-medium group ${
-                activeSection === "projects"
-                  ? "text-orange-600"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}>
+              className={`relative py-1 transition-colors font-medium group ${activeSection === "projects"
+                ? "text-orange-600"
+                : "text-gray-600 hover:text-gray-900"
+                }`}>
               Dự án
               <span
-                className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${
-                  activeSection === "projects"
-                    ? "scale-x-100"
-                    : "scale-x-0 group-hover:scale-x-50"
-                }`}
+                className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${activeSection === "projects"
+                  ? "scale-x-100"
+                  : "scale-x-0 group-hover:scale-x-50"
+                  }`}
               />
             </a>
             <a
               href="#clients"
-              className={`relative py-1 transition-colors font-medium group ${
-                activeSection === "clients"
-                  ? "text-orange-600"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}>
+              className={`relative py-1 transition-colors font-medium group ${activeSection === "clients"
+                ? "text-orange-600"
+                : "text-gray-600 hover:text-gray-900"
+                }`}>
               Khách hàng
               <span
-                className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${
-                  activeSection === "clients"
-                    ? "scale-x-100"
-                    : "scale-x-0 group-hover:scale-x-50"
-                }`}
+                className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${activeSection === "clients"
+                  ? "scale-x-100"
+                  : "scale-x-0 group-hover:scale-x-50"
+                  }`}
               />
             </a>
             <a
@@ -661,41 +672,37 @@ export default function Home() {
                 <a
                   href="#services"
                   onClick={() => setIsMenuOpen(false)}
-                  className={`text-lg font-medium transition-colors ${
-                    activeSection === "services"
-                      ? "text-orange-600"
-                      : "text-gray-700 hover:text-blue-600"
-                  }`}>
+                  className={`text-lg font-medium transition-colors ${activeSection === "services"
+                    ? "text-orange-600"
+                    : "text-gray-700 hover:text-blue-600"
+                    }`}>
                   Dịch vụ
                 </a>
                 <a
                   href="#process"
                   onClick={() => setIsMenuOpen(false)}
-                  className={`text-lg font-medium transition-colors ${
-                    activeSection === "process"
-                      ? "text-orange-600"
-                      : "text-gray-700 hover:text-blue-600"
-                  }`}>
+                  className={`text-lg font-medium transition-colors ${activeSection === "process"
+                    ? "text-orange-600"
+                    : "text-gray-700 hover:text-blue-600"
+                    }`}>
                   Quy trình
                 </a>
                 <a
                   href="#projects"
                   onClick={() => setIsMenuOpen(false)}
-                  className={`text-lg font-medium transition-colors ${
-                    activeSection === "projects"
-                      ? "text-orange-600"
-                      : "text-gray-700 hover:text-blue-600"
-                  }`}>
+                  className={`text-lg font-medium transition-colors ${activeSection === "projects"
+                    ? "text-orange-600"
+                    : "text-gray-700 hover:text-blue-600"
+                    }`}>
                   Dự án
                 </a>
                 <a
                   href="#clients"
                   onClick={() => setIsMenuOpen(false)}
-                  className={`text-lg font-medium transition-colors ${
-                    activeSection === "clients"
-                      ? "text-orange-600"
-                      : "text-gray-700 hover:text-blue-600"
-                  }`}>
+                  className={`text-lg font-medium transition-colors ${activeSection === "clients"
+                    ? "text-orange-600"
+                    : "text-gray-700 hover:text-blue-600"
+                    }`}>
                   Khách hàng
                 </a>
                 <a
@@ -820,11 +827,10 @@ export default function Home() {
                 <button
                   key={key}
                   onClick={() => setSelectedService(key)}
-                  className={`flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 flex-shrink-0 snap-start ${
-                    selectedService === key
-                      ? `${colors.bg} text-white shadow-lg scale-105`
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}>
+                  className={`flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 flex-shrink-0 snap-start ${selectedService === key
+                    ? `${colors.bg} text-white shadow-lg scale-105`
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}>
                   <Icon className="w-4 h-4" />
                   {service.name}
                 </button>
@@ -849,11 +855,9 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className={`relative bg-white rounded-2xl border-2 ${
-                      pkg.popular ? colors.border : "border-gray-200"
-                    } p-5 md:p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${
-                      pkg.popular ? "md:scale-105" : ""
-                    } flex-shrink-0 w-[75vw] md:w-auto snap-center`}>
+                    className={`relative bg-white rounded-2xl border-2 ${pkg.popular ? colors.border : "border-gray-200"
+                      } p-5 md:p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${pkg.popular ? "md:scale-105" : ""
+                      } flex-shrink-0 w-[75vw] md:w-auto snap-center`}>
                     {pkg.popular && (
                       <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                         <div className="bg-gradient-to-r from-amber-400 to-orange-400 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-md">
@@ -903,11 +907,10 @@ export default function Home() {
                           pkg.price,
                         )
                       }
-                      className={`w-full ${
-                        pkg.popular
-                          ? `${colors.bg} ${colors.hover} text-white`
-                          : `border-2 ${colors.border} ${colors.text}`
-                      } py-2.5 md:py-3 px-4 md:px-6 rounded-xl text-sm md:text-base font-semibold transition-all hover:shadow-lg`}>
+                      className={`w-full ${pkg.popular
+                        ? `${colors.bg} ${colors.hover} text-white`
+                        : `border-2 ${colors.border} ${colors.text}`
+                        } py-2.5 md:py-3 px-4 md:px-6 rounded-xl text-sm md:text-base font-semibold transition-all hover:shadow-lg`}>
                       Tư vấn ngay
                     </button>
                   </motion.div>
@@ -1066,7 +1069,7 @@ export default function Home() {
                   src={IMAGES[`project${num}` as keyof typeof IMAGES]}
                   alt={
                     IMAGE_ALT_TEXTS[
-                      `project${num}` as keyof typeof IMAGE_ALT_TEXTS
+                    `project${num}` as keyof typeof IMAGE_ALT_TEXTS
                     ]
                   }
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import JsonLd from "@/components/JsonLd"
 import GoogleAnalytics from "@/components/GoogleAnalytics"
+import { Toaster } from "sonner"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -110,6 +111,7 @@ export default function RootLayout({
         <JsonLd />
         <GoogleAnalytics gaId="G-Z8NT4N1ZKB" />
         {children}
+        <Toaster />
       </body>
     </html>
   )
