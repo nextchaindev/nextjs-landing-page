@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import JsonLd from "@/components/JsonLd"
 import GoogleAnalytics from "@/components/GoogleAnalytics"
+import ClarityAnalytics from "@/components/ClarityAnalytics"
 import { Toaster } from "sonner"
 
 const geistSans = Geist({
@@ -110,6 +111,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <JsonLd />
         <GoogleAnalytics gaId="G-Z8NT4N1ZKB" />
+        <ClarityAnalytics projectId="vkqca6mwj1" />
         {children}
         <Toaster />
       </body>
