@@ -100,6 +100,9 @@ export const viewport = {
   ],
 }
 
+import { ModalProvider } from "@/context/ModalContext"
+import ConditionalLayout from "@/components/layout/ConditionalLayout"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -107,12 +110,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <JsonLd />
         <GoogleAnalytics gaId="G-Z8NT4N1ZKB" />
         <ClarityAnalytics projectId="vkqca6mwj1" />
-        {children}
+
+        <ModalProvider>
+          <ConditionalLayout>{children}</ConditionalLayout>
+        </ModalProvider>
         <Toaster />
       </body>
     </html>
