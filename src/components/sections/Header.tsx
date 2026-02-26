@@ -28,6 +28,7 @@ export default function Header() {
     { id: "process", label: "Quy trình" },
     { id: "projects", label: "Dự án" },
     { id: "customers", label: "Khách hàng" },
+    { id: "about", label: "Về chúng tôi" },
   ]
 
   return (
@@ -42,32 +43,50 @@ export default function Header() {
         </div>
 
         <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              className={`relative py-1 transition-colors font-medium group ${
-                activeSection === link.id
-                  ? "text-orange-600"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}>
-              {link.label}
-              <span
-                className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${
+          {navLinks.map((link) => {
+            if (link.id === "about") {
+              return (
+                <a
+                  key={link.id}
+                  href={`https://www.nextchain.kr/`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`relative py-1 transition-colors font-medium group ${
+                    activeSection === link.id
+                      ? "text-orange-600"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}>
+                  {link.label}
+                  <span
+                    className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${
+                      activeSection === link.id
+                        ? "scale-x-100"
+                        : "scale-x-0 group-hover:scale-x-50"
+                    }`}
+                  />
+                </a>
+              )
+            }
+            return (
+              <Link
+                key={link.id}
+                href={`/#${link.id}`}
+                className={`relative py-1 transition-colors font-medium group ${
                   activeSection === link.id
-                    ? "scale-x-100"
-                    : "scale-x-0 group-hover:scale-x-50"
-                }`}
-              />
-            </a>
-          ))}
-          <a
-            href="https://www.nextchain.kr/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-600 hover:text-gray-900 transition-colors font-medium">
-            Về chúng tôi
-          </a>
+                    ? "text-orange-600"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}>
+                {link.label}
+                <span
+                  className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${
+                    activeSection === link.id
+                      ? "scale-x-100"
+                      : "scale-x-0 group-hover:scale-x-50"
+                  }`}
+                />
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -98,27 +117,38 @@ export default function Header() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-white border-b border-gray-100 overflow-hidden">
             <div className="flex flex-col p-4 space-y-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.id}
-                  href={`#${link.id}`}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`text-lg font-medium transition-colors ${
-                    activeSection === link.id
-                      ? "text-orange-600"
-                      : "text-gray-700 hover:text-blue-600"
-                  }`}>
-                  {link.label}
-                </a>
-              ))}
-              <a
-                href="https://www.nextchain.kr/"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsMenuOpen(false)}
-                className="text-lg font-medium text-gray-700 hover:text-blue-600 transition-colors">
-                Về chúng tôi
-              </a>
+              {navLinks.map((link) => {
+                if (link.id === "about") {
+                  return (
+                    <a
+                      key={link.id}
+                      href={`https://www.nextchain.kr/`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`text-lg font-medium transition-colors ${
+                        activeSection === link.id
+                          ? "text-orange-600"
+                          : "text-gray-700 hover:text-blue-600"
+                      }`}>
+                      {link.label}
+                    </a>
+                  )
+                }
+                return (
+                  <Link
+                    key={link.id}
+                    href={`/#${link.id}`}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`text-lg font-medium transition-colors ${
+                      activeSection === link.id
+                        ? "text-orange-600"
+                        : "text-gray-700 hover:text-blue-600"
+                    }`}>
+                    {link.label}
+                  </Link>
+                )
+              })}
             </div>
           </motion.div>
         )}

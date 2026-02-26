@@ -24,6 +24,10 @@ interface ModalContextType {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void
   handleSubmit: (e: React.FormEvent) => Promise<void>
+  keyService: string
+  setKeyService: React.Dispatch<React.SetStateAction<string>>
+  errors: Partial<Record<keyof FormData, string>>
+  clearErrors: () => void
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined)
@@ -39,6 +43,10 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [loadingSubmit, setLoadingSubmit] = useState(false)
   const [formData, setFormData] = useState<FormData>(initialFormData)
+  const [keyService, setKeyService] = useState<string>("landing")
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
+    {},
+  )
   const router = useRouter()
 
   const openModal = (data?: Partial<FormData>) => {
@@ -50,11 +58,50 @@ export function ModalProvider({ children }: { children: ReactNode }) {
 
   const openModalClean = () => {
     setFormData(initialFormData)
+    setErrors({})
     setIsModalOpen(true)
   }
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setErrors({})
+  }
+
+  const clearErrors = () => setErrors({})
+
+  const validateField = (name: string, value: string) => {
+    switch (name) {
+      case "name":
+        return !value.trim() ? "Vui lòng nhập họ và tên" : ""
+      case "email":
+        if (!value.trim()) return "Vui lòng nhập email"
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+          return "Email không hợp lệ"
+        return ""
+      case "phone":
+        if (!value.trim()) return "Vui lòng nhập số điện thoại"
+        if (!/^(0|\+84)[3|5|7|8|9][0-9]{8}$/.test(value.replace(/\s/g, "")))
+          return "Số điện thoại không hợp lệ"
+        return ""
+      default:
+        return ""
+    }
+  }
+
+  const validate = () => {
+    const newErrors: Partial<Record<keyof FormData, string>> = {}
+
+    const nameError = validateField("name", formData.name)
+    if (nameError) newErrors.name = nameError
+
+    const emailError = validateField("email", formData.email)
+    if (emailError) newErrors.email = emailError
+
+    const phoneError = validateField("phone", formData.phone)
+    if (phoneError) newErrors.phone = phoneError
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
   }
 
   const handleInputChange = (
@@ -65,10 +112,19 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       ...prev,
       [name]: value,
     }))
+
+    // Real-time validation
+    const error = validateField(name, value)
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!validate()) return
+
     try {
       setLoadingSubmit(true)
       const response = await fetch("/api/consultation", {
@@ -87,8 +143,6 @@ export function ModalProvider({ children }: { children: ReactNode }) {
             event_label: "consultation_request",
           })
         }
-
-        toast.success("Gửi yêu cầu thành công! Chúng tôi sẽ liên hệ sớm.")
         setIsModalOpen(false)
         setFormData(initialFormData)
         router.push("/success")
@@ -116,6 +170,10 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         closeModal,
         handleInputChange,
         handleSubmit,
+        keyService,
+        setKeyService,
+        errors,
+        clearErrors,
       }}>
       {children}
     </ModalContext.Provider>
