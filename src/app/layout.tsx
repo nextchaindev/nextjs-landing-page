@@ -1,20 +1,21 @@
-import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
-import "./globals.css"
-import JsonLd from "@/components/JsonLd"
-import GoogleAnalytics from "@/components/GoogleAnalytics"
-import ClarityAnalytics from "@/components/ClarityAnalytics"
-import { Toaster } from "sonner"
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import JsonLd from "@/components/JsonLd";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
+import ClarityAnalytics from "@/components/ClarityAnalytics";
+import { GoogleTagManager } from "@next/third-parties/google";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-})
+});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-})
+});
 
 export const metadata: Metadata = {
   title: {
@@ -87,7 +88,7 @@ export const metadata: Metadata = {
     // google: "your-google-verification-code",
     // yandex: "your-yandex-verification-code",
   },
-}
+};
 
 export const viewport = {
   width: "device-width",
@@ -98,15 +99,15 @@ export const viewport = {
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
-}
+};
 
-import { ModalProvider } from "@/context/ModalContext"
-import ConditionalLayout from "@/components/layout/ConditionalLayout"
+import { ModalProvider } from "@/context/ModalContext";
+import ConditionalLayout from "@/components/layout/ConditionalLayout";
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="vi">
@@ -114,10 +115,12 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <JsonLd />
         <GoogleAnalytics gaId="G-Z8NT4N1ZKB" />
         <ClarityAnalytics projectId="vkqca6mwj1" />
+        <GoogleTagManager gtmId="GTM-55QQRNJC" />
 
         <ModalProvider>
           <ConditionalLayout>{children}</ConditionalLayout>
@@ -125,5 +128,5 @@ export default function RootLayout({
         <Toaster />
       </body>
     </html>
-  )
+  );
 }
