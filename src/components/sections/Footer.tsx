@@ -1,9 +1,12 @@
 "use client"
 
+import { useModal } from "@/context/ModalContext"
 import FooterLogo from "@/imports/Logo-8-285"
 import { Globe, Mail, Phone } from "lucide-react"
+import Link from "next/link"
 
 export default function Footer() {
+  const { setKeyService } = useModal()
   return (
     <footer className="bg-[#111827] text-white pt-20 pb-12 px-6">
       <div className="max-w-[1200px] mx-auto">
@@ -15,7 +18,7 @@ export default function Footer() {
             <p className="text-[#99A1AF] leading-relaxed mb-6">
               Đối tác thiết kế & công nghệ tin cậy cho doanh nghiệp Việt Nam
             </p>
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <a
                 href="#"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
@@ -31,41 +34,53 @@ export default function Footer() {
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
                 <Phone className="w-5 h-5" />
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div>
             <h4 className="text-lg font-medium mb-6">Dịch vụ</h4>
             <ul className="space-y-4 text-[#99A1AF]">
-              <li>
-                <a href="#" className="hover:text-primary transition-colors">
+              <li onClick={() => setKeyService("landing")}>
+                <Link
+                  href="/#services"
+                  className="hover:text-primary transition-colors">
                   Landing Page
-                </a>
+                </Link>
               </li>
-              <li>
-                <a href="#" className="hover:text-primary transition-colors">
+              <li onClick={() => setKeyService("corporate")}>
+                <Link
+                  href="/#services"
+                  className="hover:text-primary transition-colors">
                   Website Doanh nghiệp
-                </a>
+                </Link>
               </li>
-              <li>
-                <a href="#" className="hover:text-primary transition-colors">
+              <li onClick={() => setKeyService("ecommerce")}>
+                <Link
+                  href="/#services"
+                  className="hover:text-primary transition-colors">
                   Website Bán hàng
-                </a>
+                </Link>
               </li>
-              <li>
-                <a href="#" className="hover:text-primary transition-colors">
+              <li onClick={() => setKeyService("custom")}>
+                <Link
+                  href="/#services"
+                  className="hover:text-primary transition-colors">
                   Thiết kế theo yêu cầu
-                </a>
+                </Link>
               </li>
-              <li>
-                <a href="#" className="hover:text-primary transition-colors">
+              <li onClick={() => setKeyService("marketing")}>
+                <Link
+                  href="/#services"
+                  className="hover:text-primary transition-colors">
                   Marketing & SEO
-                </a>
+                </Link>
               </li>
-              <li>
-                <a href="#" className="hover:text-primary transition-colors">
+              <li onClick={() => setKeyService("software")}>
+                <Link
+                  href="/#services"
+                  className="hover:text-primary transition-colors">
                   Phát triển phần mềm
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

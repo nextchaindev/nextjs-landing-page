@@ -9,6 +9,7 @@ import Services from "@/components/sections/Services"
 import Process from "@/components/sections/Process"
 import Projects from "@/components/sections/Projects"
 import CTA from "@/components/sections/CTA"
+import Client from "@/components/sections/Client"
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState("landing")
@@ -23,6 +24,8 @@ export default function Home() {
   const { ref: processRef, isVisible: processVisible } = useScrollAnimation(0.1)
   const { ref: projectsRef, isVisible: projectsVisible } =
     useScrollAnimation(0.1)
+
+  const { ref: clientsRef, isVisible: clientsVisible } = useScrollAnimation(0.1)
 
   // Active section tracking for GA
   const sectionIds = useRef(["home", "services", "process", "projects", "cta"])
@@ -74,8 +77,8 @@ export default function Home() {
       <Hero heroStatsRef={heroStatsRef} heroStatsVisible={heroStatsVisible} />
 
       <Services
-        selectedService={selectedService}
-        setSelectedService={setSelectedService}
+        // selectedService={selectedService}
+        // setSelectedService={setSelectedService}
         pricingCarouselRef={pricingCarouselRef}
         servicesRef={servicesRef}
         servicesVisible={servicesVisible}
@@ -84,6 +87,8 @@ export default function Home() {
       <Process processRef={processRef} processVisible={processVisible} />
 
       <Projects projectsRef={projectsRef} projectsVisible={projectsVisible} />
+
+      <Client clientsRef={clientsRef} clientsVisible={clientsVisible} />
 
       <WhyChooseUs />
 

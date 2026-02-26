@@ -76,8 +76,10 @@ export default function Process({ processRef, processVisible }: ProcessProps) {
           initial="hidden"
           animate={processVisible ? "visible" : "hidden"}
           variants={fadeInUp}>
-          <h2 className="text-4xl text-gray-900 mb-4">Quy trình làm việc</h2>
-          <p className="text-xl text-gray-600">
+          <h2 className="text-2xl md:text-4xl text-gray-900 mb-4">
+            Quy trình làm việc
+          </h2>
+          <p className="text-[16px] md:text-xl text-gray-600">
             Phương pháp chuyên nghiệp, minh bạch từng bước
           </p>
         </motion.div>
