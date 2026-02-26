@@ -99,6 +99,7 @@ export const viewport = {
 
 import { ModalProvider } from "@/context/ModalContext"
 import ConditionalLayout from "@/components/layout/ConditionalLayout"
+import FloatingContact from "@/components/layout/FloatingContact"
 
 export default function RootLayout({
   children,
@@ -119,6 +120,7 @@ export default function RootLayout({
         <ModalProvider>
           <ConditionalLayout>{children}</ConditionalLayout>
         </ModalProvider>
+        <FloatingContact />
         <Toaster />
       </body>
     </html>
