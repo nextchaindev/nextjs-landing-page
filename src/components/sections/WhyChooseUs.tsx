@@ -61,10 +61,10 @@ export default function WhyChooseUs() {
               <CheckCircle2 className="w-4 h-4" />
               Tại sao chọn chúng tôi
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-[#101828] mb-6 leading-tight">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#101828] mb-6 leading-tight">
               Đối tác đáng tin cậy
             </h2>
-            <p className="text-lg md:text-xl text-[#4A5565] leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm md:text-base text-[#4A5565] leading-relaxed max-w-2xl mx-auto">
               Trải qua rất nhiều dự án thành công, chúng tôi hiểu rõ then chốt
               của doanh nghiệp và biết cách giải quyết hiệu quả
             </p>
@@ -87,11 +87,11 @@ export default function WhyChooseUs() {
                 </div>
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                    <h3 className="text-lg md:text-xl font-bold text-[#101828]">
+                    <h3 className="text-base md:text-lg font-bold text-[#101828]">
                       {item.title}
                     </h3>
                     <div
-                      className={`inline-block px-3 py-1 ${item.statBg} ${item.statColor} text-[10px] md:text-xs font-bold rounded-full`}>
+                      className={`inline-block px-3 py-1 ${item.statBg} ${item.statColor} text-xs font-bold rounded-full`}>
                       {item.stat}
                     </div>
                   </div>

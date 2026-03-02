@@ -116,7 +116,7 @@ export const services = {
   corporate: {
     name: "Website Doanh nghiệp",
     icon: Globe,
-    color: "purple",
+    color: "blue",
     packages: [
       {
         name: "Basic",
@@ -171,7 +171,7 @@ export const services = {
   ecommerce: {
     name: "Website Bán hàng",
     icon: ShoppingCart,
-    color: "purple",
+    color: "teal",
     packages: [
       {
         name: "Basic",
@@ -228,7 +228,7 @@ export const services = {
   custom: {
     name: "Thiết kế theo yêu cầu",
     icon: PenTool,
-    color: "purple",
+    color: "orange",
     packages: [
       {
         name: "Basic",
@@ -285,7 +285,7 @@ export const services = {
   marketing: {
     name: "Marketing & SEO",
     icon: Search,
-    color: "purple",
+    color: "indigo",
     packages: [
       {
         name: "Basic",
@@ -341,7 +341,7 @@ export const services = {
   software: {
     name: "Phát triển phần mềm",
     icon: Boxes,
-    color: "purple",
+    color: "emerald",
     packages: [
       {
         name: "Basic",

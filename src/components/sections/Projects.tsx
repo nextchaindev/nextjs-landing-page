@@ -64,8 +64,10 @@ export default function Projects({
           initial="hidden"
           animate={projectsVisible ? "visible" : "hidden"}
           variants={fadeInUp}>
-          <h2 className="text-4xl text-gray-900 mb-4">Dự án tiêu biểu</h2>
-          <p className="text-xl text-gray-600">
+          <h2 className="text-2xl md:text-4xl text-gray-900 mb-4">
+            Dự án tiêu biểu
+          </h2>
+          <p className="text-[16px] md:text-xl text-gray-600">
             Năng lực thiết kế được thể hiện qua từng sản phẩm
           </p>
         </motion.div>
