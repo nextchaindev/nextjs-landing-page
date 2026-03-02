@@ -76,13 +76,17 @@ export default function Services({
         </motion.div>
 
         <div className="w-full overflow-x-auto scrollbar-hide">
-          <div className="w-fit flex flex-nowrap  md:flex-wrap justify-center gap-4">
+          <div className="w-fit md:w-full flex flex-nowrap items-center  md:flex-wrap justify-center gap-4">
             {Object.entries(services).map(([key, service]) => (
               <motion.button
                 key={key}
-                onClick={() => {
-                  // setSelectedService(key)
+                onClick={(e) => {
                   setKeyService(key)
+                  e.currentTarget.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest",
+                    inline: "center",
+                  })
                 }}
                 whileHover={{
                   scale: 1.05,
@@ -116,7 +120,7 @@ export default function Services({
         <div className="w-full overflow-x-auto scrollbar-hide">
           <div
             ref={pricingCarouselRef}
-            className="flex flex-nowrap gap-6 h-fit  pb-8 md:pb-0 pt-15 md:pt-12">
+            className="flex flex-nowrap justify-center gap-6 h-fit  pb-8 md:pb-0 pt-15 md:pt-12">
             <AnimatePresence mode="wait">
               <motion.div
                 key={keyService}
