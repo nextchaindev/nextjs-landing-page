@@ -74,7 +74,7 @@ export const services = {
     packages: [
       {
         name: "Basic",
-        price: "5.000.000",
+        price: "5.000.000đ",
         duration: "2-4 ngày",
         description: "Phù hợp cho chiến dịch ngắn hạn",
         features: [
@@ -87,7 +87,7 @@ export const services = {
       },
       {
         name: "Premium",
-        price: "9.000.000",
+        price: "9.000.000đ",
         duration: "4-7 ngày",
         description: "Lựa chọn phổ biến nhất",
         popular: true,
@@ -103,7 +103,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "15.000.000",
+        price: "15.000.000đ",
         duration: "7-14 ngày",
         description: "Giải pháp toàn diện",
         features: [
@@ -126,7 +126,7 @@ export const services = {
     packages: [
       {
         name: "Basic",
-        price: "12.000.000",
+        price: "12.000.000đ",
         duration: "7-10 ngày",
         description: "Website giới thiệu cơ bản",
         features: [
@@ -140,7 +140,7 @@ export const services = {
       },
       {
         name: "Premium",
-        price: "25.000.000",
+        price: "25.000.000đ",
         duration: "14-21 ngày",
         description: "Lựa chọn phổ biến nhất",
         popular: true,
@@ -157,7 +157,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "45.000.000",
+        price: "45.000.000đ",
         duration: "21-30 ngày",
         description: "Giải pháp doanh nghiệp lớn",
         features: [
@@ -181,7 +181,7 @@ export const services = {
     packages: [
       {
         name: "Basic",
-        price: "18.000.000",
+        price: "18.000.000đ",
         duration: "10-14 ngày",
         description: "Bắt đầu bán hàng online",
         features: [
@@ -195,7 +195,7 @@ export const services = {
       },
       {
         name: "Premium",
-        price: "35.000.000",
+        price: "35.000.000đ",
         duration: "21-28 ngày",
         description: "Lựa chọn phổ biến nhất",
         popular: true,
@@ -213,7 +213,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "65.000.000",
+        price: "65.000.000đ",
         duration: "30-45 ngày",
         description: "Nền tảng thương mại điện tử",
         features: [
@@ -238,7 +238,7 @@ export const services = {
     packages: [
       {
         name: "Basic",
-        price: "20.000.000",
+        price: "20.000.000đ",
         duration: "14-21 ngày",
         description: "Giải pháp tùy chỉnh cơ bản",
         features: [
@@ -252,7 +252,7 @@ export const services = {
       },
       {
         name: "Premium",
-        price: "45.000.000",
+        price: "45.000.000đ",
         duration: "30-45 ngày",
         description: "Lựa chọn phổ biến nhất",
         popular: true,
@@ -270,7 +270,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "100.000.000+",
+        price: "100.000.000đ +",
         duration: "60+ ngày",
         description: "Nền tảng enterprise",
         features: [
@@ -295,7 +295,7 @@ export const services = {
     packages: [
       {
         name: "Basic",
-        price: "8.000.000",
+        price: "8.000.000đ",
         duration: "1 tháng",
         description: "Khởi động SEO cơ bản",
         features: [
@@ -309,7 +309,7 @@ export const services = {
       },
       {
         name: "Premium",
-        price: "18.000.000",
+        price: "18.000.000đ",
         duration: "3 tháng",
         description: "Lựa chọn phổ biến nhất",
         popular: true,
@@ -326,7 +326,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "35.000.000",
+        price: "35.000.000đ",
         duration: "6 tháng",
         description: "Chiến lược marketing toàn diện",
         features: [
@@ -351,7 +351,7 @@ export const services = {
     packages: [
       {
         name: "Basic",
-        price: "20.000.000",
+        price: "20.000.000đ",
         duration: "7-14 ngày",
         description: "Giải pháp phần mềm đơn giản",
         features: [
@@ -364,7 +364,7 @@ export const services = {
       },
       {
         name: "Premium",
-        price: "40.000.000",
+        price: "40.000.000đ",
         duration: "14-30 ngày",
         description: "Phần mềm theo yêu cầu doanh nghiệp",
         popular: true,
@@ -380,7 +380,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "70.000.000",
+        price: "70.000.000đ +",
         duration: "30+ ngày",
         description: "Giải pháp phần mềm toàn diện",
         features: [
