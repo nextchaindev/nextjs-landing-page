@@ -75,7 +75,7 @@ export default function Services({
           </p>
         </motion.div>
 
-        <div className="w-full overflow-x-auto scrollbar-hide">
+        <div className="w-full overflow-x-auto scrollbar-hide mb-5">
           <div className="w-fit md:w-full flex flex-nowrap items-center  md:flex-wrap justify-center gap-4">
             {Object.entries(services).map(([key, service]) => (
               <motion.button
@@ -117,10 +117,10 @@ export default function Services({
           </div>
         </div>
 
-        <div className="w-full overflow-x-auto scrollbar-hide">
+        <div className="w-full overflow-x-auto scrollbar-hide h-fit">
           <div
             ref={pricingCarouselRef}
-            className="flex flex-nowrap justify-center gap-6 h-fit  pb-8 md:pb-0 pt-15 md:pt-12">
+            className="flex flex-nowrap justify-center md:grid grid-cols-3 max-w-[1400px] mx-auto gap-6 h-fit pb-12 pt-12">
             <AnimatePresence mode="wait">
               <motion.div
                 key={keyService}
@@ -132,15 +132,16 @@ export default function Services({
                   return (
                     <motion.div
                       key={`${keyService}-${pkg.name}`}
-                      className={`min-w-[300px] md:min-w-0 snap-center rounded-2xl p-8 lg:p-10 relative flex flex-col bg-white border border-gray-100 text-gray-900 shadow-sm`}
+                      style={{
+                        borderColor: pkg.popular
+                          ? colorTheme.borderPopular
+                          : "",
+                      }}
+                      className={`min-w-[300px] md:min-w-0 snap-center rounded-2xl relative flex flex-col bg-white border-2 border-gray-200 text-gray-900 shadow-sm p-8 lg:p-10 ${pkg.popular ? "scale-105" : ""}`}
                       whileHover={{
                         y: -12,
                         boxShadow:
                           "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                        borderColor:
-                          currentService.color === "orange"
-                            ? "var(--color-orange-200)"
-                            : `var(--color-${currentService.color}-200)`,
                         transition: {
                           type: "spring",
                           stiffness: 400,

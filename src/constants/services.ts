@@ -17,6 +17,7 @@ export const colorClasses: Record<string, any> = {
     hover: "hover:bg-purple-600",
     badgeBg: "bg-purple-50",
     badgeText: "text-purple-600",
+    borderPopular: "#dab2ff",
   },
   blue: {
     bg: "bg-blue-500",
@@ -25,6 +26,7 @@ export const colorClasses: Record<string, any> = {
     hover: "hover:bg-blue-600",
     badgeBg: "bg-blue-50",
     badgeText: "text-blue-600",
+    borderPopular: "#8ec5ff",
   },
   teal: {
     bg: "bg-teal-500",
@@ -33,6 +35,7 @@ export const colorClasses: Record<string, any> = {
     hover: "hover:bg-teal-600",
     badgeBg: "bg-teal-50",
     badgeText: "text-teal-600",
+    borderPopular: "#46edd5",
   },
   orange: {
     bg: "bg-primary",
@@ -41,6 +44,7 @@ export const colorClasses: Record<string, any> = {
     hover: "hover:bg-primary/90",
     badgeBg: "bg-orange-50",
     badgeText: "text-primary",
+    borderPopular: "#ffb86a",
   },
   indigo: {
     bg: "bg-indigo-500",
@@ -49,6 +53,7 @@ export const colorClasses: Record<string, any> = {
     hover: "hover:bg-indigo-600",
     badgeBg: "bg-indigo-50",
     badgeText: "text-indigo-600",
+    borderPopular: "#a3b3ff",
   },
   emerald: {
     bg: "bg-emerald-500",
@@ -57,6 +62,7 @@ export const colorClasses: Record<string, any> = {
     hover: "hover:bg-emerald-600",
     badgeBg: "bg-emerald-50",
     badgeText: "text-emerald-600",
+    borderPopular: "#5ee9b5",
   },
 }
 
@@ -345,7 +351,7 @@ export const services = {
     packages: [
       {
         name: "Basic",
-        price: "Từ 20.000.000",
+        price: "20.000.000",
         duration: "7-14 ngày",
         description: "Giải pháp phần mềm đơn giản",
         features: [
@@ -358,7 +364,7 @@ export const services = {
       },
       {
         name: "Premium",
-        price: "Từ 40.000.000",
+        price: "40.000.000",
         duration: "14-30 ngày",
         description: "Phần mềm theo yêu cầu doanh nghiệp",
         popular: true,
@@ -374,7 +380,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "Từ 70.000.000",
+        price: "70.000.000",
         duration: "30+ ngày",
         description: "Giải pháp phần mềm toàn diện",
         features: [
