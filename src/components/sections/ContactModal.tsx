@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { CheckCircle2, Loader2, Mail, Phone, User, X } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
 
@@ -13,6 +14,18 @@ export default function ContactModal() {
     loadingSubmit,
     errors,
   } = useModal()
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+    }
+
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [isModalOpen])
 
   if (!isModalOpen) return null
 
@@ -36,9 +49,9 @@ export default function ContactModal() {
         </div>
 
         {/* Modal Body */}
-        <form onSubmit={handleSubmit} className="p-6 md:p-8 ">
-          <div className="w-full max-h-[350px]  md:max-h-[610px] space-y-4 md:space-y-6 overflow-y-auto [direction:rtl]">
-            <div className="space-y-4 md:space-y-6 [direction:ltr] pl-2">
+        <form onSubmit={handleSubmit} className="px-2 md:px-8 py-8 ">
+          <div className="w-full max-h-[350px]  md:max-h-[610px] space-y-4 md:space-y-6 overflow-y-auto">
+            <div className="space-y-4 md:space-y-6 pr-2">
               {/* Name Field */}
               <div>
                 <label

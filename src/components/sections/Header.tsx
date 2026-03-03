@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { X, Menu } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
@@ -17,6 +17,17 @@ export default function Header() {
   const { scrollToSection } = useScrollTo()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { openModalClean } = useModal()
+  const router = useRouter()
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (pathname === "/") {
+      e.preventDefault()
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      })
+    }
+  }
 
   const sectionIds = useRef([
     "home",
@@ -38,13 +49,12 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Link
-            href="/"
-            className="w-[70px] h-[37px] md:w-[91px] md:h-[48px] relative">
-            <Image src={ImageLogo} alt="Logo" fill className="object-cover" />
-          </Link>
-        </div>
+        <Link
+          href="/"
+          onClick={handleLogoClick}
+          className="w-[70px] h-[37px] md:w-[91px] md:h-[48px] relative">
+          <Image src={ImageLogo} alt="Logo" fill className="object-cover" />
+        </Link>
 
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => {
