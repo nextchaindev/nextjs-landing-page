@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { X, Menu } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
@@ -8,11 +9,14 @@ import ImageLogo from "@/assets/logo.png"
 import Image from "next/image"
 import { useModal } from "@/context/ModalContext"
 import { useActiveSection } from "@/hooks/useActiveSection"
+import { useScrollTo } from "@/hooks/useScrollTo"
 import Link from "next/link"
 
 export default function Header() {
-  const { openModalClean } = useModal()
+  const pathname = usePathname()
+  const { scrollToSection } = useScrollTo()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { openModalClean } = useModal()
 
   const sectionIds = useRef([
     "home",
@@ -21,7 +25,7 @@ export default function Header() {
     "projects",
     "customers",
   ])
-  const activeSection = useActiveSection(sectionIds.current)
+  const activeSection = useActiveSection(sectionIds.current, pathname)
 
   const navLinks = [
     { id: "services", label: "Dịch vụ" },
@@ -52,14 +56,14 @@ export default function Header() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`relative py-1 transition-colors font-medium group ${
-                    activeSection === link.id
+                    pathname === "/" && activeSection === link.id
                       ? "text-orange-600"
                       : "text-gray-600 hover:text-gray-900"
                   }`}>
                   {link.label}
                   <span
                     className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${
-                      activeSection === link.id
+                      pathname === "/" && activeSection === link.id
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-50"
                     }`}
@@ -68,23 +72,23 @@ export default function Header() {
               )
             }
             return (
-              <Link
+              <button
                 key={link.id}
-                href={`/#${link.id}`}
-                className={`relative py-1 transition-colors font-medium group ${
-                  activeSection === link.id
+                onClick={() => scrollToSection(link.id)}
+                className={`relative py-1 transition-colors font-medium group cursor-pointer ${
+                  pathname === "/" && activeSection === link.id
                     ? "text-orange-600"
                     : "text-gray-600 hover:text-gray-900"
                 }`}>
                 {link.label}
                 <span
                   className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-600 transition-transform duration-300 origin-left ${
-                    activeSection === link.id
+                    pathname === "/" && activeSection === link.id
                       ? "scale-x-100"
                       : "scale-x-0 group-hover:scale-x-50"
                   }`}
                 />
-              </Link>
+              </button>
             )
           })}
         </nav>
@@ -127,7 +131,7 @@ export default function Header() {
                       rel="noopener noreferrer"
                       onClick={() => setIsMenuOpen(false)}
                       className={`text-lg font-medium transition-colors ${
-                        activeSection === link.id
+                        pathname === "/" && activeSection === link.id
                           ? "text-orange-600"
                           : "text-gray-700 hover:text-blue-600"
                       }`}>
@@ -136,17 +140,19 @@ export default function Header() {
                   )
                 }
                 return (
-                  <Link
+                  <button
                     key={link.id}
-                    href={`/#${link.id}`}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`text-lg font-medium transition-colors ${
-                      activeSection === link.id
+                    onClick={() => {
+                      setIsMenuOpen(false)
+                      scrollToSection(link.id)
+                    }}
+                    className={`text-lg font-medium transition-colors text-left cursor-pointer ${
+                      pathname === "/" && activeSection === link.id
                         ? "text-orange-600"
                         : "text-gray-700 hover:text-blue-600"
                     }`}>
                     {link.label}
-                  </Link>
+                  </button>
                 )
               })}
             </div>

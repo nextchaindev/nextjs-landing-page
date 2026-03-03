@@ -143,14 +143,14 @@ export function ModalProvider({ children }: { children: ReactNode }) {
             event_label: "consultation_request",
           })
         }
-        setIsModalOpen(false)
+        // router.push("/success")
+        window.location.href = "/success"
+        // setIsModalOpen(false)
         setFormData(initialFormData)
-        router.push("/success")
       } else {
         toast.error("Có lỗi xảy ra, vui lòng thử lại.")
       }
     } catch (error) {
-      console.error("Error submitting form:", error)
       toast.error("Có lỗi xảy ra, vui lòng thử lại.")
     } finally {
       setLoadingSubmit(false)

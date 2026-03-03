@@ -1,12 +1,20 @@
 "use client"
 
 import { useModal } from "@/context/ModalContext"
+import { useScrollTo } from "@/hooks/useScrollTo"
 import FooterLogo from "@/imports/Logo-8-285"
 import { Globe, Mail, Phone } from "lucide-react"
 import Link from "next/link"
 
 export default function Footer() {
   const { setKeyService } = useModal()
+  const { scrollToSection } = useScrollTo()
+
+  const handleServiceClick = (key: string) => {
+    setKeyService(key)
+    scrollToSection("services")
+  }
+
   return (
     <footer className="bg-[#111827] text-white pt-20 pb-12 px-6">
       <div className="max-w-[1200px] mx-auto">
@@ -40,47 +48,35 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-medium mb-6">Dịch vụ</h4>
             <ul className="space-y-4 text-[#99A1AF]">
-              <li onClick={() => setKeyService("landing")}>
-                <Link
-                  href="/#services"
-                  className="hover:text-primary transition-colors">
+              <li onClick={() => handleServiceClick("landing")}>
+                <button className="hover:text-primary transition-colors cursor-pointer">
                   Landing Page
-                </Link>
+                </button>
               </li>
-              <li onClick={() => setKeyService("corporate")}>
-                <Link
-                  href="/#services"
-                  className="hover:text-primary transition-colors">
+              <li onClick={() => handleServiceClick("corporate")}>
+                <button className="hover:text-primary transition-colors cursor-pointer">
                   Website Doanh nghiệp
-                </Link>
+                </button>
               </li>
-              <li onClick={() => setKeyService("ecommerce")}>
-                <Link
-                  href="/#services"
-                  className="hover:text-primary transition-colors">
+              <li onClick={() => handleServiceClick("ecommerce")}>
+                <button className="hover:text-primary transition-colors cursor-pointer">
                   Website Bán hàng
-                </Link>
+                </button>
               </li>
-              <li onClick={() => setKeyService("custom")}>
-                <Link
-                  href="/#services"
-                  className="hover:text-primary transition-colors">
+              <li onClick={() => handleServiceClick("custom")}>
+                <button className="hover:text-primary transition-colors cursor-pointer">
                   Thiết kế theo yêu cầu
-                </Link>
+                </button>
               </li>
-              <li onClick={() => setKeyService("marketing")}>
-                <Link
-                  href="/#services"
-                  className="hover:text-primary transition-colors">
+              <li onClick={() => handleServiceClick("marketing")}>
+                <button className="hover:text-primary transition-colors cursor-pointer">
                   Marketing & SEO
-                </Link>
+                </button>
               </li>
-              <li onClick={() => setKeyService("software")}>
-                <Link
-                  href="/#services"
-                  className="hover:text-primary transition-colors">
+              <li onClick={() => handleServiceClick("software")}>
+                <button className="hover:text-primary transition-colors cursor-pointer">
                   Phát triển phần mềm
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
