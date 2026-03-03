@@ -35,7 +35,7 @@ export default function Services({
     price: string,
   ) => {
     openModal({
-      message: `Tôi quan tâm đến gói ${serviceName} - ${packageName} (${price}đ). `,
+      message: `Tôi quan tâm đến gói ${serviceName} - ${packageName} (${price}). `,
     })
   }
 
@@ -161,7 +161,7 @@ export default function Services({
                           {pkg.description}
                         </p>
                         <p className={`text-4xl font-bold ${colorTheme.text}`}>
-                          {pkg.price}đ
+                          {pkg.price}
                         </p>
                         <div className="text-sm opacity-60 font-medium flex items-center gap-2 w-fit">
                           <Clock size={16} />
