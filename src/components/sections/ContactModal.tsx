@@ -49,7 +49,9 @@ export default function ContactModal() {
         </div>
 
         {/* Modal Body */}
-        <form onSubmit={handleSubmit} className="px-2 md:px-8 py-8 ">
+        <form
+          onSubmit={handleSubmit}
+          className="pl-4 pr-2 md:pl-8 md:pr-8 py-8 ">
           <div className="w-full max-h-[350px]  md:max-h-[610px] space-y-4 md:space-y-6 overflow-y-auto">
             <div className="space-y-4 md:space-y-6 pr-2">
               {/* Name Field */}

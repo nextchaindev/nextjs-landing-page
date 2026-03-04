@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "motion/react"
 import { CheckCircle2, ArrowRight, Clock } from "lucide-react"
@@ -43,6 +44,44 @@ export default function Services({
   const colorTheme =
     colorClasses[currentService.color as keyof typeof colorClasses]
 
+  useEffect(() => {
+    if (typeof window === "undefined" || window.innerWidth >= 768) return
+
+    let rafId: number
+    let attempts = 0
+
+    const scrollToPopular = () => {
+      const carouselContainer = pricingCarouselRef.current
+      if (!carouselContainer) return
+
+      const popularEl = carouselContainer.querySelector(
+        `.popular-${keyService}`,
+      ) as HTMLElement
+      if (popularEl) {
+        const scrollableParent = carouselContainer.parentElement
+        if (scrollableParent) {
+          const parentRect = scrollableParent.getBoundingClientRect()
+          const elRect = popularEl.getBoundingClientRect()
+          const scrollLeft =
+            scrollableParent.scrollLeft +
+            (elRect.left - parentRect.left) -
+            parentRect.width / 2 +
+            elRect.width / 2
+          scrollableParent.scrollTo({ left: scrollLeft, behavior: "smooth" })
+        }
+      } else if (attempts < 50) {
+        attempts++
+        rafId = requestAnimationFrame(scrollToPopular)
+      }
+    }
+
+    rafId = requestAnimationFrame(scrollToPopular)
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId)
+    }
+  }, [keyService, pricingCarouselRef])
+
   const reorderedPackages = (() => {
     const packages = [...currentService.packages]
     const popularIndex = packages.findIndex((pkg) => pkg.popular)
@@ -76,7 +115,7 @@ export default function Services({
         </motion.div>
 
         <div className="w-full overflow-x-auto scrollbar-hide mb-5">
-          <div className="w-fit md:w-full flex flex-nowrap items-center  md:flex-wrap justify-center gap-4">
+          <div className="w-fit md:w-full flex flex-nowrap items-center md:flex-wrap justify-center gap-4">
             {Object.entries(services).map(([key, service]) => (
               <motion.button
                 key={key}
@@ -117,10 +156,10 @@ export default function Services({
           </div>
         </div>
 
-        <div className="w-full overflow-x-auto scrollbar-hide h-fit">
+        <div className="w-full overflow-x-auto scrollbar-hide h-fit snap-x snap-mandatory">
           <div
             ref={pricingCarouselRef}
-            className="flex flex-nowrap justify-center md:grid grid-cols-3 max-w-[1400px] mx-auto gap-6 h-fit pb-12 pt-12">
+            className="flex flex-nowrap justify-center md:grid grid-cols-3 max-w-[1400px] mx-auto gap-6 h-fit pb-12 pt-12 w-fit md:w-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={keyService}
@@ -137,7 +176,7 @@ export default function Services({
                           ? colorTheme.borderPopular
                           : "",
                       }}
-                      className={`min-w-[300px] md:min-w-0 snap-center rounded-2xl relative flex flex-col bg-white border-2 border-gray-200 text-gray-900 shadow-sm p-8 lg:p-10 ${pkg.popular ? "scale-105" : ""}`}
+                      className={`min-w-[300px] md:min-w-0 rounded-2xl relative flex flex-col bg-white border-2 border-gray-200 text-gray-900 shadow-sm p-8 md:p-6 lg:p-10 ${pkg.popular ? `popular-${keyService} md:scale-105 md:snap-start snap-center` : "snap-center"}`}
                       whileHover={{
                         y: -12,
                         boxShadow:
@@ -160,7 +199,8 @@ export default function Services({
                         <p className="text-sm opacity-60 font-medium text-center">
                           {pkg.description}
                         </p>
-                        <p className={`text-4xl font-bold ${colorTheme.text}`}>
+                        <p
+                          className={`text-3xl md:text-lg lg:text-4xl font-bold ${colorTheme.text}`}>
                           {pkg.price}
                         </p>
                         <div className="text-sm opacity-60 font-medium flex items-center gap-2 w-fit">
