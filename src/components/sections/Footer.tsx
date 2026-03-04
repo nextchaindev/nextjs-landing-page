@@ -102,12 +102,8 @@ export default function Footer() {
             © {new Date().getFullYear()} Nextchain Tech. All rights reserved.
           </p>
           <div className="flex gap-8">
-            <span className="text-[#99A1AF] text-sm transition-colors">
-              Chính sách bảo mật
-            </span>
-            <span className="text-[#99A1AF] text-sm transition-colors">
-              Điều khoản sử dụng
-            </span>
+            <span className="text-[#99A1AF] text-sm">Chính sách bảo mật</span>
+            <span className="text-[#99A1AF] text-sm">Điều khoản sử dụng</span>s
           </div>
         </div>
       </div>
