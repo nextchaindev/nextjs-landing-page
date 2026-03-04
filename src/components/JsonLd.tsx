@@ -5,8 +5,8 @@ export default function JsonLd() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "NextChain",
-    url: "https://nextchain.kr",
-    logo: "https://nextchain.kr/logo.png",
+    url: "https://www.nextchain.site",
+    logo: "https://www.nextchain.site/logo.png",
     description:
       "Thiết kế website chuyên nghiệp giúp doanh nghiệp tăng doanh số bán hàng",
     address: {
@@ -24,12 +24,12 @@ export default function JsonLd() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "NextChain",
-    url: "https://nextchain.kr",
+    url: "https://www.nextchain.site",
     description:
       "Thiết kế website chuyên nghiệp giúp doanh nghiệp tăng doanh số bán hàng. Landing page, website bán hàng, website doanh nghiệp với SEO tối ưu.",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://nextchain.kr/search?q={search_term_string}",
+      target: "https://www.nextchain.site/search?q={search_term_string}",
       "query-input": "required name=search_term_string",
     },
   }

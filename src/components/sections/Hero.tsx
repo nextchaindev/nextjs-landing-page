@@ -93,7 +93,7 @@ export default function Hero({ heroStatsRef, heroStatsVisible }: HeroProps) {
             <div className="absolute -bottom-8 -left-8 rounded-xl p-2 w-40 hidden md:block">
               <ImageWithFallback
                 src={image_b1d2ddd0462d3f186ceed6ffb811a6df98b993cc}
-                alt="Mobile app mockup"
+                alt="Thiết kế ứng dụng di động NextChain"
                 className="rounded-lg h-78 w-full object-cover"
               />
             </div>

@@ -3,6 +3,15 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Clock, Mail, Phone, ArrowLeft } from "lucide-react"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Cảm ơn bạn | NextChain",
+  robots: {
+    index: false,
+    follow: false,
+  },
+}
 
 export default function SuccessPage() {
   return (
