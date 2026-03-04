@@ -113,7 +113,7 @@ export default function RootLayout({
       </head>
       <body className={`${beVietnamPro.variable} antialiased`}>
         <JsonLd />
-        {/* <GoogleAnalytics gaId="G-Z8NT4N1ZKB" /> */}
+        <GoogleAnalytics gaId="G-Z8NT4N1ZKB" />
         <ClarityAnalytics projectId="vkqca6mwj1" />
         <GoogleTagManager gtmId="GTM-55QQRNJC" />
 
