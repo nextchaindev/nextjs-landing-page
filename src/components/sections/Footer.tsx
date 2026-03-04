@@ -102,16 +102,12 @@ export default function Footer() {
             © {new Date().getFullYear()} Nextchain Tech. All rights reserved.
           </p>
           <div className="flex gap-8">
-            <a
-              href="#"
-              className="text-[#99A1AF] text-sm hover:text-white transition-colors">
+            <span className="text-[#99A1AF] text-sm transition-colors">
               Chính sách bảo mật
-            </a>
-            <a
-              href="#"
-              className="text-[#99A1AF] text-sm hover:text-white transition-colors">
+            </span>
+            <span className="text-[#99A1AF] text-sm transition-colors">
               Điều khoản sử dụng
-            </a>
+            </span>
           </div>
         </div>
       </div>

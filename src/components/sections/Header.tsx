@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { X, Menu } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
@@ -11,21 +11,32 @@ import { useModal } from "@/context/ModalContext"
 import { useActiveSection } from "@/hooks/useActiveSection"
 import { useScrollTo } from "@/hooks/useScrollTo"
 import Link from "next/link"
+import useWidth from "@/hooks/useWidth"
 
 export default function Header() {
   const pathname = usePathname()
   const { scrollToSection } = useScrollTo()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { openModalClean } = useModal()
-  const router = useRouter()
+  const { isMobile } = useWidth()
 
   const handleLogoClick = (e: React.MouseEvent) => {
     if (pathname === "/") {
       e.preventDefault()
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      })
+      if (isMobile) {
+        setIsMenuOpen(false)
+        setTimeout(() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          })
+        }, 300)
+      } else {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        })
+      }
     }
   }
 
@@ -154,7 +165,9 @@ export default function Header() {
                     key={link.id}
                     onClick={() => {
                       setIsMenuOpen(false)
-                      scrollToSection(link.id)
+                      setTimeout(() => {
+                        scrollToSection(link.id)
+                      }, 300) // Đợi menu đóng một chút rồi mới scroll để tránh bị giật hoặc huỷ scroll
                     }}
                     className={`text-lg font-medium transition-colors text-left cursor-pointer ${
                       pathname === "/" && activeSection === link.id
