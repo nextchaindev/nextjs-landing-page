@@ -11,8 +11,10 @@ import Projects from "@/components/sections/Projects"
 import CTA from "@/components/sections/CTA"
 import Client from "@/components/sections/Client"
 
+const SECTION_IDS = ["home", "services", "process", "projects", "cta"]
+
 export default function Home() {
-  const [selectedService, setSelectedService] = useState("landing")
+  const [selectedService] = useState("landing")
 
   // Counter animation hook for hero stats
   const { ref: heroStatsRef, isVisible: heroStatsVisible } =
@@ -28,17 +30,19 @@ export default function Home() {
   const { ref: clientsRef, isVisible: clientsVisible } = useScrollAnimation(0.1)
 
   // Active section tracking for GA
-  const sectionIds = useRef(["home", "services", "process", "projects", "cta"])
-  const activeSection = useActiveSection(sectionIds.current)
+  const activeSection = useActiveSection(SECTION_IDS)
 
   // Track section view in GA
   useEffect(() => {
+    const win = window as Window & {
+      gtag?: (command: string, action: string, params: Record<string, unknown>) => void
+    }
     if (
       activeSection &&
       typeof window !== "undefined" &&
-      (window as any).gtag
+      win.gtag
     ) {
-      ;(window as any).gtag("event", "section_view", {
+      win.gtag("event", "section_view", {
         section_name: activeSection,
       })
     }
