@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     siteName: "NextChain",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "NextChain - Thiết kế Website Chuyên Nghiệp",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     title: "Thiết kế Website Chuyên Nghiệp | Tăng Doanh Số Bán Hàng",
     description:
       "Thiết kế website chuyên nghiệp giúp doanh nghiệp tăng doanh số bán hàng. Landing page, website bán hàng, website doanh nghiệp với SEO tối ưu.",
-    images: ["/twitter-image.jpg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
