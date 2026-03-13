@@ -115,7 +115,7 @@ export default function RootLayout({
         <JsonLd />
         <GoogleAnalytics gaId="G-Z8NT4N1ZKB" />
         <ClarityAnalytics projectId="vkqca6mwj1" />
-        <GoogleTagManager gtmId="GTM-55QQRNJC" />
+        <GoogleTagManager gtmId="GTM-MCFFZTLK" />
 
         <ModalProvider>
           <ConditionalLayout>{children}</ConditionalLayout>
