@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react"
 import { CheckCircle2, Loader2, Mail, Phone, User, X } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
 import ReCAPTCHA from "react-google-recaptcha"
-import useElementSize from "@/hooks/useElementSize"
 
 export default function ContactModal() {
   const {
@@ -16,8 +15,7 @@ export default function ContactModal() {
     loadingSubmit,
     errors,
   } = useModal()
- const {  height } = useElementSize("submit-section");
- console.log('height: ', height)
+
 
   const recaptchaRef = useRef<ReCAPTCHA>(null)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
@@ -211,7 +209,7 @@ export default function ContactModal() {
           </div>
 
           {/* Submit Buttons */}
-          <div id='submit-section' className="flex flex-col gap-3 pt-2">
+          <div className="flex flex-col gap-3 pt-2">
             {/* reCAPTCHA v2 Checkbox */}
               <div className="flex justify-center">
                 <ReCAPTCHA
