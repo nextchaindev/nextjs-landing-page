@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { CheckCircle2, Loader2, Mail, Phone, User, X } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
 import ReCAPTCHA from "react-google-recaptcha"
+import useElementSize from "@/hooks/useElementSize"
 
 export default function ContactModal() {
   const {
@@ -15,6 +16,8 @@ export default function ContactModal() {
     loadingSubmit,
     errors,
   } = useModal()
+ const {  height } = useElementSize("submit-section");
+ console.log('height: ', height)
 
   const recaptchaRef = useRef<ReCAPTCHA>(null)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
@@ -71,7 +74,7 @@ export default function ContactModal() {
         <form
           onSubmit={onFormSubmit}
           className="pl-4 pr-2 md:pl-8 md:pr-8 py-8 ">
-          <div className="w-full max-h-[350px]  md:max-h-[610px] space-y-4 md:space-y-6 overflow-y-auto">
+          <div className="w-full max-h-[350px] md:max-h-[calc(100dvh-350px)] space-y-4 md:space-y-6 overflow-y-auto">
             <div className="space-y-4 md:space-y-6 pr-2">
               {/* Name Field */}
               <div>
@@ -204,8 +207,12 @@ export default function ContactModal() {
                   <span>Phản hồi trong 24h</span>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* reCAPTCHA v2 Checkbox */}
+          {/* Submit Buttons */}
+          <div id='submit-section' className="flex flex-col gap-3 pt-2">
+            {/* reCAPTCHA v2 Checkbox */}
               <div className="flex justify-center">
                 <ReCAPTCHA
                   ref={recaptchaRef}
@@ -215,11 +222,7 @@ export default function ContactModal() {
                   hl="vi"
                 />
               </div>
-            </div>
-          </div>
 
-          {/* Submit Buttons */}
-          <div className="flex gap-3 pt-2">
             <button
               type="submit"
               disabled={loadingSubmit}
