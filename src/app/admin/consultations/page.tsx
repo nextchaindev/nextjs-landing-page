@@ -8,7 +8,7 @@ export const revalidate = 0
 export default async function AdminConsultationsPage() {
     const supabase = await createClient()
 
-    // Verify auth again (optional as middleware handles it, but good practice for data fetching)
+    // Verify auth again (optional as proxy handles it, but good practice for data fetching)
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     if (authError || !user) {
         redirect("/admin/login")

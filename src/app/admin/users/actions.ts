@@ -6,7 +6,7 @@ import { createClient as createServerClient } from '@/utils/supabase/server'
 
 // Use a separate client with service role for admin management only
 // This is safe because these actions are only accessible to authenticated admins
-// verified by the middleware and the check below.
+// verified by the proxy and the check below.
 const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!

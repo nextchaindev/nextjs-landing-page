@@ -4,7 +4,35 @@ import { supabaseAdmin } from '@/lib/supabaseClient'
 export async function POST(request: Request) {
     try {
         const body = await request.json()
-        const { name, email, phone, message } = body
+        const { name, email, phone, message, recaptchaToken } = body
+
+        if (!recaptchaToken) {
+            return NextResponse.json(
+                { error: 'Missing reCAPTCHA token' },
+                { status: 400 }
+            )
+        }
+
+        const secretKey = process.env.RECAPTCHA_SECRET_KEY
+        if (!secretKey) {
+            console.error('RECAPTCHA_SECRET_KEY is not defined in environment variables')
+            return NextResponse.json(
+                { error: 'Server configuration error' },
+                { status: 500 }
+            )
+        }
+
+        const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`
+        const recaptchaResponse = await fetch(verifyUrl, { method: 'POST' })
+        const recaptchaData = await recaptchaResponse.json()
+
+        if (!recaptchaData.success || recaptchaData.score < 0.5) {
+            console.error('reCAPTCHA verification failed:', recaptchaData)
+            return NextResponse.json(
+                { error: 'reCAPTCHA verification failed. Please try again.' },
+                { status: 400 }
+            )
+        }
 
         // 1. Insert into Supabase
         const { data, error } = await supabaseAdmin

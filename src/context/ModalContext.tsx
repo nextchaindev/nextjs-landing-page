@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useState, ReactNode } from "react"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
 
 interface FormData {
   name: string
@@ -23,7 +22,7 @@ interface ModalContextType {
   handleInputChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void
-  handleSubmit: (e: React.FormEvent) => Promise<void>
+  handleSubmit: (e: React.FormEvent, recaptchaToken: string | null) => Promise<void>
   keyService: string
   setKeyService: React.Dispatch<React.SetStateAction<string>>
   errors: Partial<Record<keyof FormData, string>>
@@ -47,7 +46,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
     {},
   )
-  const router = useRouter()
+
 
   const openModal = (data?: Partial<FormData>) => {
     if (data) {
@@ -121,24 +120,33 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, recaptchaToken: string | null) => {
     e.preventDefault()
     if (!validate()) return
 
+    if (!recaptchaToken) {
+      toast.error("Vui lòng xác nhận bạn không phải robot.")
+      return
+    }
+
     try {
       setLoadingSubmit(true)
+
       const response = await fetch("/api/consultation", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken,
+        }),
       })
 
       if (response.ok) {
         // Send GA Event
-        if (typeof window !== "undefined" && (window as any).gtag) {
-          ;(window as any).gtag("event", "generate_lead", {
+        if (typeof window !== "undefined" && "gtag" in window) {
+          ;(window as Window & typeof globalThis & { gtag: (...args: unknown[]) => void }).gtag("event", "generate_lead", {
             event_category: "form",
             event_label: "consultation_request",
           })
@@ -150,8 +158,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       } else {
         toast.error("Có lỗi xảy ra, vui lòng thử lại.")
       }
-    } catch (error) {
-      toast.error("Có lỗi xảy ra, vui lòng thử lại.")
+    } catch {
+      toast.error("Có lỗi xảy ra, vui lòng kết nối mạng và thử lại.")
     } finally {
       setLoadingSubmit(false)
     }

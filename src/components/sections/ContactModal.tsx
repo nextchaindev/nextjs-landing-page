@@ -1,8 +1,9 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useRef, useState } from "react"
 import { CheckCircle2, Loader2, Mail, Phone, User, X } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
+import ReCAPTCHA from "react-google-recaptcha"
 
 export default function ContactModal() {
   const {
@@ -15,6 +16,10 @@ export default function ContactModal() {
     errors,
   } = useModal()
 
+  const recaptchaRef = useRef<ReCAPTCHA>(null)
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
+
+  // Only manage body scroll lock — the effect's sole external-system concern.
   useEffect(() => {
     if (isModalOpen) {
       document.body.style.overflow = "hidden"
@@ -27,6 +32,20 @@ export default function ContactModal() {
     }
   }, [isModalOpen])
 
+  // Handles close: reset widget + clear token state (event handler, not effect).
+  // grecaptcha.reset() does NOT fire onChange(null) per the Google reCAPTCHA API
+  // docs (https://developers.google.com/recaptcha/docs/display#js_api), so we
+  // must clear the token manually here alongside the visual widget reset.
+  const handleCloseModal = () => {
+    recaptchaRef.current?.reset()
+    setRecaptchaToken(null)
+    closeModal()
+  }
+
+  const onFormSubmit = (e: React.FormEvent) => {
+    handleSubmit(e, recaptchaToken)
+  }
+
   if (!isModalOpen) return null
 
   return (
@@ -35,7 +54,7 @@ export default function ContactModal() {
         {/* Modal Header */}
         <div className="relative bg-gradient-to-br from-blue-600 to-blue-400 p-6 md:p-8 rounded-t-2xl">
           <button
-            onClick={closeModal}
+            onClick={handleCloseModal}
             className="absolute top-3 right-3 md:top-4 md:right-4 text-white/80 hover:text-white transition-colors"
             aria-label="Đóng">
             <X className="w-5 h-5 md:w-6 md:h-6" />
@@ -50,7 +69,7 @@ export default function ContactModal() {
 
         {/* Modal Body */}
         <form
-          onSubmit={handleSubmit}
+          onSubmit={onFormSubmit}
           className="pl-4 pr-2 md:pl-8 md:pr-8 py-8 ">
           <div className="w-full max-h-[350px]  md:max-h-[610px] space-y-4 md:space-y-6 overflow-y-auto">
             <div className="space-y-4 md:space-y-6 pr-2">
@@ -173,17 +192,28 @@ export default function ContactModal() {
               {/* Trust Elements */}
               <div className="bg-blue-50 rounded-xl p-3 md:p-4 space-y-2">
                 <div className="flex items-center gap-2 text-sm text-gray-700">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
                   <span>Tư vấn miễn phí 100%</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
                   <span>Bảo mật thông tin tuyệt đối</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
                   <span>Phản hồi trong 24h</span>
                 </div>
+              </div>
+
+              {/* reCAPTCHA v2 Checkbox */}
+              <div className="flex justify-center">
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+                  onChange={(token) => setRecaptchaToken(token)}
+                  onExpired={() => setRecaptchaToken(null)}
+                  hl="vi"
+                />
               </div>
             </div>
           </div>
@@ -192,7 +222,8 @@ export default function ContactModal() {
           <div className="flex gap-3 pt-2">
             <button
               type="submit"
-              className="flex-1 flex flex-row items-center gap-1 justify-center px-6 py-2.5 md:py-3 bg-gradient-to-r from-orange-600 to-orange-400 text-white rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+              disabled={loadingSubmit}
+              className="flex-1 flex flex-row items-center gap-1 justify-center px-6 py-2.5 md:py-3 bg-linear-to-r from-orange-600 to-orange-400 text-white rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100">
               <span>Gửi yêu cầu</span>
               {loadingSubmit && <Loader2 className="w-4 h-4 animate-spin" />}
             </button>
