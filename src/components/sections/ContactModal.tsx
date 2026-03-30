@@ -204,8 +204,12 @@ export default function ContactModal() {
                   <span>Phản hồi trong 24h</span>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* reCAPTCHA v2 Checkbox */}
+          {/* Submit Buttons */}
+          <div className="flex gap-3 pt-2">
+            {/* reCAPTCHA v2 Checkbox */}
               <div className="flex justify-center">
                 <ReCAPTCHA
                   ref={recaptchaRef}
@@ -215,11 +219,7 @@ export default function ContactModal() {
                   hl="vi"
                 />
               </div>
-            </div>
-          </div>
 
-          {/* Submit Buttons */}
-          <div className="flex gap-3 pt-2">
             <button
               type="submit"
               disabled={loadingSubmit}
