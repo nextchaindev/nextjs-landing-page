@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "motion/react"
-import { CheckCircle2, ArrowRight, Clock } from "lucide-react"
+import { CheckCircle2, Clock } from "lucide-react"
 import {
   fadeInUp,
   staggerContainer,
@@ -132,7 +132,7 @@ export default function Services({
                   transition: { type: "spring", stiffness: 400, damping: 10 },
                 }}
                 whileTap={{ scale: 0.95 }}
-                className={`flex items-center gap-3 p-2 rounded-2xl border-2 ${
+                className={`flex items-center gap-3 p-2 rounded-2xl border-2 cursor-pointer ${
                   keyService === key
                     ? `${
                         colorClasses[service.color as keyof typeof colorClasses]
