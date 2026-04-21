@@ -103,7 +103,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "15.000.000đ",
+        price: "15.000.000đ +",
         duration: "7-14 ngày",
         description: "Giải pháp toàn diện",
         features: [
@@ -157,7 +157,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "45.000.000đ",
+        price: "45.000.000đ +",
         duration: "21-30 ngày",
         description: "Giải pháp doanh nghiệp lớn",
         features: [
@@ -213,7 +213,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "65.000.000đ",
+        price: "65.000.000đ +",
         duration: "30-45 ngày",
         description: "Nền tảng thương mại điện tử",
         features: [
@@ -222,7 +222,7 @@ export const services = {
           "Tích hợp ERP/CRM",
           "AI recommendation engine",
           "Loyalty program",
-          "Mobile app đồng bộ",
+          // "Mobile app đồng bộ",
           "Bảo mật cao cấp",
           "API cho tích hợp mở rộng",
           "Đào tạo team chuyên sâu",
@@ -326,7 +326,7 @@ export const services = {
       },
       {
         name: "Professional",
-        price: "35.000.000đ",
+        price: "35.000.000đ +",
         duration: "6 tháng",
         description: "Chiến lược marketing toàn diện",
         features: [
