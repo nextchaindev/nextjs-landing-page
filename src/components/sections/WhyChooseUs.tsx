@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { motion } from "motion/react"
 import { CheckCircle2, Crown, Target, Zap, Heart } from "lucide-react"
 import { fadeInUp } from "@/hooks/useScrollAnimation"
@@ -7,9 +8,9 @@ import { fadeInUp } from "@/hooks/useScrollAnimation"
 export default function WhyChooseUs() {
   const features = [
     {
-      title: "Chất lượng cao cấp",
-      desc: "Mỗi dự án đều được trải qua kiểm định và kiểm tra đầu ra trước khi đến tay người dùng.",
-      stat: "99.9% Độ mượt",
+      title: "Bạn duyệt mọi nội dung",
+      desc: "Đội ngũ Nextchain chuẩn bị thiết kế và nội dung; không nội dung nào được xuất bản khi chưa có bạn xác nhận.",
+      stat: "Duyệt trước khi đăng",
       icon: Crown,
       iconBg: "bg-[#FFEDD4]",
       iconColor: "text-[#F54900]",
@@ -17,9 +18,9 @@ export default function WhyChooseUs() {
       statColor: "text-[#F54900]",
     },
     {
-      title: "Kết quả đảm bảo",
-      desc: "Cam kết hoạt động tốt trên nhiều thiết bị như nhiều trình duyệt hiện nay",
-      stat: "100% Tương thích",
+      title: "Phạm vi rõ ràng",
+      desc: "Mỗi gói ghi rõ bao gồm gì, không bao gồm gì. Việc phát sinh được báo giá trước khi làm.",
+      stat: "Không phí ẩn",
       icon: Target,
       iconBg: "bg-[#DCFCE7]",
       iconColor: "text-[#008236]",
@@ -27,9 +28,9 @@ export default function WhyChooseUs() {
       statColor: "text-[#00A63E]",
     },
     {
-      title: "Tốc độ vượt trội",
-      desc: "Thời gian tải Website nhanh nhằm giữ chân phục vụ khách hàng trải nghiệm",
-      stat: "99% Tải nhanh",
+      title: "Chuẩn kỹ thuật cho Google",
+      desc: "Mỗi trang có tiêu đề, mô tả, sitemap, dữ liệu có cấu trúc và được kiểm tra tốc độ trên điện thoại.",
+      stat: "SEO kỹ thuật",
       icon: Zap,
       iconBg: "bg-[#DBEAFE]",
       iconColor: "text-[#155DFC]",
@@ -37,9 +38,9 @@ export default function WhyChooseUs() {
       statColor: "text-[#155DFC]",
     },
     {
-      title: "Đồng hành cùng nhau",
-      desc: "Không chỉ xây dựng rồi bỏ. Chúng tôi luôn đồng hành cùng bạn và trực tiếp quản trị.",
-      stat: "100% Hỗ trợ",
+      title: "Đồng hành sau khi xuất bản",
+      desc: "Không làm xong rồi bỏ. Nextchain cập nhật nội dung, bảo trì và hỗ trợ theo gói tháng.",
+      stat: "Quản lý hằng tháng",
       icon: Heart,
       iconBg: "bg-[#FCE7F3]",
       iconColor: "text-[#E60076]",
@@ -59,14 +60,14 @@ export default function WhyChooseUs() {
             variants={fadeInUp}>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#F0FDF4] text-[#008236] rounded-full text-sm font-medium mb-6">
               <CheckCircle2 className="w-4 h-4" />
-              Tại sao chọn chúng tôi
+              Cam kết của Nextchain
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-[#101828] mb-6 leading-tight">
-              Đối tác đáng tin cậy
+              Minh bạch, có thể kiểm chứng
             </h2>
             <p className="text-sm md:text-base text-[#4A5565] leading-relaxed max-w-2xl mx-auto">
-              Trải qua rất nhiều dự án thành công, chúng tôi hiểu rõ then chốt
-              của doanh nghiệp và biết cách giải quyết hiệu quả
+              Không hứa thứ hạng Google hay doanh số ảo — chỉ cam kết những gì
+              bạn có thể kiểm tra được.
             </p>
           </motion.div>
         </div>
@@ -103,6 +104,15 @@ export default function WhyChooseUs() {
             </motion.div>
           ))}
         </div>
+        <p className="mt-12 text-center text-gray-700">
+          <Link href="/ve-chung-toi" className="font-semibold text-primary hover:underline">
+            Về đơn vị vận hành
+          </Link>
+          {" · "}
+          <Link href="/chinh-sach-huy-dich-vu" className="font-semibold text-primary hover:underline">
+            Chính sách hủy dịch vụ
+          </Link>
+        </p>
       </div>
     </section>
   )

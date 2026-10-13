@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "motion/react"
 import { CheckCircle2, Clock } from "lucide-react"
@@ -8,27 +9,26 @@ import {
   fadeInUp,
   staggerContainer,
   staggerItem,
+  useScrollAnimation,
 } from "@/hooks/useScrollAnimation"
-import { services, colorClasses } from "@/constants/services"
+import { projectServices as services, colorClasses } from "@/content/projectPricing"
+import { SERVICE_DETAILS } from "@/content/services"
 
 import { useModal } from "@/context/ModalContext"
 
 interface ServicesProps {
-  // selectedService: string
-  // setSelectedService: (service: string) => void
-  pricingCarouselRef: React.RefObject<HTMLDivElement | null>
-  servicesRef: React.RefObject<HTMLDivElement | null>
-  servicesVisible: boolean
+  title?: string
+  desc?: string
 }
 
+/** Tabbed project pricing (Basic/Premium/Professional) for the larger services. */
 export default function Services({
-  // selectedService,
-  // setSelectedService,
-  pricingCarouselRef,
-  servicesRef,
-  servicesVisible,
+  title = "Bảng giá dự án cho doanh nghiệp",
+  desc = "Website và phần mềm quy mô lớn hơn được báo giá theo dự án",
 }: ServicesProps) {
   const { openModal, keyService, setKeyService } = useModal()
+  const pricingCarouselRef = useRef<HTMLDivElement>(null)
+  const { ref: servicesRef, isVisible: servicesVisible } = useScrollAnimation(0.1)
 
   const openModalWithService = (
     serviceName: string,
@@ -40,7 +40,12 @@ export default function Services({
     })
   }
 
-  const currentService = services[keyService as keyof typeof services]
+  const currentService = services[keyService as keyof typeof services] ?? services.corporate
+  const detailPath = `/dich-vu/${
+    SERVICE_DETAILS.find(
+      (detail) => detail.pricing.model === "project" && detail.pricing.key === keyService,
+    )?.slug ?? ""
+  }`
   const colorTheme =
     colorClasses[currentService.color as keyof typeof colorClasses]
 
@@ -97,8 +102,8 @@ export default function Services({
 
   return (
     <section
-      id="services"
-      className="py-20 px-4 md:px-6 bg-white"
+      id="bang-gia-du-an"
+      className="py-20 px-4 md:px-6 bg-gray-50"
       ref={servicesRef}>
       <div className="max-w-[1400px] mx-auto">
         <motion.div
@@ -107,10 +112,10 @@ export default function Services({
           animate={servicesVisible ? "visible" : "hidden"}
           variants={fadeInUp}>
           <h2 className="text-2xl md:text-4xl font-medium text-gray-900 mb-6 leading-tight">
-            Bảng giá dịch vụ chi tiết
+            {title}
           </h2>
           <p className="text-[16px] md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Chọn gói phù hợp với nhu cầu và ngân sách của bạn
+            {desc}
           </p>
         </motion.div>
 
@@ -253,7 +258,12 @@ export default function Services({
             </AnimatePresence>
           </div>
         </div>
-        <p className="text-center text-[16px] text-gray-600 mt-8">
+        <p className="text-center mt-4">
+          <Link href={detailPath} className={`font-semibold hover:underline ${colorTheme.text}`}>
+            Tìm hiểu chi tiết dịch vụ {currentService.name} →
+          </Link>
+        </p>
+        <p className="text-center text-[16px] text-gray-600 mt-4">
           Các gói giá trên là mức tham khảo. Liên hệ với chúng tôi để được tư
           vấn chi tiết và báo giá chính xác cho dự án của bạn.
         </p>

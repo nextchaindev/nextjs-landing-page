@@ -1,7 +1,4 @@
-"use client"
-
 import {
-  FileText,
   Globe,
   ShoppingCart,
   PenTool,
@@ -9,7 +6,21 @@ import {
   Boxes,
 } from "lucide-react"
 
-export const colorClasses: Record<string, any> = {
+/**
+ * Bảng giá theo dự án cho website/phần mềm quy mô lớn hơn.
+ * Landing page và kinh doanh nhỏ dùng gói tháng trong content/plans.ts.
+ */
+export interface ColorTheme {
+  bg: string
+  text: string
+  border: string
+  hover: string
+  badgeBg: string
+  badgeText: string
+  borderPopular: string
+}
+
+export const colorClasses: Record<string, ColorTheme> = {
   purple: {
     bg: "bg-purple-500",
     text: "text-purple-600",
@@ -66,59 +77,7 @@ export const colorClasses: Record<string, any> = {
   },
 }
 
-export const services = {
-  landing: {
-    name: "Landing Page",
-    icon: FileText,
-    color: "purple",
-    packages: [
-      {
-        name: "Basic",
-        price: "5.000.000đ",
-        duration: "2-4 ngày",
-        description: "Phù hợp cho chiến dịch ngắn hạn",
-        features: [
-          "1 trang landing page đơn giản",
-          "Thiết kế responsive mobile",
-          "Form liên hệ cơ bản",
-          "Tối ưu tốc độ tải trang",
-          "1 lần chỉnh sửa miễn phí",
-        ],
-      },
-      {
-        name: "Premium",
-        price: "9.000.000đ",
-        duration: "4-7 ngày",
-        description: "Lựa chọn phổ biến nhất",
-        popular: true,
-        features: [
-          "1 trang landing chuyên nghiệp",
-          "Thiết kế UX/UI tùy chỉnh",
-          "Form tích hợp Marketing tools",
-          "Animation & hiệu ứng mượt mà",
-          "SEO cơ bản",
-          "2 lần chỉnh sửa miễn phí",
-          "Hỗ trợ 30 ngày",
-        ],
-      },
-      {
-        name: "Professional",
-        price: "15.000.000đ +",
-        duration: "7-14 ngày",
-        description: "Giải pháp toàn diện",
-        features: [
-          "Landing page cao cấp với A/B testing",
-          "Thiết kế UX/UI độc quyền",
-          "Tích hợp đầy đủ Marketing automation",
-          "Analytics & tracking chuyên sâu",
-          "SEO nâng cao",
-          "Live chat & chatbot",
-          "3 lần chỉnh sửa miễn phí",
-          "Hỗ trợ 90 ngày",
-        ],
-      },
-    ],
-  },
+export const projectServices = {
   corporate: {
     name: "Website Doanh nghiệp",
     icon: Globe,
@@ -395,4 +354,10 @@ export const services = {
       },
     ],
   },
+}
+
+export type ProjectServiceKey = keyof typeof projectServices
+
+export function parsePrice(price: string) {
+  return { amount: Number(price.replace(/\D/g, "")), isMinimum: price.includes("+") }
 }

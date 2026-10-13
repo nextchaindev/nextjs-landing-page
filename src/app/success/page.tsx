@@ -4,7 +4,7 @@ import { CheckCircle2, Clock, Mail, Phone, ArrowLeft } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Cảm ơn bạn | NextChain",
+  title: "Cảm ơn bạn",
   robots: {
     index: false,
     follow: false,

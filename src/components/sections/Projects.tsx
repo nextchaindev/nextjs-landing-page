@@ -2,11 +2,12 @@
 
 import { motion } from "motion/react"
 import { ImageWithFallback } from "@/components/figma/ImageWithFallback"
-import { IMAGES, IMAGE_ALT_TEXTS } from "@/constants/images"
+import Link from "next/link"
 import {
   fadeInUp,
   staggerContainer,
   staggerItem,
+  useScrollAnimation,
 } from "@/hooks/useScrollAnimation"
 import image_1 from "@/assets/project-1.png"
 import image_2 from "@/assets/project-2.png"
@@ -15,15 +16,8 @@ import image_4 from "@/assets/project-4.png"
 import image_5 from "@/assets/project-5.png"
 import image_6 from "@/assets/project-6.png"
 
-interface ProjectsProps {
-  projectsRef: React.RefObject<HTMLDivElement | null>
-  projectsVisible: boolean
-}
-
-export default function Projects({
-  projectsRef,
-  projectsVisible,
-}: ProjectsProps) {
+export default function Projects() {
+  const { ref: projectsRef, isVisible: projectsVisible } = useScrollAnimation(0.1)
   const projects = [
     {
       title: "Website đặt bàn nhà hàng",
@@ -32,12 +26,12 @@ export default function Projects({
     },
     {
       title: "Website thương mại điện tử",
-      description: "Giao diện hiện đại, tăng tỷ lệ chuyển đổi",
+      description: "Danh mục sản phẩm, quy trình đặt mua ngắn",
       image: image_2,
     },
     {
       title: "Website tuyển sinh trung tâm đào tạo",
-      description: "Tăng 40% đăng ký tư vấn",
+      description: "Thông tin khóa học rõ ràng, form đăng ký tư vấn",
       image: image_3,
     },
     {
@@ -47,7 +41,7 @@ export default function Projects({
     },
     {
       title: "Landing page đặt xe Limousine",
-      description: "Mobile-first, tăng mạnh cuộc gọi",
+      description: "Mobile-first, nút gọi và đặt xe nổi bật",
       image: image_5,
     },
     {
@@ -65,10 +59,10 @@ export default function Projects({
           animate={projectsVisible ? "visible" : "hidden"}
           variants={fadeInUp}>
           <h2 className="text-2xl md:text-4xl text-gray-900 mb-4">
-            Dự án tiêu biểu
+            Thiết kế thực tế Nextchain đã làm
           </h2>
           <p className="text-[16px] md:text-xl text-gray-600">
-            Năng lực thiết kế được thể hiện qua từng sản phẩm
+            Không chỉ mockup — đây là các website và landing page đã triển khai
           </p>
         </motion.div>
 
@@ -98,6 +92,11 @@ export default function Projects({
             </motion.div>
           ))}
         </motion.div>
+        <p className="mt-12 text-center">
+          <Link href="/mau-website" className="font-semibold text-primary hover:underline">
+            Xem mẫu website theo ngành →
+          </Link>
+        </p>
       </div>
     </section>
   )

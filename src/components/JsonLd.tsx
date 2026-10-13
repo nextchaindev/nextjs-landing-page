@@ -1,106 +1,36 @@
-import Script from "next/script"
+import JsonLdScript from "@/components/marketing/JsonLdScript"
+import { COMPANY_NAME, CONTACT, SITE_NAME, SITE_URL } from "@/lib/site"
 
+/** Site-wide entity data. Page-level Service/Breadcrumb schemas live on each route. */
 export default function JsonLd() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "NextChain",
-    url: "https://www.nextchain.site",
-    logo: "https://www.nextchain.site/logo.png",
+    "@id": `${SITE_URL}#organization`,
+    name: SITE_NAME,
+    legalName: COMPANY_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
     description:
-      "Thiết kế website chuyên nghiệp giúp doanh nghiệp tăng doanh số bán hàng",
+      "Dịch vụ thiết kế, xuất bản và quản lý website/landing page theo gói tháng cho doanh nghiệp nhỏ tại Việt Nam.",
+    email: CONTACT.email,
+    telephone: CONTACT.phone,
     address: {
       "@type": "PostalAddress",
+      addressLocality: "Hồ Chí Minh",
       addressCountry: "VN",
     },
-    sameAs: [
-      // Thêm các link mạng xã hội nếu có
-      // "https://facebook.com/nextchain",
-      // "https://linkedin.com/company/nextchain",
-    ],
   }
 
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "NextChain",
-    url: "https://www.nextchain.site",
-    description:
-      "Thiết kế website chuyên nghiệp giúp doanh nghiệp tăng doanh số bán hàng. Landing page, website bán hàng, website doanh nghiệp với SEO tối ưu.",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: "https://www.nextchain.site/search?q={search_term_string}",
-      "query-input": "required name=search_term_string",
-    },
+    "@id": `${SITE_URL}#website`,
+    name: SITE_NAME,
+    url: SITE_URL,
+    inLanguage: "vi-VN",
+    publisher: { "@id": `${SITE_URL}#organization` },
   }
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    serviceType: "Thiết kế Website",
-    provider: {
-      "@type": "Organization",
-      name: "NextChain",
-    },
-    areaServed: {
-      "@type": "Country",
-      name: "Vietnam",
-    },
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "Dịch vụ thiết kế website",
-      itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Landing Page",
-            description: "Thiết kế landing page chuyên nghiệp",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Website Doanh nghiệp",
-            description: "Thiết kế website doanh nghiệp chuyên nghiệp",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Website Bán hàng",
-            description: "Thiết kế website thương mại điện tử",
-          },
-        },
-      ],
-    },
-  }
-
-  return (
-    <>
-      <Script
-        id="organization-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema),
-        }}
-      />
-      <Script
-        id="website-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(websiteSchema),
-        }}
-      />
-      <Script
-        id="service-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(serviceSchema),
-        }}
-      />
-    </>
-  )
+  return <JsonLdScript data={[organizationSchema, websiteSchema]} />
 }

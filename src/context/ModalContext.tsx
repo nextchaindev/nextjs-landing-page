@@ -42,7 +42,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [loadingSubmit, setLoadingSubmit] = useState(false)
   const [formData, setFormData] = useState<FormData>(initialFormData)
-  const [keyService, setKeyService] = useState<string>("landing")
+  const [keyService, setKeyService] = useState<string>("corporate")
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
     {},
   )

@@ -6,6 +6,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics"
 import ClarityAnalytics from "@/components/ClarityAnalytics"
 import { GoogleTagManager } from "@next/third-parties/google"
 import { Toaster } from "sonner"
+import { COMPANY_NAME, SITE_NAME, SITE_URL } from "@/lib/site"
 
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
@@ -13,59 +14,48 @@ const beVietnamPro = Be_Vietnam_Pro({
   weight: ["300", "400", "500", "600", "700"],
 })
 
+const DEFAULT_TITLE = "Nextchain.site | Thiết Kế Landing Page Trọn Gói Theo Tháng"
+const DEFAULT_DESCRIPTION =
+  "Dịch vụ làm landing page và website cho spa, salon, homestay và doanh nghiệp nhỏ. Chọn mẫu, duyệt nội dung — Nextchain thiết kế, xuất bản và quản lý theo gói tháng."
+
 export const metadata: Metadata = {
   title: {
-    default: "Thiết kế Website Chuyên Nghiệp | Tăng Doanh Số Bán Hàng",
-    template: "%s | NextChain",
+    default: DEFAULT_TITLE,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Thiết kế website chuyên nghiệp giúp doanh nghiệp tăng doanh số bán hàng. Landing page, website bán hàng, website doanh nghiệp với SEO tối ưu. Hơn 50+ dự án thành công.",
-  keywords: [
-    "thiết kế website",
-    "thiết kế landing page",
-    "website bán hàng",
-    "website doanh nghiệp",
-    "SEO website",
-    "thiết kế web chuyên nghiệp",
-    "tăng doanh số",
-    "marketing online",
-    "phát triển website",
-    "NextChain",
-  ],
-  authors: [{ name: "NextChain" }],
-  creator: "NextChain",
-  publisher: "NextChain",
+  description: DEFAULT_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: COMPANY_NAME }],
+  creator: COMPANY_NAME,
+  publisher: COMPANY_NAME,
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://www.nextchain.site"),
-  alternates: {
-    canonical: "/",
-  },
+  metadataBase: new URL(SITE_URL),
+  // Canonical is set per page via pageMetadata(); no site-wide default so
+  // pages without their own canonical don't point at the homepage.
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    url: "https://www.nextchain.site",
-    title: "Thiết kế Website Chuyên Nghiệp | Tăng Doanh Số Bán Hàng",
-    description:
-      "Thiết kế website chuyên nghiệp giúp doanh nghiệp tăng doanh số bán hàng. Landing page, website bán hàng, website doanh nghiệp với SEO tối ưu.",
-    siteName: "NextChain",
+    url: SITE_URL,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    siteName: SITE_NAME,
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "NextChain - Thiết kế Website Chuyên Nghiệp",
+        alt: SITE_NAME,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Thiết kế Website Chuyên Nghiệp | Tăng Doanh Số Bán Hàng",
-    description:
-      "Thiết kế website chuyên nghiệp giúp doanh nghiệp tăng doanh số bán hàng. Landing page, website bán hàng, website doanh nghiệp với SEO tối ưu.",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
     images: ["/og-image.png"],
   },
   robots: {
@@ -82,7 +72,6 @@ export const metadata: Metadata = {
   verification: {
     // Thêm các mã xác minh khi có
     // google: "your-google-verification-code",
-    // yandex: "your-yandex-verification-code",
   },
 }
 
