@@ -20,6 +20,12 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Form tư vấn và chống spam
+
+Form yêu cầu số điện thoại, email tùy chọn. Honeypot và reCAPTCHA v2 được xác minh ở API trước khi lưu lead. Giới hạn chia sẻ giữa các instance qua Supabase: tối đa 3 yêu cầu mỗi số điện thoại và 10 yêu cầu mỗi IP trong 10 phút. CAPTCHA và giới hạn tần suất chỉ giảm spam, không chặn tuyệt đối bot hoặc lead không hợp lệ.
+
+Trước khi triển khai, chạy [`supabase_consultation_rate_limit.sql`](./supabase_consultation_rate_limit.sql) trong Supabase SQL Editor; đặt `CONSULTATION_RATE_LIMIT_SECRET` (chuỗi bí mật ngẫu nhiên dài, chỉ phía server), `RECAPTCHA_SECRET_KEY` và `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` trong môi trường triển khai. Cho phép domain production và localhost (nếu thử local) trong cấu hình reCAPTCHA. Nếu chưa có bảng/hàm hoặc secret giới hạn tần suất, API từ chối gửi lead thay vì bỏ qua lớp bảo vệ. Lên lịch dọn bảng theo câu lệnh `pg_cron` ở cuối tệp SQL hoặc tác vụ định kỳ tương đương.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

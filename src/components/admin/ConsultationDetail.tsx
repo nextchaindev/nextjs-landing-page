@@ -88,7 +88,7 @@ export function ConsultationDetail({ isOpen, onClose, consultation }: Consultati
                         <h3 className="font-semibold text-sm text-gray-900">Contact Information</h3>
                         <div className="grid grid-cols-2 gap-2 text-sm">
                             <span className="text-gray-500">Email:</span>
-                            <span>{consultation.contact}</span>
+                            <span>{consultation.contact.includes('@') ? consultation.contact : 'Không cung cấp'}</span>
                             <span className="text-gray-500">Phone:</span>
                             <span>{consultation.phone}</span>
                         </div>

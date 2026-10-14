@@ -53,7 +53,7 @@ export default async function IndustryPage({ params }: PageProps<"/giai-phap/[sl
         intro={industry.intro}
         image={industry.image}
         imageAlt={industry.imageAlt}>
-        <ContactButton />
+        <ContactButton context={industry.name} />
         {template && (
           <Link
             href={`/mau-website/${template.slug}`}

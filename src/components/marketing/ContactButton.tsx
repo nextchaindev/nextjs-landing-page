@@ -8,19 +8,21 @@ interface ContactButtonProps {
   label?: string
   variant?: "primary" | "outline"
   className?: string
+  context?: string
 }
 
 export default function ContactButton({
   label = "Nhận tư vấn miễn phí",
   variant = "primary",
   className,
+  context,
 }: ContactButtonProps) {
-  const { openModalClean } = useModal()
+  const { openModal } = useModal()
 
   return (
     <button
       type="button"
-      onClick={openModalClean}
+      onClick={() => openModal(context ? { message: `Tôi quan tâm: ${context}. ` } : undefined)}
       className={cn(
         "inline-flex items-center justify-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-xl font-bold text-sm md:text-base transition-all active:scale-95 cursor-pointer",
         variant === "primary"

@@ -2,14 +2,15 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import Reveal from "@/components/marketing/Reveal"
+import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
 import { INDUSTRIES } from "@/content/industries"
 import { STARTING_PRICE } from "@/content/plans"
 
 export default function IndustryCards() {
   return (
-    <div className="grid md:grid-cols-3 gap-6">
+    <div className={`${MOBILE_CAROUSEL} md:grid-cols-3`}>
       {INDUSTRIES.map((industry, idx) => (
-        <Reveal key={industry.slug} delay={idx * 0.1} as="article">
+        <Reveal key={industry.slug} delay={idx * 0.1} as="article" className={MOBILE_CAROUSEL_ITEM}>
           <Link
             href={`/giai-phap/${industry.slug}`}
             className="group flex flex-col h-full bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">

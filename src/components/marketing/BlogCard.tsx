@@ -1,17 +1,11 @@
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Clock } from "lucide-react"
 import type { BlogPost } from "@/content/blog"
 
-const COVER_GRADIENTS = [
-  "from-orange-400 via-orange-300 to-amber-200",
-  "from-blue-500 via-blue-400 to-cyan-300",
-  "from-purple-500 via-fuchsia-400 to-pink-300",
-  "from-emerald-500 via-teal-400 to-cyan-200",
-]
-
 export const dateFormat = new Intl.DateTimeFormat("vi-VN", { dateStyle: "long" })
 
-export default function BlogCard({ post, index }: { post: BlogPost; index: number }) {
+export default function BlogCard({ post }: { post: BlogPost; index?: number }) {
   const href = `/blog/${post.slug}`
   return (
     <article className="group flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
@@ -19,8 +13,15 @@ export default function BlogCard({ post, index }: { post: BlogPost; index: numbe
         href={href}
         tabIndex={-1}
         aria-hidden
-        className={`relative aspect-[16/9] bg-linear-to-br ${COVER_GRADIENTS[index % COVER_GRADIENTS.length]} p-6 flex items-end overflow-hidden`}>
-        <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-white/20 transition-transform duration-700 group-hover:scale-150" />
+        className="relative aspect-[16/9] p-5 flex items-end overflow-hidden">
+        <Image
+          src={post.cover}
+          alt=""
+          fill
+          sizes="(min-width: 768px) 380px, 100vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
         <span className="relative px-3 py-1 rounded-full bg-white/90 text-gray-900 text-xs font-semibold">
           {post.category}
         </span>

@@ -3,6 +3,9 @@ import type { Faq } from "@/content/faqs"
 import imageSpa from "@/assets/stock/spa.jpg"
 import imageSalon from "@/assets/stock/salon.jpg"
 import imageHomestay from "@/assets/stock/homestay.jpg"
+import imageDental from "@/assets/stock/dental.jpg"
+import imageRealEstate from "@/assets/project-4.png"
+import imageEducation from "@/assets/project-3.png"
 
 export interface Industry {
   slug: string
@@ -169,6 +172,87 @@ export const INDUSTRIES: Industry[] = [
         q: "Tôi có thể nhận thanh toán đặt cọc qua website không?",
         a: "Website hiển thị hướng dẫn chuyển khoản đặt cọc theo chính sách của bạn. Cổng thanh toán online cần kiểm tra trước khi cam kết.",
       },
+    ],
+  },
+  {
+    slug: "website-nha-khoa",
+    name: "Website Nha khoa",
+    shortName: "Nha khoa",
+    audience: "Phòng khám nha khoa và cơ sở chăm sóc răng miệng",
+    image: imageDental,
+    imageAlt: "Không gian điều trị tại phòng khám nha khoa minh họa",
+    metaTitle: "Thiết Kế Website Nha Khoa Trọn Gói",
+    metaDescription: "Website nha khoa có trang dịch vụ, thông tin bác sĩ và form yêu cầu lịch khám. Nextchain viết nội dung, thiết kế và vận hành theo phạm vi gói.",
+    h1: "Website nha khoa: dịch vụ rõ ràng, khách dễ yêu cầu lịch khám",
+    intro: "Người tìm phòng khám muốn hiểu bác sĩ, dịch vụ, chi phí tham khảo và cách liên hệ trước khi đặt lịch. Nextchain giúp sắp xếp các thông tin đó thành một trải nghiệm dễ đọc trên điện thoại; nội dung chuyên môn do phòng khám kiểm tra và duyệt.",
+    problems: [
+      { title: "Dịch vụ khó so sánh", desc: "Tách từng nhóm khám, điều trị và chăm sóc, kèm lưu ý về chỉ định và mức giá tham khảo đã duyệt." },
+      { title: "Thiếu thông tin đội ngũ", desc: "Trang bác sĩ thể hiện bằng cấp và kinh nghiệm dựa trên hồ sơ phòng khám cung cấp." },
+      { title: "Khách hỏi lịch qua nhiều kênh", desc: "Form nhận yêu cầu và nút gọi/Zalo dẫn về người phụ trách xác nhận; không giả lập lịch trống." },
+    ],
+    pages: [
+      { title: "Dịch vụ", desc: "Trang riêng cho các nhóm dịch vụ phù hợp chuyên môn phòng khám." },
+      { title: "Đội ngũ", desc: "Thông tin bác sĩ, chứng chỉ và ảnh được xác nhận." },
+      { title: "Chi phí tham khảo", desc: "Mức giá và điều kiện áp dụng, tránh hứa kết quả điều trị." },
+      { title: "Liên hệ đặt lịch", desc: "Form yêu cầu, số điện thoại, bản đồ và giờ hoạt động." },
+    ],
+    faqs: [
+      { q: "Website có xác nhận lịch khám tự động không?", a: "Gói cơ bản nhận yêu cầu để phòng khám xác nhận. Lịch tự động và đồng bộ phần mềm cần khảo sát, báo giá riêng." },
+      { q: "Ai duyệt nội dung chuyên môn?", a: "Phòng khám chịu trách nhiệm kiểm tra thông tin chuyên môn, chứng chỉ, giá và sự đồng ý sử dụng ảnh trước khi xuất bản." },
+    ],
+  },
+  {
+    slug: "landing-page-bat-dong-san",
+    name: "Landing Page Bất động sản",
+    shortName: "Bất động sản",
+    audience: "Đơn vị phân phối và dự án bất động sản",
+    image: imageRealEstate,
+    imageAlt: "Bố cục minh họa landing page dự án căn hộ",
+    metaTitle: "Thiết Kế Landing Page Bất Động Sản Trọn Gói",
+    metaDescription: "Landing page dự án bất động sản có tổng quan, pháp lý, mặt bằng và form nhận tư vấn. Nội dung do chủ dự án xác nhận trước khi đăng.",
+    h1: "Landing page bất động sản: thông tin dự án rõ, tư vấn đúng nhu cầu",
+    intro: "Khách xem dự án cần hiểu vị trí, sản phẩm, tiến độ và điều kiện giao dịch trước khi để lại liên hệ. Landing page nên đưa thông tin có nguồn, cập nhật được và tạo đường liên hệ rõ ràng trên điện thoại.",
+    problems: [
+      { title: "Thông tin phân tán", desc: "Gom vị trí, mặt bằng, tiện ích và tiến độ từ tài liệu được phép công bố." },
+      { title: "Form không đủ ngữ cảnh", desc: "Hỏi loại căn, ngân sách và thời điểm quan tâm nếu đội tư vấn có quy trình xử lý tương ứng." },
+      { title: "Giá và pháp lý thay đổi", desc: "Thể hiện ngày cập nhật, nguồn thông tin và đầu mối duyệt; không hứa lợi nhuận hoặc pháp lý chưa xác nhận." },
+    ],
+    pages: [
+      { title: "Tổng quan", desc: "Vị trí, loại hình và điểm khác biệt đã xác minh." },
+      { title: "Sản phẩm", desc: "Mặt bằng, diện tích và giá tham khảo khi được phép công bố." },
+      { title: "Pháp lý & tiến độ", desc: "Tài liệu và mốc thời gian có nguồn do chủ dự án cung cấp." },
+      { title: "Nhận tư vấn", desc: "Form gọn, chính sách dữ liệu và chuyển thông tin tới người phụ trách." },
+    ],
+    faqs: [
+      { q: "Có thể chạy quảng cáo ngay không?", a: "Cần kiểm tra nội dung, quyền dùng ảnh và chính sách nền tảng quảng cáo trước khi xuất bản. Ngân sách quảng cáo không nằm trong giá thiết kế." },
+      { q: "Có tích hợp dữ liệu về CRM không?", a: "Có thể khảo sát luồng dữ liệu và tích hợp theo CRM bạn đang dùng; chi phí được báo trước." },
+    ],
+  },
+  {
+    slug: "landing-page-khoa-hoc",
+    name: "Landing Page Khóa học",
+    shortName: "Khóa học",
+    audience: "Trung tâm đào tạo và đơn vị tuyển sinh",
+    image: imageEducation,
+    imageAlt: "Bố cục minh họa website tuyển sinh khóa học",
+    metaTitle: "Thiết Kế Landing Page Khóa Học Trọn Gói",
+    metaDescription: "Landing page tuyển sinh khóa học với chương trình, lịch học, học phí và form tư vấn. Nextchain lo nội dung, thiết kế, xuất bản và cập nhật.",
+    h1: "Landing page khóa học: hiểu chương trình, đăng ký tư vấn nhanh",
+    intro: "Phụ huynh và học viên muốn biết mình sẽ học gì, với ai, khi nào và học phí bao nhiêu. Trang tuyển sinh nên trả lời đủ trước khi mời để lại liên hệ, thay vì chỉ đặt form ở đầu trang.",
+    problems: [
+      { title: "Bài quảng cáo thiếu thông tin", desc: "Trang gom mục tiêu học, đối tượng phù hợp, nội dung và lịch khai giảng." },
+      { title: "Khách hỏi lại học phí", desc: "Nêu mức phí và điều kiện ưu đãi có thời hạn rõ ràng để tránh tư vấn sai." },
+      { title: "Đăng ký chưa đúng khóa", desc: "Form lưu khóa hoặc lịch học quan tâm để nhân viên tiếp nhận đúng nhu cầu." },
+    ],
+    pages: [
+      { title: "Chương trình", desc: "Mục tiêu, nội dung học và yêu cầu đầu vào." },
+      { title: "Giảng viên", desc: "Hồ sơ giảng viên và kinh nghiệm được xác nhận." },
+      { title: "Lịch & học phí", desc: "Ngày khai giảng, hình thức học, học phí và chính sách." },
+      { title: "Đăng ký tư vấn", desc: "Form ngắn chuyển đúng khóa quan tâm về đội tuyển sinh." },
+    ],
+    faqs: [
+      { q: "Có nhận thanh toán học phí trực tuyến không?", a: "Gói landing page nhận yêu cầu tư vấn. Cổng thanh toán hoặc quản lý học viên cần khảo sát và báo giá riêng." },
+      { q: "Ai cung cấp thông tin về khóa học?", a: "Trung tâm cung cấp chương trình, học phí và lịch thực tế; Nextchain biên tập cách trình bày để trung tâm duyệt." },
     ],
   },
 ]

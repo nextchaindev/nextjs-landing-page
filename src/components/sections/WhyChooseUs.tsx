@@ -28,8 +28,8 @@ export default function WhyChooseUs() {
       statColor: "text-[#00A63E]",
     },
     {
-      title: "Chuẩn kỹ thuật cho Google",
-      desc: "Mỗi trang có tiêu đề, mô tả, sitemap, dữ liệu có cấu trúc và được kiểm tra tốc độ trên điện thoại.",
+      title: "Nền tảng kỹ thuật rõ ràng",
+      desc: "Trang có tiêu đề, mô tả và sơ đồ website; các hạng mục SEO và kiểm tra tốc độ tùy phạm vi gói.",
       stat: "SEO kỹ thuật",
       icon: Zap,
       iconBg: "bg-[#DBEAFE]",
@@ -66,8 +66,7 @@ export default function WhyChooseUs() {
               Minh bạch, có thể kiểm chứng
             </h2>
             <p className="text-sm md:text-base text-[#4A5565] leading-relaxed max-w-2xl mx-auto">
-              Không hứa thứ hạng Google hay doanh số ảo — chỉ cam kết những gì
-              bạn có thể kiểm tra được.
+              Phạm vi công việc và chi phí rõ ràng. Không hứa thứ hạng Google hay doanh số không thể kiểm chứng.
             </p>
           </motion.div>
         </div>

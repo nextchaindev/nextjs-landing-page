@@ -14,9 +14,9 @@ const beVietnamPro = Be_Vietnam_Pro({
   weight: ["300", "400", "500", "600", "700"],
 })
 
-const DEFAULT_TITLE = "Nextchain.site | Thiết Kế Landing Page Trọn Gói Theo Tháng"
+const DEFAULT_TITLE = "Nextchain.site | Landing Page & Website Làm Trọn Gói"
 const DEFAULT_DESCRIPTION =
-  "Dịch vụ làm landing page và website cho spa, salon, homestay và doanh nghiệp nhỏ. Chọn mẫu, duyệt nội dung — Nextchain thiết kế, xuất bản và quản lý theo gói tháng."
+  "Bạn tập trung bán hàng, Nextchain viết nội dung, thiết kế, xuất bản và vận hành website. Landing page theo tháng cho cơ sở nhỏ; website và phần mềm theo dự án cho doanh nghiệp."
 
 export const metadata: Metadata = {
   title: {
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image-1200x630.jpg",
         width: 1200,
         height: 630,
         alt: SITE_NAME,
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: ["/og-image.png"],
+    images: ["/og-image-1200x630.jpg"],
   },
   robots: {
     index: true,

@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps<"/mau-website/[slug
   if (!template?.industrySlug) return {}
   return pageMetadata({
     title: `Mẫu website ${template.name.toLowerCase()}`,
-    description: `${template.description} Xem bố cục, các trang chính và yêu cầu bản demo.`,
+    description: `${template.description} Xem bố cục và các trang chính; liên hệ để được tư vấn website phù hợp.`,
     path: `/mau-website/${template.slug}`,
     noindex: !isTemplateIndexable(template),
   })
@@ -59,10 +59,20 @@ export default async function TemplatePage({ params }: PageProps<"/mau-website/[
             Mở bản demo <ExternalLink className="w-4 h-4" />
           </a>
         ) : (
-          <ContactButton label="Yêu cầu xem bản demo" />
+          <ContactButton label="Tư vấn mẫu tham khảo" context={template.name} />
         )}
       </PageHeader>
 
+      <Section title={`Vì sao bố cục này phù hợp ${industry.shortName.toLowerCase()}?`}>
+        <div className="grid gap-6 md:grid-cols-3">
+          {industry.problems.map((problem) => (
+            <article key={problem.title} className="rounded-2xl border border-gray-200 p-6">
+              <h3 className="text-lg font-bold text-gray-900">{problem.title}</h3>
+              <p className="mt-3 text-gray-700">{problem.desc}</p>
+            </article>
+          ))}
+        </div>
+      </Section>
       <Section title="Mẫu gồm những trang nào?" muted>
         <div className="grid md:grid-cols-3 gap-6">
           {industry.pages.map((page) => (

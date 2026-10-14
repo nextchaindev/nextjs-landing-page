@@ -14,9 +14,9 @@ export default function ConditionalLayout({
   children,
 }: ConditionalLayoutProps) {
   const pathname = usePathname()
-  const isAdminPage = pathname?.startsWith("/admin")
+  const isStandalonePage = pathname?.startsWith("/admin") || pathname?.startsWith("/demo/")
 
-  if (isAdminPage) {
+  if (isStandalonePage) {
     return <>{children}</>
   }
 

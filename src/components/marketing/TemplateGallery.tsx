@@ -8,11 +8,13 @@ import { ArrowRight, Eye } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
 import { TEMPLATES, TEMPLATE_CATEGORIES, type TemplateCategory } from "@/content/templates"
 import { cn } from "@/components/ui/utils"
+import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
 
 type Filter = TemplateCategory | "all"
 
 /** Filterable gallery of reference templates. All cards render in the HTML; filtering only hides. */
-export default function TemplateGallery({ limit }: { limit?: number }) {
+/** `carousel` swipes horizontally on mobile (homepage preview); the full gallery page stays a grid. */
+export default function TemplateGallery({ limit, carousel }: { limit?: number; carousel?: boolean }) {
   const [filter, setFilter] = useState<Filter>("all")
   const { openModal } = useModal()
 
@@ -46,7 +48,7 @@ export default function TemplateGallery({ limit }: { limit?: number }) {
         </div>
       </div>
 
-      <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <motion.div layout className={carousel ? `${MOBILE_CAROUSEL} md:grid-cols-2 lg:grid-cols-3` : "grid sm:grid-cols-2 lg:grid-cols-3 gap-6"}>
         <AnimatePresence mode="popLayout">
           {visible.map((template) => (
             <motion.article
@@ -56,7 +58,10 @@ export default function TemplateGallery({ limit }: { limit?: number }) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              className="group flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+              className={cn(
+                "group flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300",
+                carousel && MOBILE_CAROUSEL_ITEM,
+              )}>
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
                   src={template.image}
@@ -87,14 +92,22 @@ export default function TemplateGallery({ limit }: { limit?: number }) {
                   ) : (
                     <span />
                   )}
-                  <button
-                    type="button"
-                    onClick={() =>
-                      openModal({ message: `Tôi muốn xem demo và tư vấn mẫu website "${template.name}". ` })
-                    }
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-sm font-semibold text-gray-700 hover:border-primary hover:text-primary transition-colors cursor-pointer">
-                    <Eye className="w-4 h-4" /> Yêu cầu xem demo
-                  </button>
+                  {template.demoUrl ? (
+                    <Link
+                      href={template.demoUrl}
+                      target="_blank"
+                      rel="noopener"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-sm font-semibold text-gray-700 hover:border-primary hover:text-primary transition-colors">
+                      <Eye className="w-4 h-4" /> Xem bản demo
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => openModal({ message: `Tôi muốn tư vấn bố cục tham khảo "${template.name}". ` })}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-sm font-semibold text-gray-700 hover:border-primary hover:text-primary transition-colors cursor-pointer">
+                      <Eye className="w-4 h-4" /> Tư vấn bố cục
+                    </button>
+                  )}
                 </div>
               </div>
             </motion.article>

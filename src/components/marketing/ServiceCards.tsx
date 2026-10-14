@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import Reveal from "@/components/marketing/Reveal"
+import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
 import { SERVICE_DETAILS, type ServiceDetail } from "@/content/services"
 import { STARTING_PRICE } from "@/content/plans"
 import { projectServices } from "@/content/projectPricing"
@@ -13,13 +14,15 @@ function startingPrice(detail: ServiceDetail) {
   return `Từ ${projectServices[detail.pricing.key].packages[0].price}`
 }
 
-export default function ServiceCards() {
+/** `only="project"` hides the monthly landing-page offer (for "bigger website" sections). */
+export default function ServiceCards({ only }: { only?: "project" } = {}) {
+  const services = only ? SERVICE_DETAILS.filter((detail) => detail.pricing.model === only) : SERVICE_DETAILS
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {SERVICE_DETAILS.map((detail, idx) => {
+    <div className={`${MOBILE_CAROUSEL} md:grid-cols-2 lg:grid-cols-3`}>
+      {services.map((detail, idx) => {
         const Icon = detail.icon
         return (
-          <Reveal key={detail.slug} delay={(idx % 3) * 0.1} as="article">
+          <Reveal key={detail.slug} delay={(idx % 3) * 0.1} as="article" className={MOBILE_CAROUSEL_ITEM}>
             <Link
               href={`/dich-vu/${detail.slug}`}
               className="group flex flex-col h-full bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">

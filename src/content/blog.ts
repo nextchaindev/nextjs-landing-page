@@ -1,4 +1,9 @@
+import type { StaticImageData } from "next/image"
 import type { Faq } from "@/content/faqs"
+import coverLanding from "@/assets/project-4.png"
+import coverCompare from "@/assets/project-3.png"
+import coverSpa from "@/assets/stock/spa.jpg"
+import coverMonthly from "@/assets/stock/cafe.jpg"
 import { FREE_SUBDOMAIN_EXAMPLE, PLANS, STARTING_PRICE, formatVnd } from "@/content/plans"
 
 /**
@@ -22,6 +27,7 @@ export interface BlogPost {
   title: string
   description: string
   category: string
+  cover: StaticImageData
   /** ISO date, e.g. "2026-10-13" */
   publishedAt: string
   updatedAt?: string
@@ -45,6 +51,7 @@ export const BLOG_POSTS: BlogPost[] = [
     description:
       "Giải thích các khoản chi phí khi làm landing page: thiết kế, nội dung, tên miền, hosting, chỉnh sửa và bảo trì. So sánh trả một lần và gói tháng, kèm checklist trước khi chọn đơn vị.",
     category: "Chi phí",
+    cover: coverLanding,
     publishedAt: "2026-10-13",
     author: AUTHOR,
     readingMinutes: 6,
@@ -132,6 +139,7 @@ export const BLOG_POSTS: BlogPost[] = [
     description:
       "So sánh landing page và website doanh nghiệp về mục tiêu, số trang, SEO, chi phí và thời gian. Hướng dẫn chọn theo mục tiêu kinh doanh.",
     category: "So sánh",
+    cover: coverCompare,
     publishedAt: "2026-10-13",
     author: AUTHOR,
     readingMinutes: 5,
@@ -202,6 +210,7 @@ export const BLOG_POSTS: BlogPost[] = [
     description:
       "Danh sách trang và tính năng một website spa nên có: bảng dịch vụ, trang từng liệu trình, gallery, đặt hẹn, blog. Kèm lỗi thường gặp cần tránh.",
     category: "Ngành Spa",
+    cover: coverSpa,
     publishedAt: "2026-10-13",
     author: AUTHOR,
     readingMinutes: 6,
@@ -274,6 +283,7 @@ export const BLOG_POSTS: BlogPost[] = [
     description:
       "So sánh hai cách làm website: trả một lần và thuê bao theo tháng. Ưu nhược điểm, chi phí ẩn và trường hợp phù hợp cho doanh nghiệp nhỏ.",
     category: "Chi phí",
+    cover: coverMonthly,
     publishedAt: "2026-10-13",
     author: AUTHOR,
     readingMinutes: 5,

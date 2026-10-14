@@ -92,7 +92,7 @@ export default async function ServicePage({ params }: PageProps<"/dich-vu/[slug]
         intro={`Dành cho: ${detail.audience}.`}
         image={detail.image}
         imageAlt={detail.imageAlt}>
-        <ContactButton />
+        <ContactButton context={detail.name} />
         <Link
           href="#bang-gia"
           className="inline-flex items-center h-12 md:h-14 px-6 md:px-8 rounded-xl font-bold border border-gray-300 bg-white text-gray-900 hover:border-gray-400 transition-all hover:scale-105">

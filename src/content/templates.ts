@@ -54,6 +54,7 @@ export const TEMPLATES: Template[] = [
     image: imageSpa,
     imageAlt: "Mẫu website spa chăm sóc da",
     industrySlug: "website-spa",
+    demoUrl: "/demo/spa",
   },
   {
     slug: "salon",
@@ -64,6 +65,7 @@ export const TEMPLATES: Template[] = [
     image: imageSalon,
     imageAlt: "Mẫu website salon tóc",
     industrySlug: "website-salon",
+    demoUrl: "/demo/salon",
   },
   {
     slug: "nail",
@@ -83,6 +85,7 @@ export const TEMPLATES: Template[] = [
     image: imageHomestay,
     imageAlt: "Mẫu website homestay",
     industrySlug: "website-homestay",
+    demoUrl: "/demo/homestay",
   },
   {
     slug: "limousine",
@@ -177,7 +180,7 @@ export function templatesWithDetail() {
 }
 
 export function isTemplateIndexable(template: Template) {
-  return Boolean(template.demoUrl)
+  return Boolean(template.demoUrl && template.industrySlug)
 }
 
 export function templateIndustry(template: Template) {

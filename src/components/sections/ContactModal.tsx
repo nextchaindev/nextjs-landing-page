@@ -43,8 +43,9 @@ export default function ContactModal() {
     closeModal()
   }
 
-  const onFormSubmit = (e: React.FormEvent) => {
-    handleSubmit(e, recaptchaToken)
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const website = new FormData(e.currentTarget).get("company_website")
+    handleSubmit(e, recaptchaToken, typeof website === "string" ? website : "")
   }
 
   if (!isModalOpen) return null
@@ -64,7 +65,7 @@ export default function ContactModal() {
             Nhận tư vấn miễn phí
           </h3>
           <p className="text-sm md:text-base text-blue-100">
-            Hãy để lại thông tin, chúng tôi sẽ liên hệ bạn trong 24h.
+            Để lại thông tin, Nextchain sẽ phản hồi trong 24 giờ làm việc.
           </p>
         </div>
 
@@ -72,6 +73,10 @@ export default function ContactModal() {
         <form
           onSubmit={onFormSubmit}
           className="pl-4 pr-2 md:pl-8 md:pr-8 py-8 ">
+          <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+            <label htmlFor="company_website">Địa chỉ website công ty</label>
+            <input id="company_website" name="company_website" type="text" tabIndex={-1} autoComplete="off" />
+          </div>
           <div className="w-full max-h-[350px] md:max-h-[calc(100dvh-350px)] space-y-4 md:space-y-6 overflow-y-auto">
             <div className="space-y-4 md:space-y-6 pr-2">
               {/* Name Field */}
@@ -111,7 +116,7 @@ export default function ContactModal() {
                 <label
                   htmlFor="email"
                   className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email <span className="text-red-500">*</span>
+                  Email <span className="font-normal text-gray-500">(không bắt buộc)</span>
                 </label>
                 <div className="relative">
                   <Mail
@@ -198,11 +203,11 @@ export default function ContactModal() {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Bảo mật thông tin tuyệt đối</span>
+                  <span>Thông tin chỉ dùng để liên hệ tư vấn</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Phản hồi trong 24h</span>
+                  <span>Phản hồi trong 24 giờ làm việc</span>
                 </div>
               </div>
             </div>

@@ -62,7 +62,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
           dateModified: modified,
           inLanguage: "vi-VN",
           articleSection: post.category,
-          image: absoluteUrl("/og-image.png"),
+          image: absoluteUrl(post.cover.src),
           author: { "@type": "Organization", name: post.author, url: SITE_URL },
           publisher: { "@id": `${SITE_URL}#organization` },
           mainEntityOfPage: absoluteUrl(path),
@@ -75,7 +75,9 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
         ]}
         eyebrow={post.category}
         title={post.title}
-        intro={post.description}>
+        intro={post.description}
+        image={post.cover}
+        imageAlt={post.title}>
         <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500">
           <span>{post.author}</span>
           <time dateTime={modified}>

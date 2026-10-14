@@ -22,7 +22,7 @@ interface ModalContextType {
   handleInputChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void
-  handleSubmit: (e: React.FormEvent, recaptchaToken: string | null) => Promise<void>
+  handleSubmit: (e: React.FormEvent, recaptchaToken: string | null, companyWebsite: string) => Promise<void>
   keyService: string
   setKeyService: React.Dispatch<React.SetStateAction<string>>
   errors: Partial<Record<keyof FormData, string>>
@@ -73,8 +73,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       case "name":
         return !value.trim() ? "Vui lòng nhập họ và tên" : ""
       case "email":
-        if (!value.trim()) return "Vui lòng nhập email"
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+        if (value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()))
           return "Email không hợp lệ"
         return ""
       case "phone":
@@ -120,7 +119,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent, recaptchaToken: string | null) => {
+  const handleSubmit = async (e: React.FormEvent, recaptchaToken: string | null, companyWebsite: string) => {
     e.preventDefault()
     if (!validate()) return
 
@@ -139,6 +138,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         },
         body: JSON.stringify({
           ...formData,
+          company_website: companyWebsite,
           recaptchaToken,
         }),
       })
@@ -155,6 +155,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         window.location.href = "/success"
         // setIsModalOpen(false)
         setFormData(initialFormData)
+      } else if (response.status === 429) {
+        toast.error("Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau 10 phút.")
       } else {
         toast.error("Có lỗi xảy ra, vui lòng thử lại.")
       }

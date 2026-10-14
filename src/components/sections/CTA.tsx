@@ -19,16 +19,10 @@ export default function CTA() {
       <div className="max-w-[1000px] mx-auto relative z-10">
         <div className="bg-white border border-[#F3F4F6] rounded-[32px] p-4 md:p-16 shadow-xl text-center">
           <h2 className="text-2xl md:text-[36px] font-medium text-[#101828] mb-2 leading-tight mx-auto">
-            Bắt đầu website giúp bạn <br />
-            <span className="text-[#F54900]">thu hút khách hàng</span> ngay hôm
-            nay
+            Chưa biết nên chọn <span className="text-[#F54900]">gói tháng hay làm theo dự án?</span>
           </h2>
-          {/* <h2 className="text-2xl md:text-[36px] font-bold  mb-8 leading-tight">
-            
-          </h2> */}
           <p className="text-lg md:text-[20px] text-[#4A5565] mb-12 max-w-2xl mx-auto leading-relaxed">
-            Nhận tư vấn miễn phí để biết website của bạn cần làm gì để tăng
-            khách và chuyển đổi tốt hơn.
+            Cho Nextchain biết bạn cần website để làm gì. Chúng tôi sẽ tư vấn phạm vi và chi phí phù hợp.
           </p>
 
           <div className="flex flex-col items-center gap-6">
@@ -56,11 +50,11 @@ export default function CTA() {
               </div>
               <div className="flex items-center gap-2 text-[#6A7282] text-sm">
                 <CheckCircle2 className="w-4 h-4 text-[#00A63E]" />
-                Không yêu cầu cam kết
+                Không cần đăng ký ngay
               </div>
               <div className="flex items-center gap-2 text-[#6A7282] text-sm">
                 <CheckCircle2 className="w-4 h-4 text-[#00A63E]" />
-                Phản hồi trong 24h
+                Phản hồi trong 24 giờ làm việc
               </div>
             </div>
           </div>

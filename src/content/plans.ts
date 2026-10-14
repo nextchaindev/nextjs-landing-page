@@ -26,7 +26,7 @@ export const PLANS: Plan[] = [
   {
     id: "khoi-dau",
     name: "Khởi đầu",
-    tagline: "Một landing page để cơ sở có mặt trên Google và nhận khách",
+    tagline: "Một landing page giới thiệu cơ sở và nhận yêu cầu liên hệ",
     monthlyPrice: 249000,
     features: [
       "1 landing page thiết kế theo ngành",
@@ -41,7 +41,7 @@ export const PLANS: Plan[] = [
   {
     id: "tang-truong",
     name: "Tăng trưởng",
-    tagline: "Website nhiều trang cho cơ sở muốn có khách từ tìm kiếm",
+    tagline: "Website nhiều trang cho cơ sở có nhiều dịch vụ",
     monthlyPrice: 790000,
     popular: true,
     features: [

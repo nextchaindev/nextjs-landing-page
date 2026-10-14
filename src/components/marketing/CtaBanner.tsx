@@ -10,7 +10,7 @@ interface CtaBannerProps {
 
 export default function CtaBanner({
   title = "Sẵn sàng có website cho cơ sở của bạn?",
-  desc = "Gửi thông tin, Nextchain liên hệ trong 24 giờ làm việc để tư vấn gói phù hợp.",
+  desc = "Gửi nhu cầu của bạn. Nextchain sẽ phản hồi trong 24 giờ làm việc để trao đổi phương án phù hợp.",
   secondaryHref = "/bang-gia",
   secondaryLabel = "Xem bảng giá",
 }: CtaBannerProps) {

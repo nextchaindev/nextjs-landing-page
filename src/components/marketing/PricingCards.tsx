@@ -1,6 +1,7 @@
 import { CheckCircle2, Info } from "lucide-react"
 import ContactButton from "@/components/marketing/ContactButton"
 import Reveal from "@/components/marketing/Reveal"
+import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
 import { MIN_TERM_MONTHS, PLANS, formatVnd } from "@/content/plans"
 import { cn } from "@/components/ui/utils"
 
@@ -10,9 +11,9 @@ export default function PricingCards({ planIds }: { planIds?: string[] }) {
 
   return (
     <>
-      <div className={cn("grid gap-6 pt-6", plans.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2 max-w-[860px] mx-auto")}>
+      <div className={cn(MOBILE_CAROUSEL, "pt-8", plans.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2 max-w-[860px] mx-auto")}>
         {plans.map((plan, idx) => (
-          <Reveal key={plan.id} delay={idx * 0.1} className={cn(plan.popular && "md:scale-105")}>
+          <Reveal key={plan.id} delay={idx * 0.1} className={cn(MOBILE_CAROUSEL_ITEM, plan.popular && "md:scale-105")}>
             <article
               id={plan.id}
               className={cn(
@@ -30,6 +31,9 @@ export default function PricingCards({ planIds }: { planIds?: string[] }) {
                 <p className="mt-5">
                   <span className="text-3xl lg:text-4xl font-bold text-primary">{formatVnd(plan.monthlyPrice)}</span>
                   <span className="text-gray-500 font-medium">/tháng</span>
+                </p>
+                <p className="mt-1 text-sm text-gray-500">
+                  khoảng {formatVnd(Math.ceil(plan.monthlyPrice / 30 / 100) * 100)} mỗi ngày
                 </p>
               </div>
 
@@ -51,6 +55,7 @@ export default function PricingCards({ planIds }: { planIds?: string[] }) {
               <ContactButton
                 label={`Đăng ký gói ${plan.name}`}
                 variant={plan.popular ? "primary" : "outline"}
+                context={`gói ${plan.name} ${formatVnd(plan.monthlyPrice)}/tháng`}
                 className="mt-8 w-full"
               />
             </article>

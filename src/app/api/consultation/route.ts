@@ -1,12 +1,49 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabaseClient'
+import { checkConsultationRateLimit } from '@/lib/consultationRateLimit'
+import { SITE_URL } from '@/lib/site'
 
 export async function POST(request: Request) {
     try {
-        const body = await request.json()
-        const { name, email, phone, message, recaptchaToken } = body
+        if (Number(request.headers.get('content-length')) > 12000) {
+            return NextResponse.json({ error: 'Request too large' }, { status: 413 })
+        }
 
-        if (!recaptchaToken) {
+        const origin = request.headers.get('origin')
+        if (origin && origin !== SITE_URL && !(process.env.NODE_ENV !== 'production' && /^http:\/\/localhost(:\d+)?$/.test(origin))) {
+            return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
+        }
+
+        const rawBody = await request.text()
+        if (rawBody.length > 12000) {
+            return NextResponse.json({ error: 'Request too large' }, { status: 413 })
+        }
+        let body: Record<string, unknown>
+        try {
+            body = JSON.parse(rawBody)
+        } catch {
+            return NextResponse.json({ error: 'Invalid consultation details' }, { status: 400 })
+        }
+        if (!body || typeof body !== 'object' || Array.isArray(body)) {
+            return NextResponse.json({ error: 'Invalid consultation details' }, { status: 400 })
+        }
+        const { name, email, phone, message, company_website, recaptchaToken } = body
+
+        if (typeof company_website !== 'string' || company_website.trim() !== '') {
+            return NextResponse.json({ success: true }, { status: 200 })
+        }
+
+        if (
+            typeof name !== 'string' || !name.trim() || name.length > 150 ||
+            (email !== undefined && typeof email !== 'string') ||
+            (typeof email === 'string' && (email.length > 254 || (email.trim() !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())))) ||
+            typeof phone !== 'string' || !/^(0|\+84)[35789][0-9]{8}$/.test(phone.replace(/\s/g, '')) ||
+            typeof message !== 'string' || message.length > 5000
+        ) {
+            return NextResponse.json({ error: 'Invalid consultation details' }, { status: 400 })
+        }
+
+        if (typeof recaptchaToken !== 'string' || !recaptchaToken) {
             return NextResponse.json(
                 { error: 'Missing reCAPTCHA token' },
                 { status: 400 }
@@ -22,16 +59,37 @@ export async function POST(request: Request) {
             )
         }
 
-        const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`
-        const recaptchaResponse = await fetch(verifyUrl, { method: 'POST' })
+        const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ secret: secretKey, response: recaptchaToken }),
+            signal: AbortSignal.timeout(5000),
+        })
+        if (!recaptchaResponse.ok) {
+            return NextResponse.json({ error: 'reCAPTCHA verification unavailable. Please try again.' }, { status: 502 })
+        }
         const recaptchaData = await recaptchaResponse.json()
 
-        if (!recaptchaData.success || recaptchaData.score < 0.5) {
+        if (recaptchaData.success !== true || typeof recaptchaData.hostname !== 'string' ||
+            (recaptchaData.hostname !== new URL(SITE_URL).hostname && !(process.env.NODE_ENV !== 'production' && recaptchaData.hostname === 'localhost'))) {
             console.error('reCAPTCHA verification failed:', recaptchaData)
             return NextResponse.json(
                 { error: 'reCAPTCHA verification failed. Please try again.' },
                 { status: 400 }
             )
+        }
+
+        const normalizedPhone = phone.replace(/\s/g, '')
+        try {
+            if (!await checkConsultationRateLimit(normalizedPhone, request)) {
+                return NextResponse.json({ error: 'Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau 10 phút.' }, {
+                    status: 429,
+                    headers: { 'Retry-After': '600' },
+                })
+            }
+        } catch (error) {
+            console.error('Consultation rate limit unavailable:', error)
+            return NextResponse.json({ error: 'Server configuration error' }, { status: 503 })
         }
 
         // 1. Insert into Supabase
@@ -40,8 +98,8 @@ export async function POST(request: Request) {
             .insert([
                 {
                     name,
-                    contact: email, // Store email as contact for now, or add phone column
-                    phone,
+                    contact: typeof email === 'string' && email.trim() ? email.trim() : normalizedPhone,
+                    phone: normalizedPhone,
                     message,
                     status: 'new',
                 },
@@ -63,7 +121,7 @@ export async function POST(request: Request) {
                         color: 5763719, // Green
                         fields: [
                             { name: 'Name', value: name, inline: true },
-                            { name: 'Email', value: email, inline: true },
+                            { name: 'Email', value: typeof email === 'string' && email.trim() ? email.trim() : 'Không cung cấp', inline: true },
                             { name: 'Phone', value: phone, inline: true },
                             { name: 'Message', value: message || 'No message' },
                         ],
@@ -72,13 +130,17 @@ export async function POST(request: Request) {
                 ],
             }
 
-            await fetch(discordWebhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(discordPayload),
-            })
+            try {
+                const webhookResponse = await fetch(discordWebhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(discordPayload),
+                    signal: AbortSignal.timeout(5000),
+                })
+                if (!webhookResponse.ok) console.error('Discord webhook failed:', webhookResponse.status)
+            } catch (error) {
+                console.error('Discord webhook unavailable:', error)
+            }
         }
 
         return NextResponse.json({ success: true, data }, { status: 200 })

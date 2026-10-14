@@ -34,7 +34,9 @@ export function Card({ item, isOverlay }: CardProps) {
                     {new Date(item.created_at).toLocaleDateString('vi-VN')}
                 </span>
             </div>
-            <div className="text-sm text-gray-600 truncate">{item.contact}</div>
+            {item.contact !== item.phone && (
+                <div className="text-sm text-gray-600 truncate">{item.contact}</div>
+            )}
             <div className="text-sm text-gray-600 truncate">{item.phone}</div>
             {item.message && (
                 <p className="mt-1 line-clamp-3 text-xs text-gray-500">

@@ -28,7 +28,7 @@ export default function ContactPage() {
         crumbs={[{ name: "Liên hệ", path: PATH }]}
         eyebrow="Liên hệ"
         title="Liên hệ tư vấn làm website"
-        intro="Để lại thông tin, Nextchain sẽ hỏi thêm về cơ sở của bạn, gợi ý gói phù hợp và gửi báo giá. Tư vấn miễn phí, không yêu cầu cam kết.">
+        intro="Cho Nextchain biết bạn cần website để làm gì. Chúng tôi sẽ trao đổi phương án và chi phí; buổi tư vấn miễn phí, chưa cần đăng ký gói.">
         <ContactButton label="Gửi yêu cầu tư vấn" />
       </PageHeader>
       <Section>

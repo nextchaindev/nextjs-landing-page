@@ -11,7 +11,7 @@ import { LEGAL_UPDATED_AT } from "@/content/legal"
  * Bump only when page content actually changes — Google ignores lastmod
  * values that move on every deploy.
  */
-const CONTENT_UPDATED_AT = "2026-10-13"
+const CONTENT_UPDATED_AT = "2026-10-14"
 
 const STATIC_PATHS = [
   "/",
@@ -20,6 +20,7 @@ const STATIC_PATHS = [
   "/dich-vu",
   "/dich-vu/quan-tri-website-theo-thang",
   "/quy-trinh",
+  "/so-sanh/tu-lam-hay-thue-tron-goi",
   "/ve-chung-toi",
   "/lien-he",
 ]

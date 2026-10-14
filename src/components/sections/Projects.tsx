@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "motion/react"
-import { ImageWithFallback } from "@/components/figma/ImageWithFallback"
+import Image from "next/image"
 import Link from "next/link"
 import {
   fadeInUp,
@@ -21,7 +21,7 @@ export default function Projects() {
   const projects = [
     {
       title: "Website đặt bàn nhà hàng",
-      description: "Tăng trải nghiệm người dùng, tối ưu booking",
+      description: "Bố cục thực đơn, thông tin bàn và nút liên hệ",
       image: image_1,
     },
     {
@@ -36,7 +36,7 @@ export default function Projects() {
     },
     {
       title: "Landing page dự án căn hộ",
-      description: "Tối ưu form nhận thông tin, thu hút khách hàng",
+      description: "Thông tin dự án, vị trí và form yêu cầu tư vấn",
       image: image_4,
     },
     {
@@ -46,7 +46,7 @@ export default function Projects() {
     },
     {
       title: "SaaS Dashboard",
-      description: "Quản lý dữ liệu trực quan, hiệu quả",
+      description: "Bảng điều khiển dữ liệu và màn hình quản trị",
       image: image_6,
     },
   ]
@@ -58,12 +58,12 @@ export default function Projects() {
           initial="hidden"
           animate={projectsVisible ? "visible" : "hidden"}
           variants={fadeInUp}>
-          <h2 className="text-2xl md:text-4xl text-gray-900 mb-4">
-            Thiết kế thực tế Nextchain đã làm
-          </h2>
-          <p className="text-[16px] md:text-xl text-gray-600">
-            Không chỉ mockup — đây là các website và landing page đã triển khai
-          </p>
+              <h2 className="text-2xl md:text-4xl text-gray-900 mb-4">
+                Tham khảo cách trình bày
+              </h2>
+              <p className="text-[16px] md:text-xl text-gray-600">
+                Bố cục minh họa, không phải dự án khách hàng hay kết quả đã đo lường.
+              </p>
         </motion.div>
 
         <motion.div
@@ -76,13 +76,15 @@ export default function Projects() {
               key={project.title}
               className="group relative overflow-hidden rounded-xl cursor-pointer aspect-video"
               variants={staggerItem}>
-              <ImageWithFallback
+              <Image
                 src={project.image}
                 alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                <div className="text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                <div className="text-white transform md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
                   <h3 className="text-xl font-semibold mb-2">
                     {project.title}
                   </h3>
