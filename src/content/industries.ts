@@ -4,6 +4,8 @@ import imageSpa from "@/assets/stock/spa.jpg"
 import imageSalon from "@/assets/stock/salon.jpg"
 import imageHomestay from "@/assets/stock/homestay.jpg"
 import imageDental from "@/assets/stock/dental.jpg"
+import imageNail from "@/assets/stock/nail.jpg"
+import imageCafe from "@/assets/stock/cafe.jpg"
 import imageRealEstate from "@/assets/project-4.png"
 import imageEducation from "@/assets/project-3.png"
 
@@ -78,19 +80,19 @@ export const INDUSTRIES: Industry[] = [
     slug: "website-salon",
     name: "Website Salon",
     shortName: "Salon",
-    audience: "Salon tóc, tiệm nail, barber shop",
+    audience: "Salon tóc, barber shop",
     image: imageSalon,
     imageAlt: "Không gian salon tóc hiện đại",
-    metaTitle: "Thiết kế website salon tóc, nail theo gói tháng",
+    metaTitle: "Website salon tóc, barber theo gói tháng",
     metaDescription:
-      "Website cho salon tóc, nail, barber: portfolio kiểu tóc/mẫu nail, bảng giá, nhận yêu cầu đặt lịch. Nextchain thiết kế và quản lý theo gói tháng.",
+      "Website cho salon tóc và barber: portfolio kiểu tóc, bảng giá theo nhóm dịch vụ, nhận yêu cầu đặt lịch. Nextchain thiết kế và quản lý theo gói tháng.",
     h1: "Website salon: khoe tác phẩm, báo giá rõ, khách đặt lịch nhanh",
     intro:
       "Khách chọn salon chủ yếu qua hình ảnh tác phẩm. Website salon của Nextchain đặt portfolio lên đầu, đi kèm bảng giá theo nhóm dịch vụ để khách biết trước chi phí trước khi đến.",
     problems: [
       {
         title: "Tác phẩm đẹp bị trôi trên mạng xã hội",
-        desc: "Portfolio trên website được phân loại theo kiểu tóc, màu, mẫu nail — khách tìm lại dễ dàng.",
+        desc: "Portfolio trên website được phân loại theo kiểu tóc, màu nhuộm, phong cách — khách tìm lại dễ dàng.",
       },
       {
         title: "Khách hỏi giá liên tục qua tin nhắn",
@@ -104,7 +106,7 @@ export const INDUSTRIES: Industry[] = [
     pages: [
       { title: "Trang chủ", desc: "Phong cách salon, tác phẩm nổi bật, địa chỉ và giờ mở cửa." },
       { title: "Portfolio", desc: "Gallery tác phẩm phân loại theo dịch vụ." },
-      { title: "Bảng giá", desc: "Cắt, nhuộm, uốn, nail, gội… theo nhóm, có ghi chú phụ phí." },
+      { title: "Bảng giá", desc: "Cắt, nhuộm, uốn, gội, phục hồi… theo nhóm, có ghi chú phụ phí." },
       { title: "Đội ngũ", desc: "Giới thiệu thợ chính và chuyên môn (tùy chọn)." },
       { title: "Đặt lịch", desc: "Form yêu cầu hẹn, nút gọi và Zalo." },
       { title: "Sản phẩm", desc: "Danh mục sản phẩm salon đang bán (gói Chuyên nghiệp)." },
@@ -131,7 +133,7 @@ export const INDUSTRIES: Industry[] = [
     audience: "Homestay, villa, nhà nghỉ và căn hộ dịch vụ",
     image: imageHomestay,
     imageAlt: "Homestay gỗ giữa rừng thông và núi",
-    metaTitle: "Thiết kế website homestay, villa theo gói tháng",
+    metaTitle: "Website homestay, villa theo gói tháng",
     metaDescription:
       "Website homestay giới thiệu phòng, tiện ích, chính sách và nhận yêu cầu hỏi phòng trực tiếp. Bổ trợ cho Booking, Airbnb — Nextchain thiết kế và quản lý.",
     h1: "Website homestay: giới thiệu phòng đầy đủ, nhận khách đặt trực tiếp",
@@ -171,6 +173,104 @@ export const INDUSTRIES: Industry[] = [
       {
         q: "Tôi có thể nhận thanh toán đặt cọc qua website không?",
         a: "Website hiển thị hướng dẫn chuyển khoản đặt cọc theo chính sách của bạn. Cổng thanh toán online cần kiểm tra trước khi cam kết.",
+      },
+    ],
+  },
+  {
+    slug: "website-nail",
+    name: "Website Nail",
+    shortName: "Nail",
+    audience: "Tiệm nail, mi, chăm sóc móng tay móng chân",
+    image: imageNail,
+    imageAlt: "Thợ nail đang làm móng cho khách tại tiệm",
+    metaTitle: "Thiết kế website tiệm nail theo gói tháng",
+    metaDescription:
+      "Website tiệm nail có bộ sưu tập mẫu móng, bảng giá theo dịch vụ và nút đặt lịch qua Zalo. Nextchain thiết kế, đăng mẫu mới và cập nhật hằng tháng.",
+    h1: "Website tiệm nail: khoe mẫu móng đẹp, khách chọn mẫu và đặt lịch ngay",
+    intro:
+      "Khách đi làm nail thường đã chọn mẫu từ trước, thường là lưu ảnh trên mạng rồi hỏi tiệm có làm được không. Website tiệm nail gom các mẫu tiệm đã làm theo từng kiểu, ghi giá từng loại dịch vụ, để khách chọn xong là nhắn Zalo đặt giờ.",
+    problems: [
+      {
+        title: "Mẫu đẹp nằm rải rác trong album Facebook",
+        desc: "Website chia mẫu theo kiểu: sơn gel, đắp bột, vẽ, đính đá, móng chân. Khách xem nhanh, chụp lại mẫu gửi qua Zalo.",
+      },
+      {
+        title: "Khách hỏi giá từng mẫu qua tin nhắn",
+        desc: "Bảng giá ghi rõ giá cơ bản và phụ phí (vẽ thêm, đính đá, tháo móng cũ), bớt tin nhắn chỉ để hỏi giá.",
+      },
+      {
+        title: "Khách mới không biết tiệm ở đâu, mở cửa giờ nào",
+        desc: "Địa chỉ, giờ mở cửa, bản đồ và nút chỉ đường luôn nằm ở cuối mỗi trang, bấm một lần là mở Google Maps.",
+      },
+    ],
+    pages: [
+      { title: "Trang chủ", desc: "Mẫu móng nổi bật, ưu đãi tháng này, địa chỉ và nút đặt lịch." },
+      { title: "Bộ sưu tập mẫu", desc: "Ảnh mẫu thật của tiệm, chia theo kiểu và màu, cập nhật mẫu mới theo gói." },
+      { title: "Bảng giá", desc: "Giá theo dịch vụ: sơn gel, đắp bột, nối móng, chăm sóc móng chân, nối mi." },
+      { title: "Đặt lịch", desc: "Form chọn dịch vụ và giờ mong muốn, cùng nút nhắn Zalo gửi kèm ảnh mẫu." },
+      { title: "Liên hệ", desc: "Địa chỉ, bản đồ, giờ mở cửa và số điện thoại." },
+    ],
+    faqs: [
+      {
+        q: "Tôi có thể tự gửi ảnh mẫu mới để đăng lên website không?",
+        a: "Có. Bạn gửi ảnh qua Zalo, Nextchain đăng vào đúng nhóm mẫu trong số lượt cập nhật của gói.",
+      },
+      {
+        q: "Có dùng ảnh mẫu nail trên mạng được không?",
+        a: "Website chỉ đăng ảnh do tiệm cung cấp hoặc tiệm có quyền sử dụng, để khách nhìn thấy đúng tay nghề của tiệm.",
+      },
+      {
+        q: "Khách đặt lịch thì tôi nhận thông báo ở đâu?",
+        a: "Yêu cầu đặt lịch gửi về Zalo hoặc email của tiệm để bạn xác nhận giờ với khách.",
+      },
+    ],
+  },
+  {
+    slug: "website-quan-ca-phe",
+    name: "Website Quán Cà Phê",
+    shortName: "Quán cà phê",
+    audience: "Quán cà phê, trà sữa, tiệm bánh và quán ăn nhỏ",
+    image: imageCafe,
+    imageAlt: "Không gian quán cà phê sáng, quầy pha chế và bảng menu",
+    metaTitle: "Thiết kế website quán cà phê theo gói tháng",
+    metaDescription:
+      "Website quán cà phê có menu kèm giá, ảnh không gian, giờ mở cửa và chỉ đường Google Maps. Nextchain thiết kế và đổi menu, ưu đãi hằng tháng cho quán.",
+    h1: "Website quán cà phê: menu rõ giá, không gian đẹp, khách tìm đường dễ",
+    intro:
+      "Trước khi ghé một quán mới, khách thường muốn biết ba điều: quán bán gì, giá khoảng bao nhiêu và ngồi có thoải mái không. Website quán cà phê trả lời đủ ba điều đó trên điện thoại, kèm nút chỉ đường để khách đến thẳng quán.",
+    problems: [
+      {
+        title: "Menu chỉ có ở quầy, khách không xem trước được",
+        desc: "Menu trên website có ảnh và giá theo nhóm đồ uống, đổi được khi quán ra món mới hoặc tăng giá.",
+      },
+      {
+        title: "Khách tìm quán để ngồi làm việc, hẹn bạn",
+        desc: "Ảnh không gian thật cùng thông tin wifi, ổ cắm, chỗ để xe, phòng máy lạnh giúp khách quyết định ghé quán.",
+      },
+      {
+        title: "Ưu đãi chỉ đăng trên trang cá nhân",
+        desc: "Mục ưu đãi trên website được cập nhật theo tháng và dẫn sang Zalo hoặc ứng dụng giao hàng quán đang dùng.",
+      },
+    ],
+    pages: [
+      { title: "Trang chủ", desc: "Ảnh không gian, món nổi bật, giờ mở cửa và nút chỉ đường." },
+      { title: "Menu", desc: "Đồ uống và bánh theo nhóm, có ảnh và giá." },
+      { title: "Không gian", desc: "Ảnh các khu ngồi và tiện ích: wifi, ổ cắm, chỗ để xe." },
+      { title: "Ưu đãi", desc: "Chương trình trong tháng, đổi theo số lượt cập nhật của gói." },
+      { title: "Liên hệ & đặt bàn", desc: "Bản đồ, số điện thoại, Zalo và form đặt bàn cho nhóm đông người." },
+    ],
+    faqs: [
+      {
+        q: "Quán có bán qua ứng dụng giao hàng thì website có cần không?",
+        a: "Ứng dụng giao hàng phục vụ khách đặt mang về. Website giúp khách tìm quán theo tên và xem không gian trước khi ghé, sau đó có thể dẫn sang ứng dụng giao hàng của quán.",
+      },
+      {
+        q: "Đổi menu, đổi giá có mất phí không?",
+        a: "Đổi menu và giá nằm trong số lượt chỉnh sửa hằng tháng của gói. Phần vượt số lượt được báo giá trước khi làm.",
+      },
+      {
+        q: "Website có nhận đặt bàn không?",
+        a: "Có form đặt bàn gửi về Zalo hoặc email của quán để bạn xác nhận với khách.",
       },
     ],
   },

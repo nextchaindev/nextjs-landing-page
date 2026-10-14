@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
 import { cn } from "@/components/ui/utils"
+import { trackEvent } from "@/lib/analytics"
 
 interface ContactButtonProps {
   label?: string
@@ -22,7 +23,10 @@ export default function ContactButton({
   return (
     <button
       type="button"
-      onClick={() => openModal(context ? { message: `Tôi quan tâm: ${context}. ` } : undefined)}
+      onClick={() => {
+        trackEvent("cta_click", { cta_text: label, ...(context && { cta_context: context }) })
+        openModal(context ? { message: `Tôi quan tâm: ${context}. ` } : undefined)
+      }}
       className={cn(
         "inline-flex items-center justify-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-xl font-bold text-sm md:text-base transition-all active:scale-95 cursor-pointer",
         variant === "primary"

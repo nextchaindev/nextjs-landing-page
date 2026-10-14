@@ -34,6 +34,7 @@ export async function updateConsultationStatus(id: string, newStatus: string) {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) return { error: 'Unauthorized' }
+    if (!['new', 'contacted', 'qualified', 'won', 'closed'].includes(newStatus)) return { error: 'Invalid status' }
 
     // 1. Get old status for logging (optional, but good for details)
     const { data: oldData } = await supabase.from('consultations').select('status').eq('id', id).single()

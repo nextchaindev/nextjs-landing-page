@@ -1,8 +1,9 @@
 "use client"
 
-import React, { createContext, useContext, useState, useRef, ReactNode } from "react"
+import React, { createContext, useContext, useEffect, useState, useRef, ReactNode } from "react"
 import { toast } from "sonner"
 import { trackEvent } from "@/lib/analytics"
+import { captureAttribution, readAttribution } from "@/lib/attribution"
 
 interface FormData {
   name: string
@@ -58,16 +59,22 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   }
 
 
+  useEffect(() => {
+    captureAttribution()
+  }, [])
+
   const openModal = (data?: Partial<FormData>) => {
     if (data) {
       setFormData((prev) => ({ ...prev, ...data }))
     }
+    trackEvent("contact_modal_open", { page_path: window.location.pathname })
     setIsModalOpen(true)
   }
 
   const openModalClean = () => {
     setFormData(initialFormData)
     setErrors({})
+    trackEvent("contact_modal_open", { page_path: window.location.pathname })
     setIsModalOpen(true)
   }
 
@@ -88,8 +95,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         return ""
       case "phone":
         if (!value.trim()) return "Vui lòng nhập số điện thoại"
-        if (!/^(0|\+84)[3|5|7|8|9][0-9]{8}$/.test(value.replace(/\s/g, "")))
-          return "Số điện thoại không hợp lệ"
+        if (!/^(0|\+84)[35789][0-9]{8}$/.test(value.replace(/\s/g, "")))
+          return "Số điện thoại chưa đúng, ví dụ: 0901234567"
         return ""
       default:
         return ""
@@ -155,6 +162,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
           ...formData,
           company_website: companyWebsite,
           recaptchaToken,
+          attribution: readAttribution() ?? undefined,
         }),
       })
 
@@ -176,6 +184,13 @@ export function ModalProvider({ children }: { children: ReactNode }) {
           const gawId = process.env.NEXT_PUBLIC_GAW_ID
           const gawLabel = process.env.NEXT_PUBLIC_GAW_LABEL
           if (gawId && gawLabel) {
+            // Enhanced Conversions for leads: gtag tự băm SHA-256 trước khi gửi.
+            const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
+            const phone = formData.phone.replace(/\s/g, "").replace(/^0/, "+84")
+            gtag?.("set", "user_data", {
+              phone_number: phone,
+              ...(formData.email.trim() && { email: formData.email.trim().toLowerCase() }),
+            })
             trackEvent("conversion", {
               send_to: `${gawId}/${gawLabel}`,
               currency: "VND",

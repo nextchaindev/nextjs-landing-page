@@ -33,6 +33,7 @@ export default function JsonLd() {
     "@type": "WebSite",
     "@id": `${SITE_URL}#website`,
     name: SITE_NAME,
+    alternateName: ["Nextchain", "nextchain.site"],
     url: SITE_URL,
     inLanguage: "vi-VN",
     publisher: { "@id": `${SITE_URL}#organization` },

@@ -17,17 +17,18 @@ export interface NavItem {
 }
 
 export const SOLUTION_LINKS: NavItem[] = [
-  { href: "/dich-vu/thiet-ke-landing-page", label: "Landing Page Trọn Gói", description: "Thiết kế, xuất bản, quản lý theo tháng" },
   { href: "/giai-phap/website-spa", label: "Website Spa", description: "Bảng dịch vụ, gallery, nhận yêu cầu hẹn" },
   { href: "/giai-phap/website-salon", label: "Website Salon", description: "Portfolio, bảng giá, đặt lịch" },
   { href: "/giai-phap/website-homestay", label: "Website Homestay", description: "Phòng, tiện ích, hỏi phòng" },
+  { href: "/giai-phap/website-nail", label: "Website Nail", description: "Mẫu móng, bảng giá, đặt lịch qua Zalo" },
+  { href: "/giai-phap/website-quan-ca-phe", label: "Website Quán Cà Phê", description: "Menu, không gian, chỉ đường" },
   { href: "/giai-phap/website-nha-khoa", label: "Website Nha khoa", description: "Dịch vụ, bác sĩ, yêu cầu lịch khám" },
   { href: "/giai-phap/landing-page-bat-dong-san", label: "Landing Page Bất động sản", description: "Thông tin dự án và nhận tư vấn" },
   { href: "/giai-phap/landing-page-khoa-hoc", label: "Landing Page Khóa học", description: "Chương trình và tuyển sinh" },
 ]
 
 export const SERVICE_LINKS: NavItem[] = [
-  { href: "/dich-vu/thiet-ke-landing-page", label: "Landing Page", description: "Gói tháng giá rẻ, có tên miền miễn phí" },
+  { href: "/dich-vu/thiet-ke-landing-page", label: "Landing Page Trọn Gói", description: "Gói tháng từ 249.000đ, có tên miền miễn phí" },
   { href: "/dich-vu/thiet-ke-website-doanh-nghiep", label: "Website Doanh nghiệp", description: "Giới thiệu công ty, dịch vụ, tin tức" },
   { href: "/dich-vu/thiet-ke-website-ban-hang", label: "Website Bán hàng", description: "Danh mục sản phẩm, đặt mua" },
   { href: "/dich-vu/thiet-ke-website-theo-yeu-cau", label: "Thiết kế theo yêu cầu", description: "Giao diện và tính năng riêng" },

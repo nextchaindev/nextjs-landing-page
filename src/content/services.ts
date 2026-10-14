@@ -49,7 +49,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     accent: { bg: "bg-primary", text: "text-primary" },
     metaTitle: "Thiết kế landing page trọn gói theo tháng",
     metaDescription:
-      `Làm landing page trọn gói theo tháng từ ${STARTING_PRICE}, không phí khởi tạo: thiết kế theo ngành, hosting, SSL, SEO, cập nhật và bảo trì. Dùng tên miền riêng hoặc địa chỉ miễn phí.`,
+      `Làm landing page trọn gói từ ${STARTING_PRICE}/tháng, không phí khởi tạo: thiết kế theo ngành, hosting, SSL, SEO và cập nhật. Tên miền riêng hoặc miễn phí.`,
     h1: "Thiết kế landing page trọn gói, quản lý theo tháng",
     summary:
       `Nextchain làm landing page trọn gói cho doanh nghiệp nhỏ: bạn gửi thông tin, chọn 1 trong 3 phương án thiết kế do chúng tôi chuẩn bị và duyệt nội dung; Nextchain xuất bản, gắn tên miền, cài SEO và cập nhật hằng tháng. Giá từ ${STARTING_PRICE}/tháng, không phí khởi tạo; dùng tên miền riêng của bạn hoặc địa chỉ miễn phí ${FREE_SUBDOMAIN_EXAMPLE}.`,
@@ -168,7 +168,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     name: "Website Bán hàng",
     icon: ShoppingCart,
     accent: { bg: "bg-teal-500", text: "text-teal-600" },
-    metaTitle: "Thiết kế website bán hàng, thương mại điện tử",
+    metaTitle: "Thiết kế website bán hàng chuyên nghiệp",
     metaDescription:
       "Thiết kế website bán hàng từ 18.000.000đ: giỏ hàng, thanh toán online, quản lý đơn hàng, kho, mã giảm giá, SEO sản phẩm. Bán hàng 24/7 không phụ thuộc sàn.",
     h1: "Thiết kế website bán hàng: bán 24/7, không phụ thuộc sàn",
@@ -224,7 +224,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     name: "Thiết kế theo yêu cầu",
     icon: PenTool,
     accent: { bg: "bg-orange-500", text: "text-orange-600" },
-    metaTitle: "Thiết kế website theo yêu cầu, tính năng riêng",
+    metaTitle: "Thiết kế website theo yêu cầu",
     metaDescription:
       "Thiết kế website theo yêu cầu từ 20.000.000đ: phân tích nghiệp vụ, UI/UX riêng, tính năng tùy chỉnh, admin panel, tích hợp API và hệ thống bên thứ ba.",
     h1: "Thiết kế website theo yêu cầu: tính năng riêng cho nghiệp vụ riêng",
@@ -332,7 +332,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     name: "Phát triển phần mềm",
     icon: Boxes,
     accent: { bg: "bg-emerald-500", text: "text-emerald-600" },
-    metaTitle: "Phát triển phần mềm, ứng dụng web theo yêu cầu",
+    metaTitle: "Phát triển phần mềm theo yêu cầu",
     metaDescription:
       "Phát triển phần mềm và ứng dụng web/mobile theo yêu cầu từ 20.000.000đ: phân tích nghiệp vụ, phát triển, tích hợp API, bảo mật, phân quyền và bảo trì.",
     h1: "Phát triển phần mềm theo quy trình doanh nghiệp",

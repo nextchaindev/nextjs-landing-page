@@ -2,6 +2,20 @@ import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabaseClient'
 import { checkConsultationRateLimit } from '@/lib/consultationRateLimit'
 import { SITE_URL } from '@/lib/site'
+import { ATTRIBUTION_KEYS } from '@/lib/attribution'
+
+const ATTRIBUTION_FIELDS = [...ATTRIBUTION_KEYS, 'landing_page', 'referrer', 'captured_at'] as const
+
+/** Chỉ giữ các trường nguồn truy cập đã biết, dạng chuỗi ngắn. */
+function sanitizeAttribution(value: unknown): Record<string, string> | null {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return null
+    const clean: Record<string, string> = {}
+    for (const key of ATTRIBUTION_FIELDS) {
+        const field = (value as Record<string, unknown>)[key]
+        if (typeof field === 'string' && field.trim()) clean[key] = field.trim().slice(0, 300)
+    }
+    return Object.keys(clean).length > 0 ? clean : null
+}
 
 export async function POST(request: Request) {
     try {
@@ -28,6 +42,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Invalid consultation details' }, { status: 400 })
         }
         const { name, email, phone, message, company_website, recaptchaToken } = body
+        const attribution = sanitizeAttribution(body.attribution)
 
         if (typeof company_website !== 'string' || company_website.trim() !== '') {
             // Honeypot: trả về thành công để bot không đoán được bộ lọc,
@@ -95,18 +110,23 @@ export async function POST(request: Request) {
         }
 
         // 1. Insert into Supabase
-        const { data, error } = await supabaseAdmin
+        const lead = {
+            name,
+            contact: typeof email === 'string' && email.trim() ? email.trim() : normalizedPhone,
+            phone: normalizedPhone,
+            message,
+            status: 'new',
+        }
+        let { data, error } = await supabaseAdmin
             .from('consultations')
-            .insert([
-                {
-                    name,
-                    contact: typeof email === 'string' && email.trim() ? email.trim() : normalizedPhone,
-                    phone: normalizedPhone,
-                    message,
-                    status: 'new',
-                },
-            ])
+            .insert([{ ...lead, ...(attribution && { attribution }) }])
             .select()
+        // Cột `attribution` chưa được tạo (chưa chạy supabase_attribution.sql):
+        // lưu lead không kèm nguồn thay vì làm hỏng form.
+        if (error && attribution && /attribution/.test(error.message)) {
+            console.error('consultations.attribution column missing; run supabase_attribution.sql')
+            ;({ data, error } = await supabaseAdmin.from('consultations').insert([lead]).select())
+        }
 
         if (error) {
             console.error('Supabase error:', error)
@@ -126,6 +146,17 @@ export async function POST(request: Request) {
                             { name: 'Email', value: typeof email === 'string' && email.trim() ? email.trim() : 'Không cung cấp', inline: true },
                             { name: 'Phone', value: phone, inline: true },
                             { name: 'Message', value: message || 'No message' },
+                            ...(attribution
+                                ? [{
+                                    name: 'Nguồn',
+                                    value: [
+                                        attribution.utm_source && `utm: ${attribution.utm_source}/${attribution.utm_medium ?? '-'}/${attribution.utm_campaign ?? '-'}`,
+                                        attribution.gclid && 'Google Ads (gclid)',
+                                        attribution.fbclid && 'Facebook (fbclid)',
+                                        attribution.landing_page && `vào từ ${attribution.landing_page}`,
+                                    ].filter(Boolean).join(' · ') || 'Trực tiếp',
+                                }]
+                                : []),
                         ],
                         timestamp: new Date().toISOString(),
                     },

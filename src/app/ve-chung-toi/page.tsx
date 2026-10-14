@@ -10,7 +10,7 @@ const PATH = "/ve-chung-toi"
 export const metadata = pageMetadata({
   title: "Về chúng tôi",
   description:
-    "Nextchain.site do Nextchain Tech vận hành: dịch vụ làm và quản lý website theo gói tháng cho doanh nghiệp nhỏ tại Việt Nam. Thông tin đơn vị, cách làm việc và liên hệ.",
+    "Nextchain.site do Nextchain Tech vận hành: làm và quản lý website theo gói tháng cho doanh nghiệp nhỏ tại Việt Nam. Thông tin đơn vị và cách làm việc.",
   path: PATH,
 })
 

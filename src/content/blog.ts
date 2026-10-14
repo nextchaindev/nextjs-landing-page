@@ -52,7 +52,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Chi phí thiết kế landing page gồm những gì? Cách tính và checklist",
     metaTitle: "Chi phí thiết kế landing page",
     description:
-      "Giải thích các khoản chi phí khi làm landing page: thiết kế, nội dung, tên miền, hosting, chỉnh sửa và bảo trì. So sánh trả một lần và gói tháng, kèm checklist trước khi chọn đơn vị.",
+      "Các khoản chi phí khi làm landing page: thiết kế, nội dung, tên miền, hosting, bảo trì. So sánh trả một lần và gói tháng, kèm checklist chọn đơn vị.",
     category: "Chi phí",
     cover: coverLanding,
     publishedAt: "2026-10-13",

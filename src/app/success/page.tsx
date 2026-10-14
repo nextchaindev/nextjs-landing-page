@@ -57,7 +57,8 @@ export default function SuccessPage() {
               </h3>
               <p className="text-[#4A5565] text-sm md:text-base leading-relaxed">
                 Vui lòng kiểm tra hộp thư email (bao gồm cả thư mục spam) để
-                nhận thông tin xác nhận từ chúng tôi.
+                nhận thông tin xác nhận từ chúng tôi. Nếu bạn không để lại
+                email, chúng tôi sẽ liên hệ qua số điện thoại hoặc Zalo.
               </p>
             </div>
           </div>

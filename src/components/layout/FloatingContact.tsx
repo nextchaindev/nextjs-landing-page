@@ -1,4 +1,7 @@
+"use client";
+
 import { Phone } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 import Image from "next/image";
 
 export default function FloatingContact() {
@@ -11,6 +14,7 @@ export default function FloatingContact() {
         rel="noopener noreferrer"
         className="relative group flex items-center justify-center"
         aria-label="Liên hệ Zalo"
+        onClick={() => trackEvent("click_zalo", { location: "floating" })}
       >
         {/* Glow effect */}
         <div className="absolute inset-0 rounded-full bg-[#0068FF] opacity-30 blur-xl scale-150 group-hover:opacity-50 transition-opacity duration-300" />
@@ -29,7 +33,8 @@ export default function FloatingContact() {
 
       {/* Phone Button */}
       <a
-        href="tel:0909807687" // TODO: Thay số điện thoại thực tế
+        href="tel:0909807687"
+        onClick={() => trackEvent("click_phone", { location: "floating" })}
         className="relative group flex items-center justify-center mt-2"
         aria-label="Gọi điện thoại"
       >

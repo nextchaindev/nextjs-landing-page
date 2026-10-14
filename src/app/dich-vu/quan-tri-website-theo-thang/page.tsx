@@ -10,10 +10,10 @@ import type { Faq } from "@/content/faqs"
 
 const PATH = "/dich-vu/quan-tri-website-theo-thang"
 const DESCRIPTION =
-  "Quản trị website theo tháng: cập nhật dịch vụ, bảng giá, ảnh, bài blog, trang sản phẩm; bảo trì kỹ thuật, sao lưu và hỗ trợ. Bạn gửi yêu cầu, Nextchain thực hiện."
+  "Quản trị website theo tháng: cập nhật dịch vụ, bảng giá, ảnh, blog; bảo trì, sao lưu và hỗ trợ kỹ thuật. Bạn gửi yêu cầu, Nextchain thực hiện."
 
 export const metadata = pageMetadata({
-  title: "Quản trị website theo tháng cho doanh nghiệp nhỏ",
+  title: "Quản trị website theo tháng",
   description: DESCRIPTION,
   path: PATH,
 })

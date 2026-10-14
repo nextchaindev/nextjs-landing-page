@@ -23,7 +23,7 @@ import { sortedPosts } from "@/content/blog"
 export const metadata = pageMetadata({
   title: "Nextchain.site | Landing page & website làm trọn gói",
   description:
-    "Bạn tập trung bán hàng, Nextchain viết nội dung, thiết kế, xuất bản và vận hành website. Landing page theo tháng cho cơ sở nhỏ; website và phần mềm theo dự án cho doanh nghiệp.",
+    "Landing page và website trọn gói cho spa, salon, homestay: Nextchain thiết kế, viết nội dung, xuất bản và quản lý. Trả theo tháng, không phí khởi tạo.",
   path: "/",
   absoluteTitle: true,
 })

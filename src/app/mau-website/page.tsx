@@ -13,7 +13,7 @@ const PATH = "/mau-website"
 export const metadata = pageMetadata({
   title: "Mẫu website tham khảo theo ngành",
   description:
-    "Mẫu website tham khảo cho spa, salon, nail, homestay, nhà hàng, quán cà phê, nha khoa, yoga, shop thời trang, bất động sản, giáo dục. Mỗi website được thiết kế riêng theo thương hiệu của bạn.",
+    "Mẫu website tham khảo cho spa, salon, nail, homestay, nhà hàng, cà phê, nha khoa và nhiều ngành khác. Mỗi website được thiết kế riêng theo thương hiệu.",
   path: PATH,
 })
 

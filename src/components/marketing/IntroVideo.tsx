@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useReducedMotion } from "motion/react"
+import { trackEvent } from "@/lib/analytics"
 
 const MOBILE_QUERY = "(max-width: 767px)"
 
@@ -21,6 +22,21 @@ export default function IntroVideo({ title }: { title: string }) {
   const [variant, setVariant] = useState<"desktop" | "mobile" | null>(null)
   const [inView, setInView] = useState(false)
   const reduceMotion = useReducedMotion()
+  const milestones = useRef(new Set<string>())
+
+  // Native <video> is invisible to GA4 enhanced measurement; report the first
+  // loop's start / 50% / complete once per page view.
+  const handleProgress = (event: React.SyntheticEvent<HTMLVideoElement>) => {
+    const video = event.currentTarget
+    if (!video.duration) return
+    const percent = video.currentTime / video.duration
+    for (const [name, threshold] of [["video_start", 0], ["video_progress", 0.5], ["video_complete", 0.95]] as const) {
+      if (percent >= threshold && !milestones.current.has(name)) {
+        milestones.current.add(name)
+        trackEvent(name, { video_title: "nextchain_intro", video_variant: variant ?? "", video_percent: Math.round(threshold * 100) })
+      }
+    }
+  }
 
   useEffect(() => {
     const media = window.matchMedia(MOBILE_QUERY)
@@ -65,6 +81,7 @@ export default function IntroVideo({ title }: { title: string }) {
           playsInline
           preload="metadata"
           aria-label={title}
+          onTimeUpdate={handleProgress}
         />
       ) : (
         <picture>

@@ -69,6 +69,7 @@ export const TEMPLATES: Template[] = [
   },
   {
     slug: "nail",
+    industrySlug: "website-nail",
     name: "Tiệm nail",
     category: "lam-dep",
     style: "Tươi sáng, nữ tính",
@@ -98,6 +99,7 @@ export const TEMPLATES: Template[] = [
   },
   {
     slug: "cafe",
+    industrySlug: "website-quan-ca-phe",
     name: "Quán cà phê",
     category: "am-thuc",
     style: "Tối giản, nhiều ảnh",

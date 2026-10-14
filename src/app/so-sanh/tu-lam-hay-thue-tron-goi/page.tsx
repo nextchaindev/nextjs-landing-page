@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo"
 const path = "/so-sanh/tu-lam-hay-thue-tron-goi"
 
 export const metadata = pageMetadata({
-  title: "Tự làm landing page hay thuê trọn gói: cách nào hợp với bạn?",
+  title: "Tự làm landing page hay thuê trọn gói?",
   description: "Tự làm hay thuê trọn gói? So sánh thời gian, chi phí, việc cần tự làm và trách nhiệm vận hành để chọn cách phù hợp.",
   path,
 })

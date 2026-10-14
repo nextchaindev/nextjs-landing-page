@@ -94,6 +94,20 @@ import ConditionalLayout from "@/components/layout/ConditionalLayout"
 import FloatingContact from "@/components/layout/FloatingContact"
 import ConsentGate from "@/components/marketing/ConsentGate"
 
+/**
+ * Tracking IDs come from env so a duplicate tag can be switched off without a
+ * code change. Unset → current production IDs; set to an empty string → off.
+ * Keep GA4 either here (gtag) OR inside the GTM container, never both, or
+ * page_view is counted twice.
+ */
+function envList(value: string | undefined, fallback: string[]) {
+  if (value === undefined) return fallback
+  return value.split(",").map((id) => id.trim()).filter(Boolean)
+}
+const GA_IDS = envList(process.env.NEXT_PUBLIC_GA_IDS, ["G-Z8NT4N1ZKB", "G-M1WX07RXCV"])
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-MCFFZTLK"
+const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID ?? "vkqca6mwj1"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -107,9 +121,9 @@ export default function RootLayout({
       <body className={`${beVietnamPro.variable} antialiased`}>
         <JsonLd />
         <ConsentGate>
-          <GoogleAnalytics gaId={["G-Z8NT4N1ZKB", "G-M1WX07RXCV"]} />
-          <ClarityAnalytics projectId="vkqca6mwj1" />
-          <GoogleTagManager gtmId="GTM-MCFFZTLK" />
+          {(GA_IDS.length > 0 || process.env.NEXT_PUBLIC_GAW_ID) && <GoogleAnalytics gaId={GA_IDS} />}
+          {CLARITY_ID && <ClarityAnalytics projectId={CLARITY_ID} />}
+          {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
         </ConsentGate>
 
         <ModalProvider>

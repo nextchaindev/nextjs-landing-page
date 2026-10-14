@@ -12,7 +12,7 @@ import type { Faq } from "@/content/faqs"
 
 const PATH = "/bang-gia"
 const DESCRIPTION =
-  `Bảng giá làm landing page và website theo tháng từ ${STARTING_PRICE}, không phí khởi tạo, tên miền miễn phí hoặc tên miền riêng. Website doanh nghiệp, bán hàng, phần mềm, Marketing & SEO báo giá theo dự án từ 8.000.000đ.`
+  `Gói website theo tháng từ ${STARTING_PRICE}, không phí khởi tạo, cam kết 6 tháng. Website doanh nghiệp, bán hàng, phần mềm và SEO báo giá theo dự án.`
 
 export const metadata = pageMetadata({
   title: "Bảng giá gói website theo tháng",

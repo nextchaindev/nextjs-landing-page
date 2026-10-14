@@ -33,7 +33,7 @@ ${planLines.join("\n")}
 - Địa chỉ miễn phí dạng ${FREE_SUBDOMAIN_EXAMPLE} hoặc kết nối tên miền riêng của khách.
 - Bảng giá đầy đủ: ${SITE_URL}/bang-gia
 
-## Dịch vụ theo dự án
+## Dịch vụ (landing page theo gói tháng, còn lại theo dự án)
 
 ${serviceLines.join("\n")}
 

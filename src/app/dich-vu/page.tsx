@@ -14,7 +14,7 @@ const PATH = "/dich-vu"
 export const metadata = pageMetadata({
   title: "Dịch vụ website trọn gói, SEO & phần mềm",
   description:
-    `Dịch vụ của Nextchain: landing page trọn gói từ ${STARTING_PRICE}/tháng; website doanh nghiệp, website bán hàng, thiết kế theo yêu cầu, Marketing & SEO và phát triển phần mềm theo dự án.`,
+    `Landing page trọn gói từ ${STARTING_PRICE}/tháng; website doanh nghiệp, bán hàng, thiết kế theo yêu cầu, SEO và phần mềm làm theo dự án.`,
   path: PATH,
 })
 
