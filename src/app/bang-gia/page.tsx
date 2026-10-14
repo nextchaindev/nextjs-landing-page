@@ -15,7 +15,7 @@ const DESCRIPTION =
   `Bảng giá làm landing page và website theo tháng từ ${STARTING_PRICE}, không phí khởi tạo, tên miền miễn phí hoặc tên miền riêng. Website doanh nghiệp, bán hàng, phần mềm, Marketing & SEO báo giá theo dự án từ 8.000.000đ.`
 
 export const metadata = pageMetadata({
-  title: "Bảng Giá Gói Website Theo Tháng",
+  title: "Bảng giá gói website theo tháng",
   description: DESCRIPTION,
   path: PATH,
 })

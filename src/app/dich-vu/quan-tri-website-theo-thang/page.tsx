@@ -13,7 +13,7 @@ const DESCRIPTION =
   "Quản trị website theo tháng: cập nhật dịch vụ, bảng giá, ảnh, bài blog, trang sản phẩm; bảo trì kỹ thuật, sao lưu và hỗ trợ. Bạn gửi yêu cầu, Nextchain thực hiện."
 
 export const metadata = pageMetadata({
-  title: "Quản Trị Website Theo Tháng Cho Doanh Nghiệp Nhỏ",
+  title: "Quản trị website theo tháng cho doanh nghiệp nhỏ",
   description: DESCRIPTION,
   path: PATH,
 })

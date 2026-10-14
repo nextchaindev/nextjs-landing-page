@@ -9,7 +9,7 @@ import { BLOG_POSTS, sortedPosts } from "@/content/blog"
 const PATH = "/blog"
 
 export const metadata = pageMetadata({
-  title: "Blog & Hướng Dẫn Làm Website Cho Doanh Nghiệp",
+  title: "Blog & hướng dẫn làm website cho doanh nghiệp",
   description:
     "Kinh nghiệm làm website cho doanh nghiệp và cơ sở dịch vụ: chi phí landing page, so sánh landing page và website, website spa cần gì, gói tháng hay trả một lần.",
   path: PATH,

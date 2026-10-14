@@ -47,7 +47,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     name: "Landing Page Trọn Gói",
     icon: FileText,
     accent: { bg: "bg-primary", text: "text-primary" },
-    metaTitle: "Thiết Kế Landing Page Trọn Gói Theo Tháng",
+    metaTitle: "Thiết kế landing page trọn gói theo tháng",
     metaDescription:
       `Làm landing page trọn gói theo tháng từ ${STARTING_PRICE}, không phí khởi tạo: thiết kế theo ngành, hosting, SSL, SEO, cập nhật và bảo trì. Dùng tên miền riêng hoặc địa chỉ miễn phí.`,
     h1: "Thiết kế landing page trọn gói, quản lý theo tháng",
@@ -115,7 +115,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     name: "Website Doanh nghiệp",
     icon: Globe,
     accent: { bg: "bg-blue-500", text: "text-blue-600" },
-    metaTitle: "Thiết Kế Website Doanh Nghiệp Chuyên Nghiệp",
+    metaTitle: "Thiết kế website doanh nghiệp chuyên nghiệp",
     metaDescription:
       "Thiết kế website doanh nghiệp từ 12.000.000đ: 5–15+ trang, quản trị nội dung, blog, đa ngôn ngữ, chuẩn SEO. Xây dựng uy tín thương hiệu và nhận khách từ Google.",
     h1: "Thiết kế website doanh nghiệp: uy tín thương hiệu, khách tìm thấy trên Google",
@@ -168,7 +168,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     name: "Website Bán hàng",
     icon: ShoppingCart,
     accent: { bg: "bg-teal-500", text: "text-teal-600" },
-    metaTitle: "Thiết Kế Website Bán Hàng, Thương Mại Điện Tử",
+    metaTitle: "Thiết kế website bán hàng, thương mại điện tử",
     metaDescription:
       "Thiết kế website bán hàng từ 18.000.000đ: giỏ hàng, thanh toán online, quản lý đơn hàng, kho, mã giảm giá, SEO sản phẩm. Bán hàng 24/7 không phụ thuộc sàn.",
     h1: "Thiết kế website bán hàng: bán 24/7, không phụ thuộc sàn",
@@ -224,7 +224,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     name: "Thiết kế theo yêu cầu",
     icon: PenTool,
     accent: { bg: "bg-orange-500", text: "text-orange-600" },
-    metaTitle: "Thiết Kế Website Theo Yêu Cầu, Tính Năng Riêng",
+    metaTitle: "Thiết kế website theo yêu cầu, tính năng riêng",
     metaDescription:
       "Thiết kế website theo yêu cầu từ 20.000.000đ: phân tích nghiệp vụ, UI/UX riêng, tính năng tùy chỉnh, admin panel, tích hợp API và hệ thống bên thứ ba.",
     h1: "Thiết kế website theo yêu cầu: tính năng riêng cho nghiệp vụ riêng",
@@ -275,7 +275,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     name: "Marketing & SEO",
     icon: Search,
     accent: { bg: "bg-indigo-500", text: "text-indigo-600" },
-    metaTitle: "Dịch Vụ Marketing & SEO Website",
+    metaTitle: "Dịch vụ marketing & SEO website",
     metaDescription:
       "Dịch vụ SEO và marketing online từ 8.000.000đ: nghiên cứu từ khóa, SEO on-page và kỹ thuật, nội dung, Google Business Profile, Google Ads, báo cáo định kỳ.",
     h1: "Marketing & SEO: đưa website đến đúng khách hàng",
@@ -332,7 +332,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
     name: "Phát triển phần mềm",
     icon: Boxes,
     accent: { bg: "bg-emerald-500", text: "text-emerald-600" },
-    metaTitle: "Phát Triển Phần Mềm, Ứng Dụng Web Theo Yêu Cầu",
+    metaTitle: "Phát triển phần mềm, ứng dụng web theo yêu cầu",
     metaDescription:
       "Phát triển phần mềm và ứng dụng web/mobile theo yêu cầu từ 20.000.000đ: phân tích nghiệp vụ, phát triển, tích hợp API, bảo mật, phân quyền và bảo trì.",
     h1: "Phát triển phần mềm theo quy trình doanh nghiệp",

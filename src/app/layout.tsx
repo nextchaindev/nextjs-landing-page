@@ -14,7 +14,7 @@ const beVietnamPro = Be_Vietnam_Pro({
   weight: ["300", "400", "500", "600", "700"],
 })
 
-const DEFAULT_TITLE = "Nextchain.site | Landing Page & Website Làm Trọn Gói"
+const DEFAULT_TITLE = "Nextchain.site | Landing page & website làm trọn gói"
 const DEFAULT_DESCRIPTION =
   "Bạn tập trung bán hàng, Nextchain viết nội dung, thiết kế, xuất bản và vận hành website. Landing page theo tháng cho cơ sở nhỏ; website và phần mềm theo dự án cho doanh nghiệp."
 
@@ -70,8 +70,11 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Thêm các mã xác minh khi có
-    // google: "your-google-verification-code",
+    // Đặt GOOGLE_SITE_VERIFICATION trong .env.local (giá trị content= của
+    // meta tag Search Console) hoặc xác minh bằng DNS rồi bỏ trống.
+    ...(process.env.GOOGLE_SITE_VERIFICATION && {
+      google: process.env.GOOGLE_SITE_VERIFICATION,
+    }),
   },
 }
 
@@ -89,6 +92,7 @@ export const viewport = {
 import { ModalProvider } from "@/context/ModalContext"
 import ConditionalLayout from "@/components/layout/ConditionalLayout"
 import FloatingContact from "@/components/layout/FloatingContact"
+import ConsentGate from "@/components/marketing/ConsentGate"
 
 export default function RootLayout({
   children,
@@ -102,9 +106,11 @@ export default function RootLayout({
       </head>
       <body className={`${beVietnamPro.variable} antialiased`}>
         <JsonLd />
-        <GoogleAnalytics gaId={["G-Z8NT4N1ZKB", "G-M1WX07RXCV"]} />
-        <ClarityAnalytics projectId="vkqca6mwj1" />
-        <GoogleTagManager gtmId="GTM-MCFFZTLK" />
+        <ConsentGate>
+          <GoogleAnalytics gaId={["G-Z8NT4N1ZKB", "G-M1WX07RXCV"]} />
+          <ClarityAnalytics projectId="vkqca6mwj1" />
+          <GoogleTagManager gtmId="GTM-MCFFZTLK" />
+        </ConsentGate>
 
         <ModalProvider>
           <ConditionalLayout>{children}</ConditionalLayout>

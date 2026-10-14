@@ -1,7 +1,8 @@
 "use client"
 
-import React, { createContext, useContext, useState, ReactNode } from "react"
+import React, { createContext, useContext, useState, useRef, ReactNode } from "react"
 import { toast } from "sonner"
+import { trackEvent } from "@/lib/analytics"
 
 interface FormData {
   name: string
@@ -23,6 +24,8 @@ interface ModalContextType {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void
   handleSubmit: (e: React.FormEvent, recaptchaToken: string | null, companyWebsite: string) => Promise<void>
+  /** Bắn event form_start một lần mỗi phiên khi người dùng focus vào form. */
+  notifyFormStart: () => void
   keyService: string
   setKeyService: React.Dispatch<React.SetStateAction<string>>
   errors: Partial<Record<keyof FormData, string>>
@@ -46,6 +49,13 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
     {},
   )
+  const formStartFired = useRef(false)
+
+  const notifyFormStart = () => {
+    if (formStartFired.current) return
+    formStartFired.current = true
+    trackEvent("form_start", { form_id: "consultation_modal" })
+  }
 
 
   const openModal = (data?: Partial<FormData>) => {
@@ -99,6 +109,9 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     if (phoneError) newErrors.phone = phoneError
 
     setErrors(newErrors)
+    if (Object.keys(newErrors).length > 0) {
+      trackEvent("form_error", { fields: Object.keys(newErrors).join(",") })
+    }
     return Object.keys(newErrors).length === 0
   }
 
@@ -128,6 +141,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       return
     }
 
+    trackEvent("form_submit", { form_id: "consultation_modal" })
+
     try {
       setLoadingSubmit(true)
 
@@ -143,13 +158,30 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         }),
       })
 
-      if (response.ok) {
-        // Send GA Event
-        if (typeof window !== "undefined" && "gtag" in window) {
-          ;(window as Window & typeof globalThis & { gtag: (...args: unknown[]) => void }).gtag("event", "generate_lead", {
-            event_category: "form",
-            event_label: "consultation_request",
+      // Chỉ server biết lead thật hay honeypot. `verified: false` (bot đi qua
+      // UI) vẫn báo thành công để giữ ẩn bộ lọc, nhưng không tính conversion —
+      // số liệu Ads/GA4 lấy chuẩn từ lead đã lưu vào Supabase.
+      const result = (await response.json().catch(() => null)) as
+        | { success?: boolean; verified?: boolean }
+        | null
+
+      if (response.ok && result?.success) {
+        if (result.verified) {
+          trackEvent("generate_lead", {
+            form_id: "consultation_modal",
+            currency: "VND",
           })
+          // Google Ads conversion — bật bằng NEXT_PUBLIC_GAW_ID và
+          // NEXT_PUBLIC_GAW_LABEL (định dạng AW-XXXXXXXXX/nhãn-conversion).
+          const gawId = process.env.NEXT_PUBLIC_GAW_ID
+          const gawLabel = process.env.NEXT_PUBLIC_GAW_LABEL
+          if (gawId && gawLabel) {
+            trackEvent("conversion", {
+              send_to: `${gawId}/${gawLabel}`,
+              currency: "VND",
+              value: 1,
+            })
+          }
         }
         // router.push("/success")
         window.location.href = "/success"
@@ -180,6 +212,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         closeModal,
         handleInputChange,
         handleSubmit,
+        notifyFormStart,
         keyService,
         setKeyService,
         errors,

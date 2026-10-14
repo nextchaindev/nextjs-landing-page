@@ -14,13 +14,14 @@ import TemplateGallery from "@/components/marketing/TemplateGallery"
 import PricingCards from "@/components/marketing/PricingCards"
 import BlogCard from "@/components/marketing/BlogCard"
 import FaqSection from "@/components/marketing/FaqSection"
+import IntroVideo from "@/components/marketing/IntroVideo"
 import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
 import { pageMetadata } from "@/lib/seo"
 import { GENERAL_FAQS } from "@/content/faqs"
 import { sortedPosts } from "@/content/blog"
 
 export const metadata = pageMetadata({
-  title: "Nextchain.site | Landing Page & Website Làm Trọn Gói",
+  title: "Nextchain.site | Landing page & website làm trọn gói",
   description:
     "Bạn tập trung bán hàng, Nextchain viết nội dung, thiết kế, xuất bản và vận hành website. Landing page theo tháng cho cơ sở nhỏ; website và phần mềm theo dự án cho doanh nghiệp.",
   path: "/",
@@ -54,6 +55,13 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       <Hero />
+
+      <Section
+        muted
+        title="Xem Nextchain làm website cho bạn"
+        desc="Gửi thông tin, chọn mẫu theo ngành, website lên mạng với tên miền miễn phí hoặc tên miền riêng.">
+        <IntroVideo title="Video giới thiệu: Nextchain làm website trọn gói cho spa, salon, homestay từ 249.000đ/tháng" />
+      </Section>
 
       <Section
         eyebrow="Chọn ngành kinh doanh"

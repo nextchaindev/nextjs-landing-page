@@ -11,7 +11,7 @@ import { TEMPLATES } from "@/content/templates"
 const PATH = "/mau-website"
 
 export const metadata = pageMetadata({
-  title: "Mẫu Website Tham Khảo Theo Ngành",
+  title: "Mẫu website tham khảo theo ngành",
   description:
     "Mẫu website tham khảo cho spa, salon, nail, homestay, nhà hàng, quán cà phê, nha khoa, yoga, shop thời trang, bất động sản, giáo dục. Mỗi website được thiết kế riêng theo thương hiệu của bạn.",
   path: PATH,

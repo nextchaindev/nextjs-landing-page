@@ -25,6 +25,8 @@ export interface BlogSection {
 export interface BlogPost {
   slug: string
   title: string
+  /** Tiêu đề ngắn (~50 ký tự) cho thẻ <title> khi title đầy đủ quá dài. */
+  metaTitle?: string
   description: string
   category: string
   cover: StaticImageData
@@ -48,6 +50,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "chi-phi-thiet-ke-landing-page",
     title: "Chi phí thiết kế landing page gồm những gì? Cách tính và checklist",
+    metaTitle: "Chi phí thiết kế landing page",
     description:
       "Giải thích các khoản chi phí khi làm landing page: thiết kế, nội dung, tên miền, hosting, chỉnh sửa và bảo trì. So sánh trả một lần và gói tháng, kèm checklist trước khi chọn đơn vị.",
     category: "Chi phí",
@@ -136,6 +139,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "landing-page-khac-website-doanh-nghiep",
     title: "Landing page khác website doanh nghiệp như thế nào? Nên chọn loại nào",
+    metaTitle: "Landing page hay website doanh nghiệp?",
     description:
       "So sánh landing page và website doanh nghiệp về mục tiêu, số trang, SEO, chi phí và thời gian. Hướng dẫn chọn theo mục tiêu kinh doanh.",
     category: "So sánh",
@@ -207,6 +211,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "website-spa-can-nhung-gi",
     title: "Website spa cần những trang và tính năng gì? Checklist cho chủ spa",
+    metaTitle: "Website spa cần những trang gì?",
     description:
       "Danh sách trang và tính năng một website spa nên có: bảng dịch vụ, trang từng liệu trình, gallery, đặt hẹn, blog. Kèm lỗi thường gặp cần tránh.",
     category: "Ngành Spa",
@@ -280,6 +285,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "lam-website-theo-goi-thang-hay-tra-mot-lan",
     title: "Làm website theo gói tháng hay trả tiền một lần: nên chọn cách nào?",
+    metaTitle: "Gói tháng hay trả một lần khi làm website?",
     description:
       "So sánh hai cách làm website: trả một lần và thuê bao theo tháng. Ưu nhược điểm, chi phí ẩn và trường hợp phù hợp cho doanh nghiệp nhỏ.",
     category: "Chi phí",

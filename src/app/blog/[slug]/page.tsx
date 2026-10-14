@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">) {
   const post = getPost(slug)
   if (!post) return {}
   const metadata = pageMetadata({
-    title: post.title,
+    title: post.metaTitle ?? post.title,
     description: post.description,
     path: `/blog/${post.slug}`,
   })
@@ -40,6 +40,25 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">) {
 
 function sectionId(idx: number) {
   return `muc-${idx + 1}`
+}
+
+/**
+ * Tác giả bài viết. Mặc định là Organization; đặt NEXT_PUBLIC_BLOG_AUTHOR_NAME
+ * (ví dụ tên founder) để Google/AI thấy tác giả là người thật — tín hiệu
+ * E-E-A-T mạnh hơn cho nội dung mang tính chuyên môn.
+ */
+function authorSchema(postAuthor: string) {
+  const personName = process.env.NEXT_PUBLIC_BLOG_AUTHOR_NAME
+  const personJob = process.env.NEXT_PUBLIC_BLOG_AUTHOR_JOB
+  if (personName) {
+    return {
+      "@type": "Person",
+      name: personName,
+      ...(personJob && { jobTitle: personJob }),
+      worksFor: { "@id": `${SITE_URL}#organization` },
+    }
+  }
+  return { "@type": "Organization", name: postAuthor, url: SITE_URL }
 }
 
 export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">) {
@@ -63,7 +82,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
           inLanguage: "vi-VN",
           articleSection: post.category,
           image: absoluteUrl(post.cover.src),
-          author: { "@type": "Organization", name: post.author, url: SITE_URL },
+          author: authorSchema(post.author),
           publisher: { "@id": `${SITE_URL}#organization` },
           mainEntityOfPage: absoluteUrl(path),
         }}

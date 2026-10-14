@@ -10,7 +10,7 @@ import { GENERAL_FAQS } from "@/content/faqs"
 const PATH = "/quy-trinh"
 
 export const metadata = pageMetadata({
-  title: "Quy Trình Làm Website Trọn Gói",
+  title: "Quy trình làm website trọn gói",
   description:
     "Quy trình 4 bước làm website cùng Nextchain: khảo sát & phân tích, thiết kế giải pháp, phát triển & triển khai, bàn giao & đồng hành. Minh bạch từng bước.",
   path: PATH,

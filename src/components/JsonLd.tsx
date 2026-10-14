@@ -1,11 +1,14 @@
 import JsonLdScript from "@/components/marketing/JsonLdScript"
-import { COMPANY_NAME, CONTACT, SITE_NAME, SITE_URL } from "@/lib/site"
+import { COMPANY_NAME, CONTACT, SITE_NAME, SITE_URL, socialProfiles } from "@/lib/site"
 
 /** Site-wide entity data. Page-level Service/Breadcrumb schemas live on each route. */
 export default function JsonLd() {
+  const profiles = socialProfiles()
   const organizationSchema = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    // ProfessionalService giúp Google/AI ghép Nextchain với ngành dịch vụ
+    // website có địa chỉ liên hệ thật; Organization giữ các tham chiếu @id.
+    "@type": ["Organization", "ProfessionalService"],
     "@id": `${SITE_URL}#organization`,
     name: SITE_NAME,
     legalName: COMPANY_NAME,
@@ -20,6 +23,9 @@ export default function JsonLd() {
       addressLocality: "Hồ Chí Minh",
       addressCountry: "VN",
     },
+    areaServed: { "@type": "Country", name: "Vietnam" },
+    priceRange: "249.000đ - 45.000.000đ+",
+    ...(profiles.length > 0 && { sameAs: profiles }),
   }
 
   const websiteSchema = {

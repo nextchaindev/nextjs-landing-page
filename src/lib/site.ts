@@ -51,6 +51,19 @@ export const LEGAL_LINKS: NavItem[] = [
   { href: "/chinh-sach-huy-dich-vu", label: "Chính sách hủy dịch vụ" },
 ]
 
+/**
+ * Hồ sơ công khai đại diện cho thương hiệu — dùng cho `sameAs` trong
+ * Organization JSON-LD để các công cụ tìm kiếm và AI ghép đúng thực thể.
+ * Thêm Facebook/Zalo OA khi có: đặt NEXT_PUBLIC_FACEBOOK_URL.
+ */
+export function socialProfiles(): string[] {
+  return [
+    "https://www.nextchain.kr/",
+    "https://zalo.me/0909807687",
+    process.env.NEXT_PUBLIC_FACEBOOK_URL || "",
+  ].filter(Boolean)
+}
+
 export function absoluteUrl(path: string) {
   return path === "/" ? SITE_URL : `${SITE_URL}${path}`
 }

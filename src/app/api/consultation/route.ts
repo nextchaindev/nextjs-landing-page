@@ -30,7 +30,9 @@ export async function POST(request: Request) {
         const { name, email, phone, message, company_website, recaptchaToken } = body
 
         if (typeof company_website !== 'string' || company_website.trim() !== '') {
-            return NextResponse.json({ success: true }, { status: 200 })
+            // Honeypot: trả về thành công để bot không đoán được bộ lọc,
+            // nhưng `verified: false` báo client không tính conversion.
+            return NextResponse.json({ success: true, verified: false }, { status: 200 })
         }
 
         if (
@@ -143,7 +145,7 @@ export async function POST(request: Request) {
             }
         }
 
-        return NextResponse.json({ success: true, data }, { status: 200 })
+        return NextResponse.json({ success: true, verified: true, data }, { status: 200 })
     } catch (error) {
         console.error('API error:', error)
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })

@@ -8,7 +8,7 @@ import { CONTACT } from "@/lib/site"
 const PATH = "/lien-he"
 
 export const metadata = pageMetadata({
-  title: "Liên Hệ Tư Vấn Làm Website",
+  title: "Liên hệ tư vấn làm website",
   description:
     "Liên hệ Nextchain.site để được tư vấn gói website theo tháng. Gửi yêu cầu qua form, email hoặc điện thoại — phản hồi trong 24 giờ làm việc.",
   path: PATH,

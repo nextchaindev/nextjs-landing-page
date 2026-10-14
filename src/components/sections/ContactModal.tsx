@@ -5,16 +5,39 @@ import { CheckCircle2, Loader2, Mail, Phone, User, X } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
 import ReCAPTCHA from "react-google-recaptcha"
 
+/** Tên miền thường gõ sai → gợi ý sửa ngay tại chỗ thay vì mất lead. */
+const EMAIL_DOMAIN_TYPOS: Record<string, string> = {
+  "gmial.com": "gmail.com",
+  "gmai.com": "gmail.com",
+  "gmail.co": "gmail.com",
+  "gmail.cm": "gmail.com",
+  "gmali.com": "gmail.com",
+  "hotmial.com": "hotmail.com",
+  "hotmai.com": "hotmail.com",
+  "hotmail.co": "hotmail.com",
+  "yhoo.com": "yahoo.com",
+  "yaho.com": "yahoo.com",
+  "yahoo.co": "yahoo.com",
+  "outlok.com": "outlook.com",
+  "icoud.com": "icloud.com",
+  "iclod.com": "icloud.com",
+}
+
 export default function ContactModal() {
   const {
     isModalOpen,
     closeModal,
     formData,
+    setFormData,
     handleInputChange,
     handleSubmit,
+    notifyFormStart,
     loadingSubmit,
     errors,
   } = useModal()
+
+  const emailPart = formData.email.trim().split("@")
+  const typoDomain = emailPart.length === 2 ? EMAIL_DOMAIN_TYPOS[emailPart[1].toLowerCase()] : undefined
 
 
   const recaptchaRef = useRef<ReCAPTCHA>(null)
@@ -72,6 +95,7 @@ export default function ContactModal() {
         {/* Modal Body */}
         <form
           onSubmit={onFormSubmit}
+          onFocusCapture={notifyFormStart}
           className="pl-4 pr-2 md:pl-8 md:pr-8 py-8 ">
           <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
             <label htmlFor="company_website">Địa chỉ website công ty</label>
@@ -141,6 +165,23 @@ export default function ContactModal() {
                     {errors.email}
                   </p>
                 )}
+                {typoDomain && !errors.email && (
+                  <p className="mt-1 text-xs text-gray-600">
+                    Ý bạn là{" "}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          email: `${emailPart[0]}@${typoDomain}`,
+                        }))
+                      }
+                      className="font-semibold text-blue-600 underline underline-offset-2">
+                      {emailPart[0]}@{typoDomain}
+                    </button>
+                    ?
+                  </p>
+                )}
               </div>
 
               {/* Phone Field */}
@@ -168,6 +209,9 @@ export default function ContactModal() {
                     placeholder="0901 234 567"
                   />
                 </div>
+                <p className="mt-1 text-xs text-gray-500">
+                  Bắt buộc để nhân viên gọi lại tư vấn — không dùng cho mục đích khác.
+                </p>
                 {errors.phone && (
                   <p className="mt-1 text-xs text-red-500 font-medium">
                     {errors.phone}

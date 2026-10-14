@@ -8,7 +8,7 @@ import { COMPANY_NAME, CONTACT } from "@/lib/site"
 const PATH = "/ve-chung-toi"
 
 export const metadata = pageMetadata({
-  title: "Về Chúng Tôi",
+  title: "Về chúng tôi",
   description:
     "Nextchain.site do Nextchain Tech vận hành: dịch vụ làm và quản lý website theo gói tháng cho doanh nghiệp nhỏ tại Việt Nam. Thông tin đơn vị, cách làm việc và liên hệ.",
   path: PATH,
