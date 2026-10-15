@@ -88,9 +88,22 @@ export function ConsultationDetail({ isOpen, onClose, consultation }: Consultati
                         <h3 className="font-semibold text-sm text-gray-900">Contact Information</h3>
                         <div className="grid grid-cols-2 gap-2 text-sm">
                             <span className="text-gray-500">Email:</span>
-                            <span>{consultation.contact}</span>
+                            <span>{consultation.contact.includes('@') ? consultation.contact : 'Không cung cấp'}</span>
                             <span className="text-gray-500">Phone:</span>
                             <span>{consultation.phone}</span>
+                            <span className="text-gray-500">Ngành:</span>
+                            <span>{consultation.industry || '—'}</span>
+                            <span className="text-gray-500">Cần:</span>
+                            <span>{consultation.website_type || '—'}</span>
+                            <span className="text-gray-500">Nguồn:</span>
+                            <span className="break-all">
+                                {[
+                                    consultation.attribution?.gclid && 'Google Ads',
+                                    consultation.attribution?.utm_source &&
+                                        `${consultation.attribution.utm_source}/${consultation.attribution.utm_medium ?? '-'}`,
+                                    consultation.attribution?.landing_page,
+                                ].filter(Boolean).join(' · ') || 'Trực tiếp'}
+                            </span>
                         </div>
                     </div>
 

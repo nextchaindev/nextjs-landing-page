@@ -1,101 +1,213 @@
-"use client"
-
-import { useState, useRef, useEffect } from "react"
-import { useActiveSection } from "@/hooks/useActiveSection"
-import { useScrollAnimation } from "@/hooks/useScrollAnimation"
+import Link from "next/link"
+import { FileText, LayoutGrid, ShoppingBag } from "lucide-react"
 import Hero from "@/components/sections/Hero"
-import WhyChooseUs from "@/components/sections/WhyChooseUs"
-import Services from "@/components/sections/Services"
 import Process from "@/components/sections/Process"
-import Projects from "@/components/sections/Projects"
+import WhyChooseUs from "@/components/sections/WhyChooseUs"
 import CTA from "@/components/sections/CTA"
-import Client from "@/components/sections/Client"
+import Section from "@/components/marketing/Section"
+import Reveal from "@/components/marketing/Reveal"
+import IndustryCards from "@/components/marketing/IndustryCards"
+import ProjectPricingTabs from "@/components/sections/ProjectPricingTabs"
+import ServiceCards from "@/components/marketing/ServiceCards"
+import TemplateGallery from "@/components/marketing/TemplateGallery"
+import PricingCards from "@/components/marketing/PricingCards"
+import BlogCard from "@/components/marketing/BlogCard"
+import FaqSection from "@/components/marketing/FaqSection"
+import IntroVideo from "@/components/marketing/IntroVideo"
+import ProjectCards from "@/components/marketing/ProjectCards"
+import JsonLdScript from "@/components/marketing/JsonLdScript"
+import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
+import { pageMetadata } from "@/lib/seo"
+import { absoluteUrl } from "@/lib/site"
+import { GENERAL_FAQS } from "@/content/faqs"
+import { sortedPosts } from "@/content/blog"
+import { PROJECTS } from "@/content/projects"
 
-const SECTION_IDS = ["home", "services", "process", "projects", "cta"]
+const FEATURED_PROJECTS = ["kyunghyang", "yamicoco", "rc-sport"]
 
-export default function Home() {
-  const [selectedService] = useState("landing")
+export const metadata = pageMetadata({
+  title: "Nextchain.site | Landing page & website làm trọn gói",
+  description:
+    "Landing page và website trọn gói cho spa, salon, homestay: Nextchain thiết kế, viết nội dung, xuất bản và quản lý. Trả theo tháng, không phí khởi tạo.",
+  path: "/",
+  absoluteTitle: true,
+})
 
-  // Counter animation hook for hero stats
-  const { ref: heroStatsRef, isVisible: heroStatsVisible } =
-    useScrollAnimation(0.3)
+const GROWTH_FEATURES = [
+  {
+    icon: LayoutGrid,
+    title: "Trang riêng cho từng dịch vụ",
+    desc: "Ví dụ spa có trang chăm sóc da, gội đầu dưỡng sinh, massage thư giãn — mỗi trang có mô tả, hình ảnh, giá đã duyệt và nút yêu cầu hẹn.",
+    iconBg: "bg-[#FFEDD4] text-[#F54900]",
+  },
+  {
+    icon: FileText,
+    title: "Blog được cập nhật khi cần",
+    desc: "Spa đăng hướng dẫn chăm sóc da, homestay giới thiệu trải nghiệm du lịch. Nextchain soạn nháp, kiểm tra và đăng theo số bài trong gói.",
+    iconBg: "bg-[#DBEAFE] text-[#155DFC]",
+  },
+  {
+    icon: ShoppingBag,
+    title: "Danh mục sản phẩm rõ ràng",
+    desc: "Salon bán sản phẩm chăm sóc tóc, spa bán mỹ phẩm: ảnh, mô tả, thuộc tính, giá và nút liên hệ đặt mua.",
+    iconBg: "bg-[#DCFCE7] text-[#008236]",
+  },
+]
 
-  // Scroll animations for sections
-  const { ref: servicesRef, isVisible: servicesVisible } =
-    useScrollAnimation(0.1)
-  const { ref: processRef, isVisible: processVisible } = useScrollAnimation(0.1)
-  const { ref: projectsRef, isVisible: projectsVisible } =
-    useScrollAnimation(0.1)
-
-  const { ref: clientsRef, isVisible: clientsVisible } = useScrollAnimation(0.1)
-
-  // Active section tracking for GA
-  const activeSection = useActiveSection(SECTION_IDS)
-
-  // Track section view in GA
-  useEffect(() => {
-    const win = window as Window & {
-      gtag?: (command: string, action: string, params: Record<string, unknown>) => void
-    }
-    if (
-      activeSection &&
-      typeof window !== "undefined" &&
-      win.gtag
-    ) {
-      win.gtag("event", "section_view", {
-        section_name: activeSection,
-      })
-    }
-  }, [activeSection])
-
-  // Ref for pricing carousel to auto-scroll to popular card
-  const pricingCarouselRef = useRef<HTMLDivElement>(null)
-
-  // Auto-scroll to popular card on mobile when service changes
-  useEffect(() => {
-    if (
-      pricingCarouselRef.current &&
-      typeof window !== "undefined" &&
-      window.innerWidth < 768
-    ) {
-      // Popular card is always in the middle (index 1) after reordering
-      const middleIndex = 1
-      // All services have 3 packages
-      const cardWidth = pricingCarouselRef.current.scrollWidth / 3
-      const scrollPosition =
-        cardWidth * middleIndex - (window.innerWidth - cardWidth) / 2
-
-      // Wait for animation to complete (300ms) before scrolling
-      const timer = setTimeout(() => {
-        pricingCarouselRef.current?.scrollTo({
-          left: Math.max(0, scrollPosition),
-          behavior: "smooth",
-        })
-      }, 400)
-      return () => clearTimeout(timer)
-    }
-  }, [selectedService])
+export default function HomePage() {
+  const latestPosts = sortedPosts().slice(0, 3)
 
   return (
     <div className="min-h-screen bg-white">
-      <Hero heroStatsRef={heroStatsRef} heroStatsVisible={heroStatsVisible} />
+      <Hero />
 
-      <Services
-        // selectedService={selectedService}
-        // setSelectedService={setSelectedService}
-        pricingCarouselRef={pricingCarouselRef}
-        servicesRef={servicesRef}
-        servicesVisible={servicesVisible}
-      />
+      <Section
+        muted
+        title="Xem Nextchain làm website cho bạn"
+        desc="Gửi thông tin, chọn mẫu theo ngành, website lên mạng với tên miền miễn phí hoặc tên miền riêng.">
+        <IntroVideo title="Video giới thiệu: Nextchain làm website trọn gói cho spa, salon, homestay từ 249.000đ/tháng" />
+        <p className="mx-auto mt-6 max-w-2xl text-center text-sm md:text-base text-gray-600 leading-relaxed">
+          Video minh họa quy trình của chúng tôi: bạn gửi thông tin cơ sở, Nextchain viết nội dung và
+          thiết kế theo ngành, bạn duyệt, website lên mạng với tên miền miễn phí hoặc tên miền riêng —
+          từ 249.000đ/tháng, không phí khởi tạo.
+        </p>
+        <JsonLdScript
+          data={{
+            "@context": "https://schema.org",
+            "@type": "VideoObject",
+            name: "Nextchain làm website trọn gói cho spa, salon, homestay",
+            description:
+              "Quy trình Nextchain thiết kế, viết nội dung và xuất bản website theo gói tháng từ 249.000đ: bạn gửi thông tin, duyệt bố cục, website lên mạng.",
+            thumbnailUrl: absoluteUrl("/videos/nextchain-intro-16x9-poster.jpg"),
+            uploadDate: "2026-10-14",
+            contentUrl: absoluteUrl("/videos/nextchain-intro-16x9.mp4"),
+            embedUrl: absoluteUrl("/"),
+            inLanguage: "vi-VN",
+            isFamilyFriendly: true,
+          }}
+        />
+      </Section>
 
-      <Process processRef={processRef} processVisible={processVisible} />
+      <Section
+        eyebrow="Chọn ngành kinh doanh"
+        title="Website thiết kế riêng cho từng ngành"
+        desc="Spa, salon, homestay và các cơ sở dịch vụ địa phương. Mỗi ngành có bố cục và nội dung riêng.">
+        <IndustryCards />
+      </Section>
 
-      <Projects projectsRef={projectsRef} projectsVisible={projectsVisible} />
+      <Section
+        muted
+        id="bang-gia"
+        eyebrow="Bảng giá"
+        title="Trả theo tháng, không phí khởi tạo"
+        desc="Dành cho landing page và kinh doanh nhỏ. Quyền lợi, giới hạn và điều kiện hủy công bố rõ.">
+        <PricingCards />
+        <p className="mt-10 text-center">
+          <Link href="/bang-gia" className="font-semibold text-primary hover:underline">
+            Xem bảng giá chi tiết và câu hỏi thường gặp →
+          </Link>
+        </p>
+      </Section>
 
-      <Client clientsRef={clientsRef} clientsVisible={clientsVisible} />
+      <Section
+        title="Tham khảo mẫu theo ngành"
+        desc="Một số bố cục tham khảo. Website của bạn được thiết kế riêng theo thương hiệu, không giới hạn trong các mẫu này.">
+        <TemplateGallery limit={6} carousel />
+        <p className="mt-10 text-center">
+          <Link href="/mau-website" className="font-semibold text-primary hover:underline">
+            Xem tất cả mẫu tham khảo →
+          </Link>
+        </p>
+      </Section>
+
+      <Section
+        muted
+        title="Dự án Nextchain đã thực hiện"
+        desc="Landing page, website bán hàng và phần mềm quản lý do chính đội ngũ Nextchain thiết kế và phát triển.">
+        <ProjectCards projects={PROJECTS.filter((project) => FEATURED_PROJECTS.includes(project.slug))} />
+        <p className="mt-10 text-center">
+          <Link href="/du-an" className="font-semibold text-primary hover:underline">
+            Xem tất cả dự án →
+          </Link>
+        </p>
+      </Section>
+
+      <Section
+        muted
+        title="Tự làm hay thuê trọn gói?"
+        desc="So sánh thời gian, chi phí và việc bạn cần tự làm trước khi quyết định.">
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <Link href="/so-sanh/tu-lam-hay-thue-tron-goi" className="rounded-xl bg-primary px-6 py-3 font-semibold text-white hover:bg-primary/90">
+            So sánh hai cách làm
+          </Link>
+          <Link href="/quy-trinh" className="font-semibold text-primary underline underline-offset-4">Quy trình Nextchain thực hiện</Link>
+        </div>
+      </Section>
+
+      <Section
+        id="dich-vu"
+        title="Doanh nghiệp cần giải pháp riêng?"
+        desc="Website doanh nghiệp, bán hàng, marketing và phần mềm được khảo sát, báo giá theo dự án.">
+        <ServiceCards only="project" />
+        <p className="mt-10 text-center">
+          <Link href="/dich-vu" className="font-semibold text-primary hover:underline">
+            Xem tất cả dịch vụ →
+          </Link>
+        </p>
+      </Section>
+
+      <ProjectPricingTabs />
+
+      <Process />
+
+      <Section
+        muted
+        title="Website phát triển cùng doanh nghiệp"
+        desc="Cập nhật dịch vụ, danh mục sản phẩm, blog, ảnh và thông tin liên hệ theo phạm vi gói.">
+        <div className={`${MOBILE_CAROUSEL} md:grid-cols-3`}>
+          {GROWTH_FEATURES.map(({ icon: Icon, title, desc, iconBg }, idx) => (
+            <Reveal
+              key={title}
+              delay={idx * 0.1}
+              className={`${MOBILE_CAROUSEL_ITEM} group bg-white border border-[#E5E7EB] rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-md transition-all duration-300`}>
+              <span className={`w-14 h-14 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 ${iconBg}`}>
+                <Icon className="w-7 h-7" />
+              </span>
+              <h3 className="mt-5 text-lg font-bold text-[#101828]">{title}</h3>
+              <p className="mt-2 text-sm md:text-base text-[#4A5565] leading-relaxed">{desc}</p>
+            </Reveal>
+          ))}
+        </div>
+        <p className="mt-10 text-center">
+          <Link href="/dich-vu/quan-tri-website-theo-thang" className="font-semibold text-primary hover:underline">
+            Quản trị website theo tháng gồm những gì? →
+          </Link>
+        </p>
+      </Section>
 
       <WhyChooseUs />
 
+      {latestPosts.length > 0 && (
+        <Section
+          muted
+          title="Kinh nghiệm làm website cho doanh nghiệp nhỏ"
+          desc="Chi phí, tính năng cần có và cách chọn loại website phù hợp.">
+          <div className={`${MOBILE_CAROUSEL} md:grid-cols-3`}>
+            {latestPosts.map((post) => (
+              <div key={post.slug} className={MOBILE_CAROUSEL_ITEM}>
+                <BlogCard post={post} />
+              </div>
+            ))}
+          </div>
+          <p className="mt-10 text-center">
+            <Link href="/blog" className="font-semibold text-primary hover:underline">
+              Xem tất cả bài viết →
+            </Link>
+          </p>
+        </Section>
+      )}
+
+      <FaqSection faqs={GENERAL_FAQS} />
       <CTA />
     </div>
   )

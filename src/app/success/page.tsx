@@ -4,7 +4,7 @@ import { CheckCircle2, Clock, Mail, Phone, ArrowLeft } from "lucide-react"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Cảm ơn bạn | NextChain",
+  title: "Cảm ơn bạn",
   robots: {
     index: false,
     follow: false,
@@ -57,7 +57,8 @@ export default function SuccessPage() {
               </h3>
               <p className="text-[#4A5565] text-sm md:text-base leading-relaxed">
                 Vui lòng kiểm tra hộp thư email (bao gồm cả thư mục spam) để
-                nhận thông tin xác nhận từ chúng tôi.
+                nhận thông tin xác nhận từ chúng tôi. Nếu bạn không để lại
+                email, chúng tôi sẽ liên hệ qua số điện thoại hoặc Zalo.
               </p>
             </div>
           </div>

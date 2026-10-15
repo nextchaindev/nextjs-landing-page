@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation"
 import Header from "@/components/sections/Header"
 import Footer from "@/components/sections/Footer"
 import ContactModal from "@/components/sections/ContactModal"
+import FloatingContact from "@/components/layout/FloatingContact"
 import { ReactNode } from "react"
 
 interface ConditionalLayoutProps {
@@ -14,9 +15,9 @@ export default function ConditionalLayout({
   children,
 }: ConditionalLayoutProps) {
   const pathname = usePathname()
-  const isAdminPage = pathname?.startsWith("/admin")
+  const isStandalonePage = pathname?.startsWith("/admin")
 
-  if (isAdminPage) {
+  if (isStandalonePage) {
     return <>{children}</>
   }
 
@@ -26,6 +27,7 @@ export default function ConditionalLayout({
       <main>{children}</main>
       <Footer />
       <ContactModal />
+      <FloatingContact />
     </>
   )
 }

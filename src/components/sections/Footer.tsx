@@ -1,110 +1,98 @@
-"use client"
-
-import { useModal } from "@/context/ModalContext"
-import { useScrollTo } from "@/hooks/useScrollTo"
 import FooterLogo from "@/imports/Logo-8-285"
-import { Globe, Mail, Phone } from "lucide-react"
 import Link from "next/link"
+import {
+  COMPANY_NAME,
+  CONTACT,
+  LEGAL_LINKS,
+  MAIN_NAV,
+  SERVICE_LINKS,
+  SOLUTION_LINKS,
+  type NavItem,
+} from "@/lib/site"
+
+const COMPANY_LINKS: NavItem[] = [
+  { href: "/ve-chung-toi", label: "Về chúng tôi" },
+  { href: "/dich-vu", label: "Tất cả dịch vụ" },
+  { href: "/giai-phap", label: "Tất cả giải pháp" },
+  ...MAIN_NAV,
+]
+
+function LinkColumn({ title, links }: { title: string; links: NavItem[] }) {
+  return (
+    <div>
+      <h2 className="text-lg font-medium mb-6">{title}</h2>
+      <ul className="space-y-3 text-[#99A1AF]">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link href={link.href} className="hover:text-primary transition-colors">
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 
 export default function Footer() {
-  const { setKeyService } = useModal()
-  const { scrollToSection } = useScrollTo()
-
-  const handleServiceClick = (key: string) => {
-    setKeyService(key)
-    scrollToSection("services")
-  }
-
   return (
     <footer className="bg-[#111827] text-white pt-20 pb-12 px-6">
       <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           <div className="lg:col-span-1">
             <div className="w-[120px] mb-6">
               <FooterLogo />
             </div>
-            <p className="text-[#99A1AF] leading-relaxed mb-6">
-              Đối tác thiết kế & công nghệ tin cậy cho doanh nghiệp Việt Nam
+            <p className="text-[#99A1AF] leading-relaxed mb-4">
+              Website chuyên nghiệp cho doanh nghiệp nhỏ. Nextchain làm từ A–Z và quản lý theo gói tháng.
             </p>
-            {/* <div className="flex gap-4">
-              <a
-                href="#"
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                <Globe className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                <Mail className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                <Phone className="w-5 h-5" />
-              </a>
-            </div> */}
+            <p className="text-[#6A7282] text-sm leading-relaxed mb-6">
+              Nextchain.site là dịch vụ của {COMPANY_NAME}, hoạt động tại Thành phố Hồ Chí Minh.
+            </p>
           </div>
 
-          <div>
-            <h4 className="text-lg font-medium mb-6">Dịch vụ</h4>
-            <ul className="space-y-4 text-[#99A1AF]">
-              <li onClick={() => handleServiceClick("landing")}>
-                <button className="hover:text-primary transition-colors cursor-pointer">
-                  Landing Page
-                </button>
-              </li>
-              <li onClick={() => handleServiceClick("corporate")}>
-                <button className="hover:text-primary transition-colors cursor-pointer">
-                  Website Doanh nghiệp
-                </button>
-              </li>
-              <li onClick={() => handleServiceClick("ecommerce")}>
-                <button className="hover:text-primary transition-colors cursor-pointer">
-                  Website Bán hàng
-                </button>
-              </li>
-              <li onClick={() => handleServiceClick("custom")}>
-                <button className="hover:text-primary transition-colors cursor-pointer">
-                  Thiết kế theo yêu cầu
-                </button>
-              </li>
-              <li onClick={() => handleServiceClick("marketing")}>
-                <button className="hover:text-primary transition-colors cursor-pointer">
-                  Marketing & SEO
-                </button>
-              </li>
-              <li onClick={() => handleServiceClick("software")}>
-                <button className="hover:text-primary transition-colors cursor-pointer">
-                  Phát triển phần mềm
-                </button>
-              </li>
-            </ul>
-          </div>
+          <LinkColumn title="Giải pháp" links={SOLUTION_LINKS} />
+          <LinkColumn title="Dịch vụ" links={SERVICE_LINKS} />
+          <LinkColumn title="Nextchain" links={COMPANY_LINKS} />
 
           <div>
-            <h4 className="text-lg font-medium mb-6">Liên hệ</h4>
-            <ul className="space-y-4 text-[#99A1AF]">
+            <h2 className="text-lg font-medium mb-6">Liên hệ</h2>
+            <ul className="space-y-3 text-[#99A1AF]">
               <li>
-                <span>Email: contact@nextchain.kr</span>
+                Email:{" "}
+                <a href={`mailto:${CONTACT.email}`} className="hover:text-primary">
+                  {CONTACT.email}
+                </a>
               </li>
               <li>
-                <span>Điện thoại: +84-909-807-687</span>
+                Điện thoại:{" "}
+                <a href={CONTACT.phoneHref} className="hover:text-primary">
+                  {CONTACT.phone}
+                </a>
               </li>
-              <li>
-                <span>Địa chỉ: Hồ Chí Minh, Việt Nam</span>
-              </li>
+              <li>Địa chỉ: {CONTACT.address}</li>
+              {CONTACT.addresses.slice(1).map((office) => (
+                <li key={office.label}>
+                  {office.label}: {office.value}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         <div className="pt-8 border-t border-[#1E2939] flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[#6A7282] text-sm">
-            © {new Date().getFullYear()} Nextchain Tech. All rights reserved.
+            © {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.
           </p>
-          <div className="flex gap-8">
-            <span className="text-[#99A1AF] text-sm">Chính sách bảo mật</span>
-            <span className="text-[#99A1AF] text-sm">Điều khoản sử dụng</span>
-          </div>
+          <ul className="flex flex-wrap justify-center gap-x-8 gap-y-2">
+            {LEGAL_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="text-[#99A1AF] text-sm hover:text-primary">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </footer>

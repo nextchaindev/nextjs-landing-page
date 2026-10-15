@@ -2,16 +2,14 @@
 
 import { motion } from "motion/react"
 import { Target, Lightbulb, Code, Rocket } from "lucide-react"
+import { PROCESS_STEPS } from "@/content/process"
+import Link from "next/link"
 import {
   fadeInUp,
   staggerContainer,
   staggerItem,
+  useScrollAnimation,
 } from "@/hooks/useScrollAnimation"
-
-interface ProcessProps {
-  processRef: React.RefObject<HTMLDivElement | null>
-  processVisible: boolean
-}
 
 const colorMap: Record<string, { bg: string; text: string; line: string }> = {
   blue: {
@@ -36,38 +34,17 @@ const colorMap: Record<string, { bg: string; text: string; line: string }> = {
   },
 }
 
-const steps = [
-  {
-    title: "Khảo sát & phân tích",
-    desc: "Tìm hiểu sâu về doanh nghiệp, khách hàng mục tiêu và mục tiêu kinh doanh",
-    icon: Target,
-    color: "blue",
-    step: 1,
-  },
-  {
-    title: "Thiết kế giải pháp",
-    desc: "Đề xuất ý tưởng sáng tạo và thiết kế phù hợp với thương hiệu",
-    icon: Lightbulb,
-    color: "orange",
-    step: 2,
-  },
-  {
-    title: "Phát triển & triển khai",
-    desc: "Xây dựng sản phẩm với chất lượng cao và kiểm thử kỹ lưỡng",
-    icon: Code,
-    color: "purple",
-    step: 3,
-  },
-  {
-    title: "Bàn giao & đồng hành",
-    desc: "Hỗ trợ vận hành và tối ưu hóa liên tục sau khi ra mắt khi ra mắt",
-    icon: Rocket,
-    step: 4,
-    color: "green",
-  },
+const STEP_STYLES = [
+  { icon: Target, color: "blue" },
+  { icon: Lightbulb, color: "orange" },
+  { icon: Code, color: "purple" },
+  { icon: Rocket, color: "green" },
 ]
 
-export default function Process({ processRef, processVisible }: ProcessProps) {
+const steps = PROCESS_STEPS.map((step, idx) => ({ ...step, ...STEP_STYLES[idx], step: idx + 1 }))
+
+export default function Process() {
+  const { ref: processRef, isVisible: processVisible } = useScrollAnimation(0.1)
   return (
     <section id="process" className="py-20 px-6" ref={processRef}>
       <div className="max-w-[1200px] mx-auto">
@@ -123,6 +100,11 @@ export default function Process({ processRef, processVisible }: ProcessProps) {
             )
           })}
         </motion.div>
+        <p className="mt-12 text-center">
+          <Link href="/quy-trinh" className="font-semibold text-primary hover:underline">
+            Xem chi tiết quy trình làm website →
+          </Link>
+        </p>
       </div>
     </section>
   )

@@ -1,6 +1,8 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
+  turbopack: { root: process.cwd() },
+
   /* SEO & Performance Optimizations */
 
   // Compress responses
@@ -12,6 +14,20 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
+  },
+
+  // Đổi hoặc xóa slug của trang đã public: thêm một dòng ở đây (308 vĩnh viễn),
+  // trỏ thẳng tới URL cuối cùng (không nối chuỗi redirect) và sửa link nội bộ.
+  async redirects() {
+    return [
+      { source: "/demo/:slug", destination: "/mau-website/:slug", permanent: true },
+      { source: "/gioi-thieu", destination: "/ve-chung-toi", permanent: true },
+      { source: "/about", destination: "/ve-chung-toi", permanent: true },
+      { source: "/contact", destination: "/lien-he", permanent: true },
+      { source: "/pricing", destination: "/bang-gia", permanent: true },
+      { source: "/projects", destination: "/du-an", permanent: true },
+      { source: "/dich-vu/landing-page", destination: "/dich-vu/thiet-ke-landing-page", permanent: true },
+    ]
   },
 
   // Security and SEO headers
@@ -34,7 +50,11 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Referrer-Policy",
-            value: "origin-when-cross-origin",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000",
           },
         ],
       },

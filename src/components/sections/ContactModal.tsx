@@ -4,17 +4,41 @@ import { useEffect, useRef, useState } from "react"
 import { CheckCircle2, Loader2, Mail, Phone, User, X } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
 import ReCAPTCHA from "react-google-recaptcha"
+import { LEAD_INDUSTRIES, LEAD_WEBSITE_TYPES } from "@/content/leadOptions"
+
+/** Tên miền thường gõ sai → gợi ý sửa ngay tại chỗ thay vì mất lead. */
+const EMAIL_DOMAIN_TYPOS: Record<string, string> = {
+  "gmial.com": "gmail.com",
+  "gmai.com": "gmail.com",
+  "gmail.co": "gmail.com",
+  "gmail.cm": "gmail.com",
+  "gmali.com": "gmail.com",
+  "hotmial.com": "hotmail.com",
+  "hotmai.com": "hotmail.com",
+  "hotmail.co": "hotmail.com",
+  "yhoo.com": "yahoo.com",
+  "yaho.com": "yahoo.com",
+  "yahoo.co": "yahoo.com",
+  "outlok.com": "outlook.com",
+  "icoud.com": "icloud.com",
+  "iclod.com": "icloud.com",
+}
 
 export default function ContactModal() {
   const {
     isModalOpen,
     closeModal,
     formData,
+    setFormData,
     handleInputChange,
     handleSubmit,
+    notifyFormStart,
     loadingSubmit,
     errors,
   } = useModal()
+
+  const emailPart = formData.email.trim().split("@")
+  const typoDomain = emailPart.length === 2 ? EMAIL_DOMAIN_TYPOS[emailPart[1].toLowerCase()] : undefined
 
 
   const recaptchaRef = useRef<ReCAPTCHA>(null)
@@ -43,8 +67,9 @@ export default function ContactModal() {
     closeModal()
   }
 
-  const onFormSubmit = (e: React.FormEvent) => {
-    handleSubmit(e, recaptchaToken)
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const website = new FormData(e.currentTarget).get("company_website")
+    handleSubmit(e, recaptchaToken, typeof website === "string" ? website : "")
   }
 
   if (!isModalOpen) return null
@@ -64,14 +89,19 @@ export default function ContactModal() {
             Nhận tư vấn miễn phí
           </h3>
           <p className="text-sm md:text-base text-blue-100">
-            Hãy để lại thông tin, chúng tôi sẽ liên hệ bạn trong 24h.
+            Để lại thông tin, Nextchain sẽ phản hồi trong 24 giờ làm việc.
           </p>
         </div>
 
         {/* Modal Body */}
         <form
           onSubmit={onFormSubmit}
+          onFocusCapture={notifyFormStart}
           className="pl-4 pr-2 md:pl-8 md:pr-8 py-8 ">
+          <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+            <label htmlFor="company_website">Địa chỉ website công ty</label>
+            <input id="company_website" name="company_website" type="text" tabIndex={-1} autoComplete="off" />
+          </div>
           <div className="w-full max-h-[350px] md:max-h-[calc(100dvh-350px)] space-y-4 md:space-y-6 overflow-y-auto">
             <div className="space-y-4 md:space-y-6 pr-2">
               {/* Name Field */}
@@ -111,7 +141,7 @@ export default function ContactModal() {
                 <label
                   htmlFor="email"
                   className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email <span className="text-red-500">*</span>
+                  Email <span className="font-normal text-gray-500">(không bắt buộc)</span>
                 </label>
                 <div className="relative">
                   <Mail
@@ -134,6 +164,23 @@ export default function ContactModal() {
                 {errors.email && (
                   <p className="mt-1 text-xs text-red-500 font-medium">
                     {errors.email}
+                  </p>
+                )}
+                {typoDomain && !errors.email && (
+                  <p className="mt-1 text-xs text-gray-600">
+                    Ý bạn là{" "}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          email: `${emailPart[0]}@${typoDomain}`,
+                        }))
+                      }
+                      className="font-semibold text-blue-600 underline underline-offset-2">
+                      {emailPart[0]}@{typoDomain}
+                    </button>
+                    ?
                   </p>
                 )}
               </div>
@@ -163,11 +210,40 @@ export default function ContactModal() {
                     placeholder="0901 234 567"
                   />
                 </div>
+                <p className="mt-1 text-xs text-gray-500">
+                  Bắt buộc để nhân viên gọi lại tư vấn — không dùng cho mục đích khác.
+                </p>
                 {errors.phone && (
                   <p className="mt-1 text-xs text-red-500 font-medium">
                     {errors.phone}
                   </p>
                 )}
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                {[
+                  { id: "industry", label: "Ngành kinh doanh", options: LEAD_INDUSTRIES },
+                  { id: "websiteType", label: "Bạn cần", options: LEAD_WEBSITE_TYPES },
+                ].map((field) => (
+                  <div key={field.id}>
+                    <label htmlFor={field.id} className="block text-sm font-semibold text-gray-700 mb-2">
+                      {field.label}
+                    </label>
+                    <select
+                      id={field.id}
+                      name={field.id}
+                      value={formData[field.id as "industry" | "websiteType"]}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2.5 md:py-3 border-2 border-gray-200 rounded-xl bg-white text-gray-900 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all">
+                      <option value="">Chọn (không bắt buộc)</option>
+                      {field.options.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
               </div>
 
               {/* Message Field */}
@@ -198,11 +274,11 @@ export default function ContactModal() {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Bảo mật thông tin tuyệt đối</span>
+                  <span>Thông tin chỉ dùng để liên hệ tư vấn</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Phản hồi trong 24h</span>
+                  <span>Phản hồi trong 24 giờ làm việc</span>
                 </div>
               </div>
             </div>

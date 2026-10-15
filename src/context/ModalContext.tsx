@@ -1,13 +1,17 @@
 "use client"
 
-import React, { createContext, useContext, useState, ReactNode } from "react"
+import React, { createContext, useContext, useEffect, useState, useRef, ReactNode } from "react"
 import { toast } from "sonner"
+import { trackEvent } from "@/lib/analytics"
+import { captureAttribution, readAttribution } from "@/lib/attribution"
 
 interface FormData {
   name: string
   email: string
   phone: string
   message: string
+  industry: string
+  websiteType: string
 }
 
 interface ModalContextType {
@@ -20,9 +24,11 @@ interface ModalContextType {
   openModalClean: () => void
   closeModal: () => void
   handleInputChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => void
-  handleSubmit: (e: React.FormEvent, recaptchaToken: string | null) => Promise<void>
+  handleSubmit: (e: React.FormEvent, recaptchaToken: string | null, companyWebsite: string) => Promise<void>
+  /** Bắn event form_start một lần mỗi phiên khi người dùng focus vào form. */
+  notifyFormStart: () => void
   keyService: string
   setKeyService: React.Dispatch<React.SetStateAction<string>>
   errors: Partial<Record<keyof FormData, string>>
@@ -36,28 +42,49 @@ const initialFormData: FormData = {
   email: "",
   phone: "",
   message: "",
+  industry: "",
+  websiteType: "",
+}
+
+/** client_id của GA4 lấy từ cookie _ga (GA1.1.<id>.<ts>) để gửi trạng thái lead về GA4 sau này. */
+function readGaClientId() {
+  const match = document.cookie.match(/(?:^|; )_ga=GA\d\.\d\.(\d+\.\d+)/)
+  return match?.[1]
 }
 
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [loadingSubmit, setLoadingSubmit] = useState(false)
   const [formData, setFormData] = useState<FormData>(initialFormData)
-  const [keyService, setKeyService] = useState<string>("landing")
+  const [keyService, setKeyService] = useState<string>("corporate")
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
     {},
   )
+  const formStartFired = useRef(false)
 
+  const notifyFormStart = () => {
+    if (formStartFired.current) return
+    formStartFired.current = true
+    trackEvent("form_start", { form_id: "consultation_modal" })
+  }
+
+
+  useEffect(() => {
+    captureAttribution()
+  }, [])
 
   const openModal = (data?: Partial<FormData>) => {
     if (data) {
       setFormData((prev) => ({ ...prev, ...data }))
     }
+    trackEvent("contact_modal_open", { page_path: window.location.pathname })
     setIsModalOpen(true)
   }
 
   const openModalClean = () => {
     setFormData(initialFormData)
     setErrors({})
+    trackEvent("contact_modal_open", { page_path: window.location.pathname })
     setIsModalOpen(true)
   }
 
@@ -73,14 +100,13 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       case "name":
         return !value.trim() ? "Vui lòng nhập họ và tên" : ""
       case "email":
-        if (!value.trim()) return "Vui lòng nhập email"
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+        if (value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()))
           return "Email không hợp lệ"
         return ""
       case "phone":
         if (!value.trim()) return "Vui lòng nhập số điện thoại"
-        if (!/^(0|\+84)[3|5|7|8|9][0-9]{8}$/.test(value.replace(/\s/g, "")))
-          return "Số điện thoại không hợp lệ"
+        if (!/^(0|\+84)[35789][0-9]{8}$/.test(value.replace(/\s/g, "")))
+          return "Số điện thoại chưa đúng, ví dụ: 0901234567"
         return ""
       default:
         return ""
@@ -100,11 +126,14 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     if (phoneError) newErrors.phone = phoneError
 
     setErrors(newErrors)
+    if (Object.keys(newErrors).length > 0) {
+      trackEvent("form_error", { fields: Object.keys(newErrors).join(",") })
+    }
     return Object.keys(newErrors).length === 0
   }
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -120,7 +149,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent, recaptchaToken: string | null) => {
+  const handleSubmit = async (e: React.FormEvent, recaptchaToken: string | null, companyWebsite: string) => {
     e.preventDefault()
     if (!validate()) return
 
@@ -128,6 +157,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       toast.error("Vui lòng xác nhận bạn không phải robot.")
       return
     }
+
+    trackEvent("form_submit", { form_id: "consultation_modal" })
 
     try {
       setLoadingSubmit(true)
@@ -139,22 +170,52 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         },
         body: JSON.stringify({
           ...formData,
+          company_website: companyWebsite,
           recaptchaToken,
+          attribution: { ...readAttribution(), ga_client_id: readGaClientId() },
         }),
       })
 
-      if (response.ok) {
-        // Send GA Event
-        if (typeof window !== "undefined" && "gtag" in window) {
-          ;(window as Window & typeof globalThis & { gtag: (...args: unknown[]) => void }).gtag("event", "generate_lead", {
-            event_category: "form",
-            event_label: "consultation_request",
+      // Chỉ server biết lead thật hay honeypot. `verified: false` (bot đi qua
+      // UI) vẫn báo thành công để giữ ẩn bộ lọc, nhưng không tính conversion —
+      // số liệu Ads/GA4 lấy chuẩn từ lead đã lưu vào Supabase.
+      const result = (await response.json().catch(() => null)) as
+        | { success?: boolean; verified?: boolean }
+        | null
+
+      if (response.ok && result?.success) {
+        if (result.verified) {
+          trackEvent("generate_lead", {
+            form_id: "consultation_modal",
+            currency: "VND",
+            ...(formData.industry && { lead_industry: formData.industry }),
+            ...(formData.websiteType && { lead_website_type: formData.websiteType }),
           })
+          // Google Ads conversion — bật bằng NEXT_PUBLIC_GAW_ID và
+          // NEXT_PUBLIC_GAW_LABEL (định dạng AW-XXXXXXXXX/nhãn-conversion).
+          const gawId = process.env.NEXT_PUBLIC_GAW_ID
+          const gawLabel = process.env.NEXT_PUBLIC_GAW_LABEL
+          if (gawId && gawLabel) {
+            // Enhanced Conversions for leads: gtag tự băm SHA-256 trước khi gửi.
+            const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
+            const phone = formData.phone.replace(/\s/g, "").replace(/^0/, "+84")
+            gtag?.("set", "user_data", {
+              phone_number: phone,
+              ...(formData.email.trim() && { email: formData.email.trim().toLowerCase() }),
+            })
+            trackEvent("conversion", {
+              send_to: `${gawId}/${gawLabel}`,
+              currency: "VND",
+              value: 1,
+            })
+          }
         }
         // router.push("/success")
         window.location.href = "/success"
         // setIsModalOpen(false)
         setFormData(initialFormData)
+      } else if (response.status === 429) {
+        toast.error("Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau 10 phút.")
       } else {
         toast.error("Có lỗi xảy ra, vui lòng thử lại.")
       }
@@ -178,6 +239,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         closeModal,
         handleInputChange,
         handleSubmit,
+        notifyFormStart,
         keyService,
         setKeyService,
         errors,

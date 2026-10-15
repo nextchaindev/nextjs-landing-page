@@ -29,6 +29,9 @@ export type Consultation = {
     status: string
     created_at: string
     memo?: string
+    industry?: string | null
+    website_type?: string | null
+    attribution?: Record<string, string> | null
 }
 
 type KanbanBoardProps = {
@@ -48,7 +51,15 @@ export function KanbanBoard({ initialData }: KanbanBoardProps) {
         })
     )
 
-    const columns = ['new', 'contacted', 'closed']
+    // qualified/won feed Google Ads offline conversion import (lead quality, signed deals)
+    const columns = ['new', 'contacted', 'qualified', 'won', 'closed']
+    const columnLabels: Record<string, string> = {
+        new: 'Mới',
+        contacted: 'Đã liên hệ',
+        qualified: 'Đủ điều kiện',
+        won: 'Đã ký',
+        closed: 'Đã đóng',
+    }
 
     const handleDragStart = (event: DragStartEvent) => {
         setActiveId(event.active.id as string)
@@ -127,7 +138,7 @@ export function KanbanBoard({ initialData }: KanbanBoardProps) {
             >
                 <div className="flex h-full gap-4 overflow-x-auto pb-4">
                     {columns.map((status) => (
-                        <Column key={status} id={status} title={status.charAt(0).toUpperCase() + status.slice(1)} count={items.filter(i => i.status === status).length}>
+                        <Column key={status} id={status} title={columnLabels[status] ?? status} count={items.filter(i => i.status === status).length}>
                             {items
                                 .filter((item) => item.status === status)
                                 .map((item) => (
