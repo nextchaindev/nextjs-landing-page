@@ -28,7 +28,7 @@ export async function sendLeadStatusEvent(status: string, gaClientId: string | u
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         client_id: gaClientId,
-        events: [{ name: eventName, params: { lead_id: leadId, currency: "VND", value: 1 } }],
+        events: [{ name: eventName, params: { lead_id: leadId } }],
       }),
       signal: AbortSignal.timeout(5000),
     })
