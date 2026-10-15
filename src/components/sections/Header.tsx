@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { X, Menu, ChevronDown } from "lucide-react"
@@ -25,7 +25,18 @@ export default function Header() {
   const isActive = (href: string) => pathname === href || pathname?.startsWith(`${href}/`)
   const isGroupActive = (group: (typeof MENU_GROUPS)[number]) =>
     group.links.some((link) => isActive(link.href)) || (group.allHref !== undefined && pathname === group.allHref)
+  const [openGroup, setOpenGroup] = useState<string | null>(null)
+
+  useEffect(() => {
+    document.body.toggleAttribute("data-menu-open", isMenuOpen)
+    return () => document.body.removeAttribute("data-menu-open")
+  }, [isMenuOpen])
   const closeMenu = () => setIsMenuOpen(false)
+  const toggleMenu = () => {
+    // Mở menu: nhóm chứa trang hiện tại tự bung, các nhóm khác gập lại.
+    if (!isMenuOpen) setOpenGroup(MENU_GROUPS.find(isGroupActive)?.title ?? null)
+    setIsMenuOpen(!isMenuOpen)
+  }
 
   const desktopLinkClass = (active: boolean) =>
     cn(
@@ -107,7 +118,7 @@ export default function Header() {
             Nhận tư vấn
           </Button>
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={toggleMenu}
             className="xl:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
             aria-expanded={isMenuOpen}
             aria-label="Mở menu">
@@ -123,28 +134,50 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="xl:hidden bg-white border-b border-gray-100 overflow-y-auto max-h-[calc(100dvh-64px)]">
-            <div className="flex flex-col p-4 gap-1">
-              {MENU_GROUPS.map((group) => (
-                <div key={group.title} className="mb-2">
-                  <p className="px-2 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                    {group.title}
-                  </p>
-                  {group.links.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={closeMenu}
+            className="xl:hidden bg-white border-b border-gray-100 overflow-hidden flex flex-col max-h-[calc(100dvh-64px)]">
+            <div className="flex flex-col p-4 gap-1 overflow-y-auto overscroll-contain">
+              {MENU_GROUPS.map((group) => {
+                const expanded = openGroup === group.title
+                return (
+                  <div key={group.title}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenGroup(expanded ? null : group.title)}
+                      aria-expanded={expanded}
                       className={cn(
-                        "block px-2 py-2 text-base font-medium",
-                        isActive(link.href) ? "text-orange-600" : "text-gray-700",
+                        "w-full flex items-center justify-between px-2 py-2 text-lg font-medium",
+                        isGroupActive(group) ? "text-orange-600" : "text-gray-700",
                       )}>
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-              <div className="mb-2 border-t border-gray-100" />
+                      {group.title}
+                      <ChevronDown className={cn("w-5 h-5 transition-transform", expanded && "rotate-180")} />
+                    </button>
+                    {expanded && (
+                      <div className="mb-2 ml-2 border-l-2 border-orange-100 pl-3">
+                        {group.links.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            onClick={closeMenu}
+                            className={cn(
+                              "block px-2 py-2 text-base font-medium",
+                              isActive(link.href) ? "text-orange-600" : "text-gray-700",
+                            )}>
+                            {link.label}
+                          </Link>
+                        ))}
+                        {group.allHref && (
+                          <Link
+                            href={group.allHref}
+                            onClick={closeMenu}
+                            className="block px-2 py-2 text-sm font-semibold text-primary">
+                            {group.allLabel}
+                          </Link>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
               {MAIN_NAV.map((link) => (
                 <Link
                   key={link.href}
@@ -157,12 +190,14 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
+            </div>
+            <div className="shrink-0 border-t border-gray-100 bg-white p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
               <Button
                 onClick={() => {
                   closeMenu()
                   openModalClean()
                 }}
-                className="mt-3 bg-blue-600 hover:bg-blue-600/90 text-white rounded-lg font-medium">
+                className="w-full h-12 bg-blue-600 hover:bg-blue-600/90 text-white rounded-lg font-medium text-base">
                 Nhận tư vấn miễn phí
               </Button>
             </div>

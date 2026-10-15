@@ -26,7 +26,7 @@ interface ModalContextType {
   handleInputChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => void
-  handleSubmit: (e: React.FormEvent, recaptchaToken: string | null, companyWebsite: string) => Promise<void>
+  handleSubmit: (e: React.FormEvent, recaptchaToken: string | null, honeypot: string) => Promise<void>
   /** Bắn event form_start một lần mỗi phiên khi người dùng focus vào form. */
   notifyFormStart: () => void
   keyService: string
@@ -149,7 +149,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent, recaptchaToken: string | null, companyWebsite: string) => {
+  const handleSubmit = async (e: React.FormEvent, recaptchaToken: string | null, honeypot: string) => {
     e.preventDefault()
     if (!validate()) return
 
@@ -170,7 +170,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         },
         body: JSON.stringify({
           ...formData,
-          company_website: companyWebsite,
+          verify_sum: honeypot,
           recaptchaToken,
           attribution: { ...readAttribution(), ga_client_id: readGaClientId() },
         }),

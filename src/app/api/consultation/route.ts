@@ -43,13 +43,13 @@ export async function POST(request: Request) {
         if (!body || typeof body !== 'object' || Array.isArray(body)) {
             return NextResponse.json({ error: 'Invalid consultation details' }, { status: 400 })
         }
-        const { name, email, phone, message, company_website, recaptchaToken } = body
+        const { name, email, phone, message, recaptchaToken } = body
         const attribution = sanitizeAttribution(body.attribution)
         const industry = pickOption(LEAD_INDUSTRIES, body.industry)
         const websiteType = pickOption(LEAD_WEBSITE_TYPES, body.websiteType)
 
-        if (typeof company_website !== 'string' || company_website.trim() !== '') {
-            // Honeypot: trả về thành công để bot không đoán được bộ lọc,
+        if (typeof body.verify_sum === 'string' && body.verify_sum.trim() !== '') {
+            // Honeypot (phép tính ẩn): trả về thành công để bot không đoán được bộ lọc,
             // nhưng `verified: false` báo client không tính conversion.
             console.warn('Consultation honeypot triggered; lead dropped')
             return NextResponse.json({ success: true, verified: false }, { status: 200 })

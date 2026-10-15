@@ -68,8 +68,8 @@ export default function ContactModal() {
   }
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const website = new FormData(e.currentTarget).get("nc_hp_field")
-    handleSubmit(e, recaptchaToken, typeof website === "string" ? website : "")
+    const trap = new FormData(e.currentTarget).get("verify_sum")
+    handleSubmit(e, recaptchaToken, typeof trap === "string" ? trap : "")
   }
 
   if (!isModalOpen) return null
@@ -98,10 +98,11 @@ export default function ContactModal() {
           onSubmit={onFormSubmit}
           onFocusCapture={notifyFormStart}
           className="pl-4 pr-2 md:pl-8 md:pr-8 py-8 ">
+          {/* Honeypot: phép tính ẩn khỏi người dùng; bot đọc HTML sẽ điền → lead bị loại.
+              Tên/nhãn không giống trường autofill (tên, email, công ty, địa chỉ). */}
           <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-            {/* Tên trung tính để trình duyệt không tự điền (autofill) vào ô bẫy bot. */}
-            <label htmlFor="nc_hp_field">Bỏ trống ô này</label>
-            <input id="nc_hp_field" name="nc_hp_field" type="text" tabIndex={-1} autoComplete="off" />
+            <label htmlFor="verify_sum">3 + 4 = ?</label>
+            <input id="verify_sum" name="verify_sum" type="text" inputMode="numeric" tabIndex={-1} autoComplete="off" />
           </div>
           <div className="w-full max-h-[350px] md:max-h-[calc(100dvh-350px)] space-y-4 md:space-y-6 overflow-y-auto">
             <div className="space-y-4 md:space-y-6 pr-2">
