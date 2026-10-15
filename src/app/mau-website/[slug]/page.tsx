@@ -63,7 +63,7 @@ export default async function TemplatePage({ params }: PageProps<"/mau-website/[
         )}
       </PageHeader>
 
-      <Section title="Bản demo gồm những khối nào?">
+      <Section title={template.demoUrl ? "Bản demo gồm những khối nào?" : "Mẫu gồm những khối nào?"}>
         <div className="grid gap-6 md:grid-cols-3">
           {(template.highlights ?? []).map((highlight) => (
             <article key={highlight} className="rounded-2xl border border-gray-200 p-6">

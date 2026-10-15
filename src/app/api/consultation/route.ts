@@ -176,6 +176,7 @@ export async function POST(request: Request) {
                                         attribution.utm_source && `utm: ${attribution.utm_source}/${attribution.utm_medium ?? '-'}/${attribution.utm_campaign ?? '-'}`,
                                         attribution.gclid && 'Google Ads (gclid)',
                                         attribution.fbclid && 'Facebook (fbclid)',
+                                        attribution.ttclid && 'TikTok Ads (ttclid)',
                                         attribution.landing_page && `vào từ ${attribution.landing_page}`,
                                     ].filter(Boolean).join(' · ') || 'Trực tiếp',
                                 }]

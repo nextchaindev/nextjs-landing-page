@@ -35,6 +35,7 @@ export const SOLUTION_LINKS: NavItem[] = [
   { href: "/giai-phap/website-homestay", label: "Website Homestay", description: "Phòng, tiện ích, hỏi phòng" },
   { href: "/giai-phap/website-nail", label: "Website Nail", description: "Mẫu móng, bảng giá, đặt lịch qua Zalo" },
   { href: "/giai-phap/website-quan-ca-phe", label: "Website Quán Cà Phê", description: "Menu, không gian, chỉ đường" },
+  { href: "/giai-phap/website-nha-hang", label: "Website Nhà hàng", description: "Thực đơn, đặt bàn, tiệc và chi nhánh" },
   { href: "/giai-phap/website-nha-khoa", label: "Website Nha khoa", description: "Dịch vụ, bác sĩ, yêu cầu lịch khám" },
   { href: "/giai-phap/landing-page-bat-dong-san", label: "Landing Page Bất động sản", description: "Thông tin dự án và nhận tư vấn" },
   { href: "/giai-phap/landing-page-khoa-hoc", label: "Landing Page Khóa học", description: "Chương trình và tuyển sinh" },

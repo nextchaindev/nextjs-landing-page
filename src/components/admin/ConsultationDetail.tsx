@@ -99,6 +99,8 @@ export function ConsultationDetail({ isOpen, onClose, consultation }: Consultati
                             <span className="break-all">
                                 {[
                                     consultation.attribution?.gclid && 'Google Ads',
+                                    consultation.attribution?.ttclid && 'TikTok Ads',
+                                    consultation.attribution?.fbclid && 'Facebook',
                                     consultation.attribution?.utm_source &&
                                         `${consultation.attribution.utm_source}/${consultation.attribution.utm_medium ?? '-'}`,
                                     consultation.attribution?.landing_page,
