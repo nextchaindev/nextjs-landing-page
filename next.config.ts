@@ -20,6 +20,7 @@ const nextConfig: NextConfig = {
   // trỏ thẳng tới URL cuối cùng (không nối chuỗi redirect) và sửa link nội bộ.
   async redirects() {
     return [
+      { source: "/admin", destination: "/admin/consultations", permanent: false },
       { source: "/demo/:slug", destination: "/mau-website/:slug", permanent: true },
       { source: "/gioi-thieu", destination: "/ve-chung-toi", permanent: true },
       { source: "/about", destination: "/ve-chung-toi", permanent: true },
