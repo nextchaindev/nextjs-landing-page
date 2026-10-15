@@ -5,13 +5,14 @@ import { SERVICE_DETAILS } from "@/content/services"
 import { TEMPLATES, isTemplateIndexable } from "@/content/templates"
 import { BLOG_POSTS } from "@/content/blog"
 import { LEGAL_UPDATED_AT } from "@/content/legal"
+import { PROJECTS } from "@/content/projects"
 
 /**
  * Date of the last substantive content change to the marketing pages.
  * Bump only when page content actually changes — Google ignores lastmod
  * values that move on every deploy.
  */
-const CONTENT_UPDATED_AT = "2026-10-14"
+const CONTENT_UPDATED_AT = "2026-10-15"
 
 const STATIC_PATHS = [
   "/",
@@ -19,6 +20,8 @@ const STATIC_PATHS = [
   "/mau-website",
   "/dich-vu",
   "/dich-vu/quan-tri-website-theo-thang",
+  "/giai-phap",
+  "/du-an",
   "/quy-trinh",
   "/so-sanh/tu-lam-hay-thue-tron-goi",
   "/ve-chung-toi",
@@ -37,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...STATIC_PATHS.map((path) => entry(path, CONTENT_UPDATED_AT)),
     ...SERVICE_DETAILS.map((service) => entry(`/dich-vu/${service.slug}`, CONTENT_UPDATED_AT)),
     ...INDUSTRIES.map((industry) => entry(`/giai-phap/${industry.slug}`, CONTENT_UPDATED_AT)),
+    ...PROJECTS.map((project) => entry(`/du-an/${project.slug}`, CONTENT_UPDATED_AT)),
     ...TEMPLATES.filter(isTemplateIndexable).map((template) =>
       entry(`/mau-website/${template.slug}`, CONTENT_UPDATED_AT),
     ),

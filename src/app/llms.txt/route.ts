@@ -1,4 +1,4 @@
-import { FREE_SUBDOMAIN_EXAMPLE, MIN_TERM_MONTHS, PLANS, formatVnd } from "@/content/plans"
+import { FREE_SUBDOMAIN_EXAMPLE, PLANS, formatVnd } from "@/content/plans"
 import { SERVICE_DETAILS } from "@/content/services"
 import { INDUSTRIES } from "@/content/industries"
 import { CONTACT, SITE_NAME, SITE_URL } from "@/lib/site"
@@ -27,7 +27,7 @@ export function GET() {
 
 Liên hệ: ${CONTACT.email} | ${CONTACT.phone} | phản hồi ${CONTACT.responseTime}
 
-## Gói theo tháng (VND, không phí khởi tạo, cam kết tối thiểu ${MIN_TERM_MONTHS} tháng)
+## Gói theo tháng (VND, không phí khởi tạo, trả theo tháng)
 
 ${planLines.join("\n")}
 - Địa chỉ miễn phí dạng ${FREE_SUBDOMAIN_EXAMPLE} hoặc kết nối tên miền riêng của khách.

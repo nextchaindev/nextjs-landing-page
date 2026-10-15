@@ -29,6 +29,9 @@ export type Consultation = {
     status: string
     created_at: string
     memo?: string
+    industry?: string | null
+    website_type?: string | null
+    attribution?: Record<string, string> | null
 }
 
 type KanbanBoardProps = {

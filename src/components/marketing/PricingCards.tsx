@@ -2,7 +2,7 @@ import { CheckCircle2, Info } from "lucide-react"
 import ContactButton from "@/components/marketing/ContactButton"
 import Reveal from "@/components/marketing/Reveal"
 import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
-import { MIN_TERM_MONTHS, PLANS, formatVnd } from "@/content/plans"
+import { PLANS, formatVnd } from "@/content/plans"
 import { cn } from "@/components/ui/utils"
 
 /** Monthly plans for landing pages & small businesses. Pass `planIds` to show a subset. */
@@ -36,11 +36,7 @@ export default function PricingCards({ planIds }: { planIds?: string[] }) {
                   khoảng {formatVnd(Math.ceil(plan.monthlyPrice / 30 / 100) * 100)} mỗi ngày
                 </p>
                 <p className="mt-2 inline-block rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-gray-700">
-                  Cam kết {MIN_TERM_MONTHS} tháng · chưa gồm VAT
-                </p>
-                <p className="mt-1 text-xs text-gray-500">
-                  Tổng tối thiểu {MIN_TERM_MONTHS} tháng:{" "}
-                  <span className="font-semibold text-gray-700">{formatVnd(plan.monthlyPrice * MIN_TERM_MONTHS)}</span>
+                  Trả theo tháng · chưa gồm VAT
                 </p>
               </div>
 
@@ -70,8 +66,7 @@ export default function PricingCards({ planIds }: { planIds?: string[] }) {
         ))}
       </div>
       <p className="mt-10 text-center text-sm md:text-base text-gray-600">
-        <strong className="text-gray-900">Không phí khởi tạo.</strong> Thanh toán theo tháng, cam kết tối thiểu{" "}
-        {MIN_TERM_MONTHS} tháng. Giá chưa gồm VAT.
+        <strong className="text-gray-900">Không phí khởi tạo.</strong> Thanh toán theo tháng, không ràng buộc thời hạn tối thiểu. Giá chưa gồm VAT.
         <br />
         Bạn xem và duyệt thiết kế, nội dung trước khi website lên mạng.
       </p>

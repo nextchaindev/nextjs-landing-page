@@ -14,7 +14,7 @@ export const metadata = pageMetadata({
 
 const rows = [
   ["Thời gian của bạn", "Tự học công cụ, viết nội dung, kiểm tra hiển thị và sửa lỗi", "Cung cấp thông tin, phản hồi và duyệt bản cuối"],
-  ["Chi phí", "Phí công cụ, tên miền và thời gian tự làm; tùy nền tảng", "Phí dịch vụ theo gói, phạm vi và thời hạn công bố trước"],
+  ["Chi phí", "Phí công cụ, tên miền và thời gian tự làm; tùy nền tảng", "Phí dịch vụ theo gói và phạm vi công bố trước"],
   ["Nội dung bán hàng", "Bạn tự viết hoặc thuê người viết riêng", "Đội ngũ biên tập từ thông tin bạn cung cấp, bạn duyệt"],
   ["Đo lường & tích hợp", "Bạn thiết lập hoặc thuê kỹ thuật theo nền tảng", "Khảo sát nhu cầu; tích hợp nâng cao được báo giá theo phạm vi"],
   ["Sau khi xuất bản", "Bạn tự cập nhật, theo dõi và xử lý lỗi", "Nextchain bảo trì và chỉnh sửa theo số lượt trong gói"],
@@ -42,7 +42,7 @@ export default function ComparisonPage() {
       <Section muted title="Khi nào nên tự làm, khi nào nên thuê?">
         <div className="grid gap-8 md:grid-cols-2">
           <div><h3 className="text-xl font-bold">Tự làm khi bạn có thời gian</h3><p className="mt-3 text-gray-700">Bạn muốn tự viết, thiết kế và cập nhật trang. Đổi lại, bạn cần kiểm tra form, tên miền và hiển thị trên điện thoại sau mỗi lần sửa.</p></div>
-          <div><h3 className="text-xl font-bold">Thuê trọn gói khi bạn muốn có người làm thay</h3><p className="mt-3 text-gray-700">Bạn cung cấp thông tin và duyệt; Nextchain triển khai theo phạm vi đã thống nhất. Xem số lượt chỉnh sửa, thời hạn tối thiểu và điều kiện hủy trước khi đăng ký.</p></div>
+          <div><h3 className="text-xl font-bold">Thuê trọn gói khi bạn muốn có người làm thay</h3><p className="mt-3 text-gray-700">Bạn cung cấp thông tin và duyệt; Nextchain triển khai theo phạm vi đã thống nhất. Xem số lượt chỉnh sửa và điều kiện hủy trước khi đăng ký.</p></div>
         </div>
         <p className="mt-8 text-gray-700">Xem <Link href="/bang-gia" className="font-semibold text-primary underline">giá gói tháng</Link> hoặc <Link href="/dich-vu/thiet-ke-website-doanh-nghiep" className="font-semibold text-primary underline">giải pháp doanh nghiệp</Link>.</p>
       </Section>

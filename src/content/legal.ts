@@ -7,7 +7,7 @@ import { FREE_SUBDOMAIN_EXAMPLE } from "@/content/plans"
  * khi chạy quảng cáo: thời hạn báo trước, hoàn phí và quyền sở hữu tên miền
  * phải khớp với hợp đồng thực tế. Khi sửa nội dung, cập nhật LEGAL_UPDATED_AT.
  */
-export const LEGAL_UPDATED_AT = "2026-10-14"
+export const LEGAL_UPDATED_AT = "2026-10-15"
 
 export const TERMS_SECTIONS: LegalSection[] = [
   {
@@ -19,7 +19,7 @@ export const TERMS_SECTIONS: LegalSection[] = [
   {
     heading: "Phí dịch vụ và thanh toán",
     paragraphs: [
-      "Gói tháng (landing page, website kinh doanh nhỏ) tính phí theo tháng, không có phí khởi tạo, cam kết tối thiểu 6 tháng. Dự án website, phần mềm và Marketing & SEO tính phí theo báo giá dự án. Mức phí và quyền lợi được ghi tại trang Bảng giá và báo giá gửi khách hàng.",
+      "Gói tháng (landing page, website kinh doanh nhỏ) tính phí theo tháng, không có phí khởi tạo, không ràng buộc thời hạn tối thiểu. Dự án website, phần mềm và Marketing & SEO tính phí theo báo giá dự án. Mức phí và quyền lợi được ghi tại trang Bảng giá và báo giá gửi khách hàng.",
       "Công việc ngoài phạm vi gói được báo giá trước và chỉ thực hiện khi khách hàng đồng ý.",
     ],
   },
@@ -92,7 +92,7 @@ export const CANCELLATION_SECTIONS: LegalSection[] = [
   {
     heading: "Phí đã thanh toán",
     paragraphs: [
-      "Gói tháng có thời hạn cam kết tối thiểu 6 tháng. Nếu bạn muốn hủy trước khi hết thời hạn này, khoản phí còn lại và việc hoàn phí cho kỳ đang sử dụng (nếu có) được ghi rõ trong hợp đồng.", "Nextchain gửi hợp đồng để bạn đọc trước khi ký. Không có khoản phí nào nằm ngoài hợp đồng.",
+      "Gói tháng không ràng buộc thời hạn tối thiểu. Thời gian báo trước khi ngừng sử dụng và việc hoàn phí cho kỳ đang sử dụng (nếu có) được ghi rõ trong hợp đồng.", "Nextchain gửi hợp đồng để bạn đọc trước khi ký. Không có khoản phí nào nằm ngoài hợp đồng.",
     ],
   },
   {

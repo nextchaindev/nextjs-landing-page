@@ -17,8 +17,6 @@ export interface Plan {
   limits: string[]
 }
 
-export const MIN_TERM_MONTHS = 6
-
 /** Free address every plan gets; customers may connect their own domain instead. */
 export const FREE_SUBDOMAIN_EXAMPLE = "ten-cua-ban.nextchain.site"
 

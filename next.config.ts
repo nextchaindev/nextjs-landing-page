@@ -16,6 +16,20 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60,
   },
 
+  // Đổi hoặc xóa slug của trang đã public: thêm một dòng ở đây (308 vĩnh viễn),
+  // trỏ thẳng tới URL cuối cùng (không nối chuỗi redirect) và sửa link nội bộ.
+  async redirects() {
+    return [
+      { source: "/demo/:slug", destination: "/mau-website/:slug", permanent: true },
+      { source: "/gioi-thieu", destination: "/ve-chung-toi", permanent: true },
+      { source: "/about", destination: "/ve-chung-toi", permanent: true },
+      { source: "/contact", destination: "/lien-he", permanent: true },
+      { source: "/pricing", destination: "/bang-gia", permanent: true },
+      { source: "/projects", destination: "/du-an", permanent: true },
+      { source: "/dich-vu/landing-page", destination: "/dich-vu/thiet-ke-landing-page", permanent: true },
+    ]
+  },
+
   // Security and SEO headers
   async headers() {
     return [

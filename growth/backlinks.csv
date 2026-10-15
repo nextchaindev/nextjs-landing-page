@@ -1,0 +1,17 @@
+source,target_page,type,expected_rel,status,owner,cost_vnd,submitted_at,live_url,verified_at,actual_rel,notes
+Google Business Profile,/,profile,,Discovered,,0,,,,,Hồ sơ doanh nghiệp: tên Nextchain.site; danh mục Thiết kế website; gắn website + SĐT
+Trang Vàng Việt Nam (trangvangvietnam.com/dang-ky),/,directory,,Discovered,,0,,,,,Hồ sơ doanh nghiệp xác thực
+LinkedIn Company Page,/,profile,nofollow,Discovered,,0,,,,,Thêm URL vào NEXT_PUBLIC_SAME_AS sau khi tạo
+Facebook Fanpage,/,profile,nofollow,Discovered,,0,,,,,Đặt NEXT_PUBLIC_FACEBOOK_URL để vào schema sameAs
+Zalo Official Account,/,profile,,Discovered,,0,,,,,Liên kết website trong phần giới thiệu OA
+Cốc Cốc Map,/,directory,,Discovered,,0,,,,,
+Bing Places,/,directory,,Discovered,,0,,,,,Nhập từ Google Business Profile
+masothue / hosocongty,/,directory,,Discovered,,0,,,,,Chỉ khi đã có mã số thuế công ty
+Behance,/mau-website,portfolio,nofollow,Discovered,,0,,,,,Đăng ảnh mẫu thật; link về trang mẫu cụ thể
+Việt Designer (forum.vietdesigner.net),/mau-website,forum,ugc,Discovered,,0,,,,,Chỉ đăng ở chuyên mục cho phép chia sẻ thiết kế
+KenhRao (kenhrao.com),/dich-vu,classified,ugc,Discovered,,0,,,,,Một bài đúng danh mục dịch vụ web
+Làm Cha Mẹ (forum.lamchame.com),/blog/website-hay-facebook-cho-kinh-doanh-nho,forum,ugc,Discovered,,0,,,,,Theo nội quy chuyên mục; trả lời câu hỏi thật
+OCD.vn (write for us),/blog/chi-phi-thiet-ke-landing-page,editorial,,Discovered,,0,,,,,Bài chuyên môn; không quảng cáo trá hình
+Brands Vietnam community,/blog,editorial,,Discovered,,0,,,,,Cần nội dung có dữ liệu riêng
+Clutch,/,directory,nofollow,Discovered,,0,,,,,Cần review khách thật
+GoodFirms,/,directory,nofollow,Discovered,,0,,,,,

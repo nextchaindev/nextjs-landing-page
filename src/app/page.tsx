@@ -2,7 +2,6 @@ import Link from "next/link"
 import { FileText, LayoutGrid, ShoppingBag } from "lucide-react"
 import Hero from "@/components/sections/Hero"
 import Process from "@/components/sections/Process"
-import Projects from "@/components/sections/Projects"
 import WhyChooseUs from "@/components/sections/WhyChooseUs"
 import CTA from "@/components/sections/CTA"
 import Section from "@/components/marketing/Section"
@@ -15,12 +14,16 @@ import PricingCards from "@/components/marketing/PricingCards"
 import BlogCard from "@/components/marketing/BlogCard"
 import FaqSection from "@/components/marketing/FaqSection"
 import IntroVideo from "@/components/marketing/IntroVideo"
+import ProjectCards from "@/components/marketing/ProjectCards"
 import JsonLdScript from "@/components/marketing/JsonLdScript"
 import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
 import { GENERAL_FAQS } from "@/content/faqs"
 import { sortedPosts } from "@/content/blog"
+import { PROJECTS } from "@/content/projects"
+
+const FEATURED_PROJECTS = ["kyunghyang", "yamicoco", "rc-sport"]
 
 export const metadata = pageMetadata({
   title: "Nextchain.site | Landing page & website làm trọn gói",
@@ -117,7 +120,17 @@ export default function HomePage() {
         </p>
       </Section>
 
-      <Projects />
+      <Section
+        muted
+        title="Dự án Nextchain đã thực hiện"
+        desc="Landing page, website bán hàng và phần mềm quản lý do chính đội ngũ Nextchain thiết kế và phát triển.">
+        <ProjectCards projects={PROJECTS.filter((project) => FEATURED_PROJECTS.includes(project.slug))} />
+        <p className="mt-10 text-center">
+          <Link href="/du-an" className="font-semibold text-primary hover:underline">
+            Xem tất cả dự án →
+          </Link>
+        </p>
+      </Section>
 
       <Section
         muted

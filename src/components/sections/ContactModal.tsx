@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { CheckCircle2, Loader2, Mail, Phone, User, X } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
 import ReCAPTCHA from "react-google-recaptcha"
+import { LEAD_INDUSTRIES, LEAD_WEBSITE_TYPES } from "@/content/leadOptions"
 
 /** Tên miền thường gõ sai → gợi ý sửa ngay tại chỗ thay vì mất lead. */
 const EMAIL_DOMAIN_TYPOS: Record<string, string> = {
@@ -217,6 +218,32 @@ export default function ContactModal() {
                     {errors.phone}
                   </p>
                 )}
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                {[
+                  { id: "industry", label: "Ngành kinh doanh", options: LEAD_INDUSTRIES },
+                  { id: "websiteType", label: "Bạn cần", options: LEAD_WEBSITE_TYPES },
+                ].map((field) => (
+                  <div key={field.id}>
+                    <label htmlFor={field.id} className="block text-sm font-semibold text-gray-700 mb-2">
+                      {field.label}
+                    </label>
+                    <select
+                      id={field.id}
+                      name={field.id}
+                      value={formData[field.id as "industry" | "websiteType"]}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2.5 md:py-3 border-2 border-gray-200 rounded-xl bg-white text-gray-900 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all">
+                      <option value="">Chọn (không bắt buộc)</option>
+                      {field.options.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
               </div>
 
               {/* Message Field */}

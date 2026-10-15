@@ -13,6 +13,7 @@ import {
 const COMPANY_LINKS: NavItem[] = [
   { href: "/ve-chung-toi", label: "Về chúng tôi" },
   { href: "/dich-vu", label: "Tất cả dịch vụ" },
+  { href: "/giai-phap", label: "Tất cả giải pháp" },
   ...MAIN_NAV,
 ]
 

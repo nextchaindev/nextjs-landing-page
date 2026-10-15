@@ -10,6 +10,8 @@ interface FormData {
   email: string
   phone: string
   message: string
+  industry: string
+  websiteType: string
 }
 
 interface ModalContextType {
@@ -22,7 +24,7 @@ interface ModalContextType {
   openModalClean: () => void
   closeModal: () => void
   handleInputChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => void
   handleSubmit: (e: React.FormEvent, recaptchaToken: string | null, companyWebsite: string) => Promise<void>
   /** Bắn event form_start một lần mỗi phiên khi người dùng focus vào form. */
@@ -40,6 +42,14 @@ const initialFormData: FormData = {
   email: "",
   phone: "",
   message: "",
+  industry: "",
+  websiteType: "",
+}
+
+/** client_id của GA4 lấy từ cookie _ga (GA1.1.<id>.<ts>) để gửi trạng thái lead về GA4 sau này. */
+function readGaClientId() {
+  const match = document.cookie.match(/(?:^|; )_ga=GA\d\.\d\.(\d+\.\d+)/)
+  return match?.[1]
 }
 
 export function ModalProvider({ children }: { children: ReactNode }) {
@@ -123,7 +133,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   }
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -162,7 +172,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
           ...formData,
           company_website: companyWebsite,
           recaptchaToken,
-          attribution: readAttribution() ?? undefined,
+          attribution: { ...readAttribution(), ga_client_id: readGaClientId() },
         }),
       })
 
@@ -178,6 +188,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
           trackEvent("generate_lead", {
             form_id: "consultation_modal",
             currency: "VND",
+            ...(formData.industry && { lead_industry: formData.industry }),
+            ...(formData.websiteType && { lead_website_type: formData.websiteType }),
           })
           // Google Ads conversion — bật bằng NEXT_PUBLIC_GAW_ID và
           // NEXT_PUBLIC_GAW_LABEL (định dạng AW-XXXXXXXXX/nhãn-conversion).

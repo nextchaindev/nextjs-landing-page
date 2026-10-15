@@ -1,4 +1,4 @@
-import { MIN_TERM_MONTHS, PLANS, formatVnd } from "@/content/plans"
+import { PLANS, formatVnd } from "@/content/plans"
 import { parsePrice, projectServices } from "@/content/projectPricing"
 
 export const dynamic = "force-static"
@@ -34,7 +34,7 @@ export function GET() {
 
   const body = `# Bảng giá — Nextchain.site
 
-Đơn vị: VND. Gói tháng chưa gồm VAT. Cam kết tối thiểu ${MIN_TERM_MONTHS} tháng, không phí khởi tạo.
+Đơn vị: VND. Gói tháng chưa gồm VAT, trả theo tháng, không phí khởi tạo.
 Chi tiết điều khoản: https://www.nextchain.site/bang-gia và https://www.nextchain.site/dieu-khoan
 
 # Gói website theo tháng

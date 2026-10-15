@@ -43,7 +43,7 @@ export default function Hero() {
             </Link>
           </div>
           <p className="mt-3 text-sm text-gray-600">
-            Gói tháng từ {STARTING_PRICE}/tháng, tối thiểu 6 tháng. Dự án lớn báo giá riêng.
+            Gói tháng từ {STARTING_PRICE}/tháng. Dự án lớn báo giá riêng.
           </p>
 
           <ul className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-2.5 sm:gap-x-6">

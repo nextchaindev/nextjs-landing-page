@@ -12,9 +12,9 @@ import { useModal } from "@/context/ModalContext"
 import { MAIN_NAV, SERVICE_LINKS, SITE_NAME, SOLUTION_LINKS, type NavItem } from "@/lib/site"
 import { cn } from "@/components/ui/utils"
 
-const MENU_GROUPS: { title: string; links: NavItem[]; allHref?: string }[] = [
-  { title: "Giải pháp", links: SOLUTION_LINKS },
-  { title: "Dịch vụ", links: SERVICE_LINKS, allHref: "/dich-vu" },
+const MENU_GROUPS: { title: string; links: NavItem[]; allHref?: string; allLabel?: string }[] = [
+  { title: "Giải pháp", links: SOLUTION_LINKS, allHref: "/giai-phap", allLabel: "Xem tất cả giải pháp →" },
+  { title: "Dịch vụ", links: SERVICE_LINKS, allHref: "/dich-vu", allLabel: "Xem tất cả dịch vụ →" },
 ]
 
 export default function Header() {
@@ -53,7 +53,7 @@ export default function Header() {
           <Image src={ImageLogo} alt={SITE_NAME} fill className="object-cover" priority />
         </Link>
 
-        <nav aria-label="Điều hướng chính" className="hidden lg:flex items-center gap-6">
+        <nav aria-label="Điều hướng chính" className="hidden xl:flex items-center gap-6 whitespace-nowrap">
           {MENU_GROUPS.map((group) => (
             <div key={group.title} className="relative group/dd">
               <button
@@ -84,7 +84,7 @@ export default function Header() {
                       <Link
                         href={group.allHref}
                         className="block rounded-xl px-4 py-2.5 text-sm font-semibold text-primary hover:bg-orange-50">
-                        Xem tất cả dịch vụ →
+                        {group.allLabel}
                       </Link>
                     </li>
                   )}
@@ -103,12 +103,12 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <Button
             onClick={openModalClean}
-            className="bg-blue-600 hover:bg-blue-600/90 text-white text-sm md:text-base px-5 md:px-6 rounded-lg font-medium transition-all shadow-md active:scale-95 hidden lg:block">
+            className="bg-blue-600 hover:bg-blue-600/90 text-white text-sm md:text-base px-5 md:px-6 rounded-lg font-medium transition-all shadow-md active:scale-95 hidden xl:block whitespace-nowrap">
             Nhận tư vấn
           </Button>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
+            className="xl:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
             aria-expanded={isMenuOpen}
             aria-label="Mở menu">
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -123,7 +123,7 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-b border-gray-100 overflow-y-auto max-h-[calc(100dvh-64px)]">
+            className="xl:hidden bg-white border-b border-gray-100 overflow-y-auto max-h-[calc(100dvh-64px)]">
             <div className="flex flex-col p-4 gap-1">
               {MENU_GROUPS.map((group) => (
                 <div key={group.title} className="mb-2">

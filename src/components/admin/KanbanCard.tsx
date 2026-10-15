@@ -38,6 +38,15 @@ export function Card({ item, isOverlay }: CardProps) {
                 <div className="text-sm text-gray-600 truncate">{item.contact}</div>
             )}
             <div className="text-sm text-gray-600 truncate">{item.phone}</div>
+            {(item.industry || item.website_type) && (
+                <div className="flex flex-wrap gap-1">
+                    {[item.industry, item.website_type].filter(Boolean).map((tag) => (
+                        <span key={tag} className="rounded bg-orange-50 px-1.5 py-0.5 text-[11px] font-medium text-orange-700">
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            )}
             {item.message && (
                 <p className="mt-1 line-clamp-3 text-xs text-gray-500">
                     {item.message}

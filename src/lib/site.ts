@@ -52,6 +52,7 @@ export const SERVICE_LINKS: NavItem[] = [
 
 export const MAIN_NAV: NavItem[] = [
   { href: "/mau-website", label: "Mẫu Website" },
+  { href: "/du-an", label: "Dự án" },
   { href: "/bang-gia", label: "Bảng giá" },
   { href: "/quy-trinh", label: "Quy trình" },
   { href: "/so-sanh/tu-lam-hay-thue-tron-goi", label: "Tự làm hay thuê?" },
@@ -74,8 +75,13 @@ export function socialProfiles(): string[] {
   return [
     "https://www.nextchain.kr/",
     "https://zalo.me/0909807687",
+    "https://www.nextchain.tech/",
     process.env.NEXT_PUBLIC_FACEBOOK_URL || "",
-  ].filter(Boolean)
+    // Hồ sơ khác (LinkedIn, Google Business Profile, Behance…), cách nhau bằng dấu phẩy.
+    ...(process.env.NEXT_PUBLIC_SAME_AS ?? "").split(","),
+  ]
+    .map((url) => url.trim())
+    .filter(Boolean)
 }
 
 export function absoluteUrl(path: string) {

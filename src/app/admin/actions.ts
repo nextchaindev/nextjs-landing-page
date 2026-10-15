@@ -3,6 +3,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { sendLeadStatusEvent } from '@/lib/leadLifecycle'
 
 export async function login(formData: FormData) {
     const supabase = await createClient()
@@ -37,7 +38,7 @@ export async function updateConsultationStatus(id: string, newStatus: string) {
     if (!['new', 'contacted', 'qualified', 'won', 'closed'].includes(newStatus)) return { error: 'Invalid status' }
 
     // 1. Get old status for logging (optional, but good for details)
-    const { data: oldData } = await supabase.from('consultations').select('status').eq('id', id).single()
+    const { data: oldData } = await supabase.from('consultations').select('*').eq('id', id).single()
 
     // 2. Update status
     const { error } = await supabase
@@ -55,6 +56,10 @@ export async function updateConsultationStatus(id: string, newStatus: string) {
         action: 'status_change',
         details: { from: oldData?.status, to: newStatus }
     })
+
+    if (oldData?.status !== newStatus) {
+        await sendLeadStatusEvent(newStatus, oldData?.attribution?.ga_client_id, id)
+    }
 
     revalidatePath('/admin/consultations')
     return { success: true }

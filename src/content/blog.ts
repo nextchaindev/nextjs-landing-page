@@ -4,6 +4,7 @@ import coverLanding from "@/assets/project-4.png"
 import coverCompare from "@/assets/project-3.png"
 import coverSpa from "@/assets/stock/spa.jpg"
 import coverMonthly from "@/assets/stock/cafe.jpg"
+import coverFacebook from "@/assets/stock/nail.jpg"
 import { FREE_SUBDOMAIN_EXAMPLE, PLANS, STARTING_PRICE, formatVnd } from "@/content/plans"
 
 /**
@@ -346,6 +347,92 @@ export const BLOG_POSTS: BlogPost[] = [
       { href: "/bang-gia", label: "Bảng giá dịch vụ và gói tháng" },
       { href: "/dich-vu/quan-tri-website-theo-thang", label: "Quản trị website theo tháng" },
       { href: "/chinh-sach-huy-dich-vu", label: "Chính sách hủy dịch vụ" },
+    ],
+  },
+  {
+    slug: "website-hay-facebook-cho-kinh-doanh-nho",
+    title: "Đã có Fanpage Facebook, kinh doanh nhỏ có cần website không?",
+    metaTitle: "Đã có Fanpage, có cần website không?",
+    description:
+      "So sánh Fanpage Facebook và website cho spa, salon, quán cà phê, homestay: khách tìm thấy bạn ở đâu, ai sở hữu dữ liệu, chi phí và khi nào nên làm website.",
+    category: "So sánh",
+    cover: coverFacebook,
+    publishedAt: "2026-10-15",
+    author: AUTHOR,
+    readingMinutes: 5,
+    answer:
+      "Fanpage giúp giữ liên lạc với khách quen; website giúp khách mới tìm thấy bạn trên Google và tin tưởng trước khi liên hệ. Nếu khách của bạn thường tìm “spa gần đây”, “homestay Đà Lạt” hay xem bảng giá trước khi đến, nên có cả hai: website làm nơi thông tin chính thức, Fanpage để đăng bài và trò chuyện hằng ngày.",
+    keyTakeaways: [
+      "Fanpage và website không thay thế nhau — mỗi kênh giải quyết một việc khác.",
+      "Bài đăng Fanpage trôi theo thời gian; website giữ bảng giá, dịch vụ, địa chỉ luôn ở chỗ dễ tìm.",
+      "Website và tên miền là tài sản của bạn; Fanpage phụ thuộc chính sách của nền tảng.",
+      `Chi phí website cho cơ sở nhỏ hiện có thể bắt đầu từ ${STARTING_PRICE}/tháng, không cần trả một khoản lớn ban đầu.`,
+    ],
+    sections: [
+      {
+        heading: "Fanpage và website khác nhau ở điểm nào?",
+        table: {
+          head: ["Tiêu chí", "Fanpage Facebook", "Website"],
+          rows: [
+            ["Khách mới tìm thấy bạn", "Chủ yếu qua bạn bè chia sẻ, quảng cáo", "Qua Google, Google Maps, link chia sẻ"],
+            ["Thông tin dịch vụ, bảng giá", "Nằm trong bài đăng, dễ bị trôi", "Có trang riêng, luôn ở vị trí cố định"],
+            ["Hình ảnh thương hiệu", "Giao diện giống mọi Fanpage khác", "Thiết kế riêng theo màu sắc, phong cách của bạn"],
+            ["Quyền sở hữu", "Phụ thuộc chính sách và tài khoản Facebook", "Bạn sở hữu tên miền và nội dung"],
+            ["Nhận yêu cầu", "Tin nhắn, bình luận", "Form, nút gọi, Zalo — gửi thẳng cho bạn"],
+            ["Chi phí", "Miễn phí tạo, trả tiền nếu chạy quảng cáo", "Phí thiết kế hoặc gói tháng, tên miền, hosting"],
+          ],
+        },
+      },
+      {
+        heading: "Khi nào chỉ cần Fanpage là đủ?",
+        bullets: [
+          "Bạn mới thử nghiệm sản phẩm, chưa có địa điểm hay bảng giá cố định.",
+          "Gần như toàn bộ khách đến từ người quen giới thiệu và nhắn tin trực tiếp.",
+          "Bạn chưa có thời gian trả lời yêu cầu từ kênh mới.",
+        ],
+      },
+      {
+        heading: "Khi nào nên có website?",
+        bullets: [
+          "Khách thường tìm trên Google trước khi chọn: spa, nha khoa, homestay, nhà hàng, trung tâm đào tạo.",
+          "Bạn chạy quảng cáo Google và cần một trang đích rõ ràng để đo hiệu quả.",
+          "Khách hỏi đi hỏi lại cùng một câu về giá, giờ mở cửa, địa chỉ.",
+          "Bạn muốn trông chuyên nghiệp hơn khi làm việc với đối tác, khách doanh nghiệp.",
+          "Bạn lo mất kênh liên lạc nếu tài khoản Fanpage gặp sự cố.",
+        ],
+      },
+      {
+        heading: "Dùng website và Fanpage cùng nhau thế nào?",
+        paragraphs: [
+          "Website là nơi đặt thông tin chính thức: dịch vụ, bảng giá, hình ảnh, địa chỉ, cách đặt lịch. Fanpage dùng để đăng bài mới, khuyến mãi và trò chuyện với khách.",
+          "Trong mỗi bài Fanpage, dẫn link về trang dịch vụ hoặc bảng giá trên website. Trên website, gắn nút Zalo, Facebook và form để khách chọn cách liên hệ quen thuộc.",
+        ],
+      },
+      {
+        heading: "Website cho cơ sở nhỏ tốn bao nhiêu?",
+        paragraphs: [
+          `Có hai cách phổ biến: trả một lần cho thiết kế rồi tự lo hosting, cập nhật; hoặc trả theo tháng với dịch vụ trọn gói. Nextchain.site áp dụng gói tháng từ ${STARTING_PRICE}, không phí khởi tạo, có địa chỉ miễn phí dạng ${FREE_SUBDOMAIN_EXAMPLE} hoặc dùng tên miền riêng của bạn.`,
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Có website rồi có nên bỏ Fanpage không?",
+        a: "Không nên. Fanpage vẫn là kênh tốt để giữ liên lạc với khách quen và đăng nội dung hằng ngày. Website bổ sung phần khách mới tìm kiếm và thông tin chính thức.",
+      },
+      {
+        q: "Website có giúp tôi lên Google Maps không?",
+        a: "Google Maps hiển thị theo Hồ sơ doanh nghiệp trên Google (Google Business Profile). Gắn link website vào hồ sơ này giúp khách xem thêm thông tin và liên hệ dễ hơn.",
+      },
+      {
+        q: "Tôi không rành công nghệ, có tự quản lý website được không?",
+        a: "Với gói tháng của Nextchain, bạn chỉ cần gửi nội dung muốn thay đổi; đội ngũ Nextchain cập nhật theo số lượt của gói.",
+      },
+    ],
+    relatedLinks: [
+      { href: "/giai-phap", label: "Website theo ngành" },
+      { href: "/bang-gia", label: "Bảng giá gói tháng" },
+      { href: "/so-sanh/tu-lam-hay-thue-tron-goi", label: "Tự làm hay thuê trọn gói?" },
     ],
   },
 ]

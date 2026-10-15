@@ -3,8 +3,10 @@ import { supabaseAdmin } from '@/lib/supabaseClient'
 import { checkConsultationRateLimit } from '@/lib/consultationRateLimit'
 import { SITE_URL } from '@/lib/site'
 import { ATTRIBUTION_KEYS } from '@/lib/attribution'
+import { LEAD_INDUSTRIES, LEAD_WEBSITE_TYPES, pickOption } from '@/content/leadOptions'
 
-const ATTRIBUTION_FIELDS = [...ATTRIBUTION_KEYS, 'landing_page', 'referrer', 'captured_at'] as const
+const ATTRIBUTION_FIELDS = [...ATTRIBUTION_KEYS, 'landing_page', 'referrer', 'captured_at', 'ga_client_id'] as const
+const DUPLICATE_WINDOW_MS = 24 * 60 * 60 * 1000
 
 /** Chỉ giữ các trường nguồn truy cập đã biết, dạng chuỗi ngắn. */
 function sanitizeAttribution(value: unknown): Record<string, string> | null {
@@ -43,6 +45,8 @@ export async function POST(request: Request) {
         }
         const { name, email, phone, message, company_website, recaptchaToken } = body
         const attribution = sanitizeAttribution(body.attribution)
+        const industry = pickOption(LEAD_INDUSTRIES, body.industry)
+        const websiteType = pickOption(LEAD_WEBSITE_TYPES, body.websiteType)
 
         if (typeof company_website !== 'string' || company_website.trim() !== '') {
             // Honeypot: trả về thành công để bot không đoán được bộ lọc,
@@ -109,6 +113,17 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Server configuration error' }, { status: 503 })
         }
 
+        // Cùng số điện thoại đã gửi trong 24 giờ và lead chưa đóng: không tạo lead
+        // mới, không tính conversion lần nữa — chỉ báo nhân viên khách đã nhắn lại.
+        const { data: recent } = await supabaseAdmin
+            .from('consultations')
+            .select('id')
+            .eq('phone', normalizedPhone)
+            .gte('created_at', new Date(Date.now() - DUPLICATE_WINDOW_MS).toISOString())
+            .neq('status', 'closed')
+            .limit(1)
+        const isDuplicate = Boolean(recent && recent.length > 0)
+
         // 1. Insert into Supabase
         const lead = {
             name,
@@ -117,15 +132,20 @@ export async function POST(request: Request) {
             message,
             status: 'new',
         }
-        let { data, error } = await supabaseAdmin
-            .from('consultations')
-            .insert([{ ...lead, ...(attribution && { attribution }) }])
-            .select()
-        // Cột `attribution` chưa được tạo (chưa chạy supabase_attribution.sql):
-        // lưu lead không kèm nguồn thay vì làm hỏng form.
-        if (error && attribution && /attribution/.test(error.message)) {
-            console.error('consultations.attribution column missing; run supabase_attribution.sql')
-            ;({ data, error } = await supabaseAdmin.from('consultations').insert([lead]).select())
+        const extras = {
+            ...(attribution && { attribution }),
+            ...(industry && { industry }),
+            ...(websiteType && { website_type: websiteType }),
+        }
+        let data: unknown = null
+        let error: { message: string } | null = null
+        if (!isDuplicate) {
+            ;({ data, error } = await supabaseAdmin.from('consultations').insert([{ ...lead, ...extras }]).select())
+            // Cột mới chưa được tạo (chưa chạy file SQL): lưu lead cơ bản thay vì làm hỏng form.
+            if (error && /attribution|industry|website_type/.test(error.message)) {
+                console.error('consultations columns missing; run supabase_attribution.sql and supabase_lead_details.sql')
+                ;({ data, error } = await supabaseAdmin.from('consultations').insert([lead]).select())
+            }
         }
 
         if (error) {
@@ -139,9 +159,11 @@ export async function POST(request: Request) {
             const discordPayload = {
                 embeds: [
                     {
-                        title: 'New Consultation Request',
-                        color: 5763719, // Green
+                        title: isDuplicate ? 'Khách gửi lại yêu cầu (trùng SĐT trong 24h)' : 'New Consultation Request',
+                        color: isDuplicate ? 16753920 : 5763719,
                         fields: [
+                            ...(industry ? [{ name: 'Ngành', value: industry, inline: true }] : []),
+                            ...(websiteType ? [{ name: 'Cần', value: websiteType, inline: true }] : []),
                             { name: 'Name', value: name, inline: true },
                             { name: 'Email', value: typeof email === 'string' && email.trim() ? email.trim() : 'Không cung cấp', inline: true },
                             { name: 'Phone', value: phone, inline: true },
@@ -176,7 +198,7 @@ export async function POST(request: Request) {
             }
         }
 
-        return NextResponse.json({ success: true, verified: true, data }, { status: 200 })
+        return NextResponse.json({ success: true, verified: !isDuplicate, data }, { status: 200 })
     } catch (error) {
         console.error('API error:', error)
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })

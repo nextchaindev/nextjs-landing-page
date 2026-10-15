@@ -48,7 +48,7 @@ export default async function IndustryPage({ params }: PageProps<"/giai-phap/[sl
         })}
       />
       <PageHeader
-        crumbs={[{ name: industry.name, path }]}
+        crumbs={[{ name: "Giải pháp", path: "/giai-phap" }, { name: industry.name, path }]}
         eyebrow={`Dành cho ${industry.audience.toLowerCase()}`}
         title={industry.h1}
         intro={industry.intro}

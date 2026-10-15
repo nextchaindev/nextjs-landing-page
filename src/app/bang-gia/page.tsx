@@ -12,7 +12,7 @@ import type { Faq } from "@/content/faqs"
 
 const PATH = "/bang-gia"
 const DESCRIPTION =
-  `Gói website theo tháng từ ${STARTING_PRICE}, không phí khởi tạo, cam kết 6 tháng. Website doanh nghiệp, bán hàng, phần mềm và SEO báo giá theo dự án.`
+  `Gói website theo tháng từ ${STARTING_PRICE}, không phí khởi tạo, trả theo tháng. Website doanh nghiệp, bán hàng, phần mềm và SEO báo giá theo dự án.`
 
 export const metadata = pageMetadata({
   title: "Bảng giá gói website theo tháng",
@@ -23,7 +23,7 @@ export const metadata = pageMetadata({
 const PRICING_FAQS: Faq[] = [
   {
     q: "Gói tháng có phí khởi tạo không?",
-    a: "Không. Thiết kế, soạn nội dung, hosting và SEO ban đầu đã nằm trong phí tháng. Gói yêu cầu cam kết tối thiểu 6 tháng.",
+    a: "Không. Thiết kế, soạn nội dung, hosting và SEO ban đầu đã nằm trong phí tháng.",
   },
   {
     q: "Tôi có cần mua tên miền không?",
