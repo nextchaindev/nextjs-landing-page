@@ -203,11 +203,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
               phone_number: phone,
               ...(formData.email.trim() && { email: formData.email.trim().toLowerCase() }),
             })
-            trackEvent("conversion", {
-              send_to: `${gawId}/${gawLabel}`,
-              currency: "VND",
-              value: 1,
-            })
+            // Không gửi value/currency: tài khoản Ads dùng KRW, giá trị lấy từ cài đặt conversion.
+            trackEvent("conversion", { send_to: `${gawId}/${gawLabel}` })
           }
         }
         // router.push("/success")
