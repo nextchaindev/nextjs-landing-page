@@ -68,7 +68,7 @@ export default function ContactModal() {
   }
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const website = new FormData(e.currentTarget).get("company_website")
+    const website = new FormData(e.currentTarget).get("nc_hp_field")
     handleSubmit(e, recaptchaToken, typeof website === "string" ? website : "")
   }
 
@@ -99,8 +99,9 @@ export default function ContactModal() {
           onFocusCapture={notifyFormStart}
           className="pl-4 pr-2 md:pl-8 md:pr-8 py-8 ">
           <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-            <label htmlFor="company_website">Địa chỉ website công ty</label>
-            <input id="company_website" name="company_website" type="text" tabIndex={-1} autoComplete="off" />
+            {/* Tên trung tính để trình duyệt không tự điền (autofill) vào ô bẫy bot. */}
+            <label htmlFor="nc_hp_field">Bỏ trống ô này</label>
+            <input id="nc_hp_field" name="nc_hp_field" type="text" tabIndex={-1} autoComplete="off" />
           </div>
           <div className="w-full max-h-[350px] md:max-h-[calc(100dvh-350px)] space-y-4 md:space-y-6 overflow-y-auto">
             <div className="space-y-4 md:space-y-6 pr-2">

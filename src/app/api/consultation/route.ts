@@ -51,6 +51,7 @@ export async function POST(request: Request) {
         if (typeof company_website !== 'string' || company_website.trim() !== '') {
             // Honeypot: trả về thành công để bot không đoán được bộ lọc,
             // nhưng `verified: false` báo client không tính conversion.
+            console.warn('Consultation honeypot triggered; lead dropped')
             return NextResponse.json({ success: true, verified: false }, { status: 200 })
         }
 
