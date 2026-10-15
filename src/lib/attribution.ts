@@ -15,6 +15,7 @@ export const ATTRIBUTION_KEYS = [
   "gbraid",
   "wbraid",
   "fbclid",
+  "ttclid",
   "utm_source",
   "utm_medium",
   "utm_campaign",

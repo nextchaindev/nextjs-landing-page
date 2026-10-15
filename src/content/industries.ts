@@ -6,6 +6,7 @@ import imageHomestay from "@/assets/stock/homestay.jpg"
 import imageDental from "@/assets/stock/dental.jpg"
 import imageNail from "@/assets/stock/nail.jpg"
 import imageCafe from "@/assets/stock/cafe.jpg"
+import imageRestaurant from "@/assets/project-1.png"
 import imageRealEstate from "@/assets/project-4.png"
 import imageEducation from "@/assets/project-3.png"
 
@@ -229,7 +230,7 @@ export const INDUSTRIES: Industry[] = [
     slug: "website-quan-ca-phe",
     name: "Website Quán Cà Phê",
     shortName: "Quán cà phê",
-    audience: "Quán cà phê, trà sữa, tiệm bánh và quán ăn nhỏ",
+    audience: "Quán cà phê, trà sữa và tiệm bánh",
     image: imageCafe,
     imageAlt: "Không gian quán cà phê sáng, quầy pha chế và bảng menu",
     metaTitle: "Thiết kế website quán cà phê theo gói tháng",
@@ -271,6 +272,56 @@ export const INDUSTRIES: Industry[] = [
       {
         q: "Website có nhận đặt bàn không?",
         a: "Có form đặt bàn gửi về Zalo hoặc email của quán để bạn xác nhận với khách.",
+      },
+    ],
+  },
+  {
+    slug: "website-nha-hang",
+    name: "Website Nhà hàng",
+    shortName: "Nhà hàng",
+    audience: "Nhà hàng, quán nướng, lẩu và quán ăn gia đình",
+    image: imageRestaurant,
+    imageAlt: "Khách xem website nhà hàng BBQ trên điện thoại ngay tại bàn",
+    metaTitle: "Thiết kế website nhà hàng theo gói tháng",
+    metaDescription:
+      "Website nhà hàng có thực đơn kèm ảnh và giá, form đặt bàn gửi về Zalo, mục tiệc và sự kiện, chỉ đường từng chi nhánh. Nextchain thiết kế và cập nhật theo tháng.",
+    h1: "Website nhà hàng: thực đơn hấp dẫn, đặt bàn nhanh, khách tìm đến dễ",
+    intro:
+      "Khách chọn nhà hàng cho bữa tối gia đình, tiếp khách hay liên hoan thường xem trước món ăn, mức giá và không gian. Website nhà hàng gom đủ những thông tin đó vào một đường link, kèm form đặt bàn để quán chủ động sắp xếp chỗ ngồi.",
+    problems: [
+      {
+        title: "Khách gọi điện chỉ để hỏi giá và món",
+        desc: "Thực đơn trên website có ảnh, giá và ghi chú khẩu phần, khách xem trước nên cuộc gọi chủ yếu là để đặt bàn.",
+      },
+      {
+        title: "Đặt bàn cho nhóm đông, tiệc công ty bị sót",
+        desc: "Form đặt bàn ghi rõ ngày, giờ, số khách và yêu cầu riêng, gửi về Zalo hoặc email để quán xác nhận lại với khách.",
+      },
+      {
+        title: "Nhiều chi nhánh, khách đến nhầm địa chỉ",
+        desc: "Mỗi chi nhánh có địa chỉ, giờ mở cửa, số điện thoại và nút chỉ đường Google Maps riêng.",
+      },
+    ],
+    pages: [
+      { title: "Trang chủ", desc: "Món đặc trưng, không gian, giờ mở cửa và nút đặt bàn luôn hiển thị." },
+      { title: "Thực đơn", desc: "Món theo nhóm, có ảnh, giá và ghi chú khẩu phần hoặc độ cay." },
+      { title: "Đặt bàn", desc: "Form chọn ngày, giờ, số khách; kết quả gửi về Zalo hoặc email của quán." },
+      { title: "Tiệc & sự kiện", desc: "Set menu cho sinh nhật, liên hoan công ty, sức chứa từng khu." },
+      { title: "Chi nhánh", desc: "Địa chỉ, giờ mở cửa và chỉ đường của từng cơ sở." },
+      { title: "Ưu đãi", desc: "Chương trình trong tháng, cập nhật theo số lượt của gói." },
+    ],
+    faqs: [
+      {
+        q: "Website có thay được hệ thống đặt bàn hay phần mềm bán hàng (POS) không?",
+        a: "Không. Form đặt bàn gửi yêu cầu để quán xác nhận thủ công; website không quản lý bàn trống hay thanh toán. Nếu cần kết nối hệ thống đặt bàn hoặc POS, Nextchain báo giá riêng theo dự án.",
+      },
+      {
+        q: "Nhà hàng có nhiều chi nhánh thì làm thế nào?",
+        a: "Mỗi chi nhánh có trang hoặc mục riêng với địa chỉ, giờ mở cửa và bản đồ. Số chi nhánh hiển thị phụ thuộc gói đã chọn.",
+      },
+      {
+        q: "Đổi thực đơn, đổi giá theo mùa có mất phí không?",
+        a: "Đổi thực đơn và giá nằm trong số lượt chỉnh sửa hằng tháng của gói. Phần vượt số lượt được báo giá trước khi làm.",
       },
     ],
   },

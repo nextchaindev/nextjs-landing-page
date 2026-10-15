@@ -13,7 +13,7 @@ const PATH = "/giai-phap"
 
 export const metadata = pageMetadata({
   title: "Giải pháp website theo ngành",
-  description: `Website cho spa, salon, nail, homestay, quán cà phê, nha khoa, bất động sản và khóa học. Thiết kế riêng theo ngành, trả theo tháng từ ${STARTING_PRICE}.`,
+  description: `Website cho spa, salon, nail, homestay, quán cà phê, nhà hàng, nha khoa, bất động sản, khóa học. Thiết kế riêng theo ngành, trả theo tháng từ ${STARTING_PRICE}.`,
   path: PATH,
 })
 

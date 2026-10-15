@@ -73,7 +73,7 @@ for (const [, paths] of seenDescs) if (paths.length > 1) fail(`Trùng descriptio
 
 // Link nội bộ gãy (bỏ qua file tĩnh, API, admin).
 for (const link of internalLinks) {
-  if (/^\/(api|admin|auth|_next)\b|\.\w+$/.test(link)) continue
+  if (/^\/(api|admin|auth|_next|cdn-cgi)\b|\.\w+$/.test(link)) continue
   const res = await get(link)
   if (res.status >= 400) fail(`Link nội bộ gãy: ${link} → ${res.status}`)
   else if (res.status >= 300) warn(`Link nội bộ đi qua redirect: ${link} → ${res.headers.get("location")}`)
