@@ -38,6 +38,10 @@ export default function PricingCards({ planIds }: { planIds?: string[] }) {
                 <p className="mt-2 inline-block rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-gray-700">
                   Cam kết {MIN_TERM_MONTHS} tháng · chưa gồm VAT
                 </p>
+                <p className="mt-1 text-xs text-gray-500">
+                  Tổng tối thiểu {MIN_TERM_MONTHS} tháng:{" "}
+                  <span className="font-semibold text-gray-700">{formatVnd(plan.monthlyPrice * MIN_TERM_MONTHS)}</span>
+                </p>
               </div>
 
               <ul className="mt-8 space-y-4 flex-1">

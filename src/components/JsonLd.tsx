@@ -18,11 +18,21 @@ export default function JsonLd() {
       "Dịch vụ thiết kế, xuất bản và quản lý website/landing page theo gói tháng cho doanh nghiệp nhỏ tại Việt Nam.",
     email: CONTACT.email,
     telephone: CONTACT.phone,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Hồ Chí Minh",
-      addressCountry: "VN",
-    },
+    address: [
+      {
+        "@type": "PostalAddress",
+        streetAddress:
+          "Tầng 3, Khối đế - Tháp 1 và 2, Tòa nhà The Vista, Số 628C Đường Võ Nguyên Giáp, Phường An Khánh",
+        addressLocality: "Thành phố Hồ Chí Minh",
+        addressCountry: "VN",
+      },
+      {
+        "@type": "PostalAddress",
+        streetAddress: "S1.01 Vinhomes Grand Park, Phường Long Bình",
+        addressLocality: "Thành phố Hồ Chí Minh",
+        addressCountry: "VN",
+      },
+    ],
     areaServed: { "@type": "Country", name: "Vietnam" },
     priceRange: "249.000đ - 45.000.000đ+",
     ...(profiles.length > 0 && { sameAs: profiles }),

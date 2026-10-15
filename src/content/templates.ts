@@ -19,7 +19,8 @@ import imageLimousine from "@/assets/project-5.png"
  * được thiết kế riêng; mẫu chỉ giúp khách hình dung bố cục theo ngành.
  *
  * - `industrySlug`: có trang giải pháp riêng → có trang chi tiết mẫu.
- * - `demoUrl`: có bản demo thật → trang chi tiết được index và vào sitemap.
+ * - `demoUrl`: URL bản demo BÊN NGOÀI (web do Nextchain chuẩn bị sẵn,
+ *   tách khỏi site marketing). Chưa có → nút "Tư vấn bố cục".
  */
 export const TEMPLATE_CATEGORIES = [
   { id: "lam-dep", label: "Làm đẹp" },
@@ -38,9 +39,12 @@ export interface Template {
   category: TemplateCategory
   style: string
   description: string
+  /** Các khối bố cục trên bản demo — nội dung riêng của trang mẫu, không lặp trang giải pháp. */
+  highlights?: string[]
   image: StaticImageData
   imageAlt: string
   industrySlug?: string
+  /** URL demo bên ngoài (https://...). Bỏ trống khi chưa có bản demo. */
   demoUrl?: string
 }
 
@@ -51,10 +55,18 @@ export const TEMPLATES: Template[] = [
     category: "lam-dep",
     style: "Nhẹ nhàng, thư giãn",
     description: "Bảng dịch vụ theo liệu trình, ảnh không gian lớn và nút đặt hẹn luôn hiển thị.",
+    highlights: [
+      "Hero có ảnh không gian lớn và nút “Đặt lịch hẹn” nhìn thấy ngay",
+      "Bảng dịch vụ kèm thời lượng và giá từng liệu trình",
+      "Khối ưu đãi tháng hiển thị ngay trên trang chủ",
+      "Gallery ảnh không gian dạng lưới 3 cột",
+      "Form đặt hẹn ngắn: tên, số điện thoại, dịch vụ, ngày",
+      "Chân trang có giờ mở cửa, địa chỉ và nút gọi",
+    ],
     image: imageSpa,
     imageAlt: "Mẫu website spa chăm sóc da",
     industrySlug: "website-spa",
-    demoUrl: "/demo/spa",
+    demoUrl: "https://vitrine-landing-page.onrender.com/preview/wyf47vx3cope3ibdjni8/v/1?owner=4f5f7db73b42434c84e41a3dec4565f9",
   },
   {
     slug: "salon",
@@ -62,14 +74,23 @@ export const TEMPLATES: Template[] = [
     category: "lam-dep",
     style: "Hiện đại, cá tính",
     description: "Portfolio kiểu tóc dạng lưới, bảng giá theo nhóm dịch vụ và đặt lịch nhanh.",
+    highlights: [
+      "Hero nêu cam kết “biết giá trước khi cắt”",
+      "Bảng giá từng hạng mục: cắt, gội, uốn, nhuộm, dưỡng",
+      "Gallery tác phẩm mới nhất ở vị trí giữa trang",
+      "Combo khuyến mãi cho khách đặt lịch online",
+      "Nút gọi ngay trên header, không cần cuộn",
+      "Phần giới thiệu thợ và năm kinh nghiệm",
+    ],
     image: imageSalon,
     imageAlt: "Mẫu website salon tóc",
     industrySlug: "website-salon",
-    demoUrl: "/demo/salon",
+    demoUrl: "https://vitrine-landing-page.onrender.com/preview/neub4rkqqynga539ofmp/v/1?owner=a95774f9daec4d27b1c96056e3a929d3",
   },
   {
     slug: "nail",
     industrySlug: "website-nail",
+    demoUrl: "https://vitrine-landing-page.onrender.com/preview/ddzpj67pku32s28o6fw7/v/1?owner=9856f16eb7084ff1885e7caef847a6d5",
     name: "Tiệm nail",
     category: "lam-dep",
     style: "Tươi sáng, nữ tính",
@@ -83,10 +104,18 @@ export const TEMPLATES: Template[] = [
     category: "luu-tru",
     style: "Ấm cúng, gần gũi thiên nhiên",
     description: "Danh sách phòng, tiện ích, bản đồ vị trí và form hỏi phòng theo ngày.",
+    highlights: [
+      "Hero nêu trải nghiệm nghỉ — “ngủ giữa rừng thông”",
+      "Danh sách từng loại phòng kèm sức chứa và giá/đêm",
+      "Khối ưu đãi cho khách ở 2 đêm trở lên",
+      "Gallery view phòng, khu ngoại thất, bữa sáng",
+      "Giờ nhận/trả phòng và chính sách nêu rõ",
+      "Form hỏi phòng có ngày đến – ngày đi",
+    ],
     image: imageHomestay,
     imageAlt: "Mẫu website homestay",
     industrySlug: "website-homestay",
-    demoUrl: "/demo/homestay",
+    demoUrl: "https://vitrine-landing-page.onrender.com/preview/nsvkv8t2fnfvwxquqpkq/v/1?owner=a18880b054064db696280ea484f58229",
   },
   {
     slug: "limousine",
@@ -100,6 +129,7 @@ export const TEMPLATES: Template[] = [
   {
     slug: "cafe",
     industrySlug: "website-quan-ca-phe",
+    demoUrl: "https://vitrine-landing-page.onrender.com/preview/a6sqguqktwgjspfgn5ii/v/1?owner=f6d7c885c4474e17952e23b5d7f79930",
     name: "Quán cà phê",
     category: "am-thuc",
     style: "Tối giản, nhiều ảnh",
@@ -122,8 +152,18 @@ export const TEMPLATES: Template[] = [
     category: "suc-khoe",
     style: "Sạch sẽ, đáng tin cậy",
     description: "Dịch vụ điều trị, đội ngũ bác sĩ, bảng giá tham khảo và đặt lịch khám.",
+    highlights: [
+      "Hero đặt lịch khám ngay trên màn hình đầu",
+      "Dịch vụ tách theo nhóm: khám, nạo vôi, điều trị, thẩm mỹ",
+      "Mục đội ngũ bác sĩ với chuyên môn và kinh nghiệm",
+      "Bảng giá tham khảo kèm điều kiện áp dụng",
+      "Bản đồ và hướng dẫn đường đến phòng khám",
+      "Giờ hoạt động và số điện thoại khẩn cấp",
+    ],
     image: imageDental,
     imageAlt: "Mẫu website phòng khám nha khoa",
+    industrySlug: "website-nha-khoa",
+    demoUrl: "https://vitrine-landing-page.onrender.com/preview/jxgyqu4uz3cffu65ggfc/v/1?owner=e4cf1ab2e0a74fab91a0a2fb805b7182",
   },
   {
     slug: "yoga",
@@ -158,8 +198,18 @@ export const TEMPLATES: Template[] = [
     category: "doanh-nghiep",
     style: "Cao cấp, nhiều hình ảnh",
     description: "Tổng quan dự án, mặt bằng, tiện ích, chính sách bán hàng và form nhận báo giá.",
+    highlights: [
+      "Hero tổng quan dự án với thông tin vị trí nổi bật",
+      "Mục vị trí kết nối tiện ích xung quanh",
+      "Bảng mặt bằng và các loại hình sản phẩm",
+      "Tiến độ xây dựng theo mốc thời gian",
+      "Chính sách bán hàng và ưu đãi hiện hành",
+      "Form nhận báo giá gọn, hỏi rõ loại sản phẩm quan tâm",
+    ],
     image: imageRealEstate,
     imageAlt: "Mẫu landing page dự án căn hộ",
+    industrySlug: "landing-page-bat-dong-san",
+    demoUrl: "https://vitrine-landing-page.onrender.com/preview/thfmu6aou4ntvvj8mgup/v/1?owner=477223d046954575a42affb088261003",
   },
   {
     slug: "giao-duc",
@@ -167,8 +217,18 @@ export const TEMPLATES: Template[] = [
     category: "doanh-nghiep",
     style: "Rõ ràng, nhiều thông tin",
     description: "Khóa học, lịch khai giảng, học phí, giảng viên và form đăng ký tư vấn.",
+    highlights: [
+      "Hero nêu mục tiêu khóa học và nút đăng ký tư vấn",
+      "Danh sách khóa học theo lộ trình và đối tượng",
+      "Hồ sơ giảng viên kèm kinh nghiệm thực tế",
+      "Lịch khai giảng và học phí minh bạch từng khóa",
+      "Mục phản hồi học viên cũ",
+      "Form đăng ký lưu sẵn khóa đang quan tâm",
+    ],
     image: imageEducation,
     imageAlt: "Mẫu website trung tâm đào tạo",
+    industrySlug: "landing-page-khoa-hoc",
+    demoUrl: "https://vitrine-landing-page.onrender.com/preview/ejbovui6fbkjpetrmg84/v/1?owner=55c2085ac65f4c01979fbfe9266629cc",
   },
 ]
 
@@ -182,7 +242,7 @@ export function templatesWithDetail() {
 }
 
 export function isTemplateIndexable(template: Template) {
-  return Boolean(template.demoUrl && template.industrySlug)
+  return Boolean(template.industrySlug)
 }
 
 export function templateIndustry(template: Template) {

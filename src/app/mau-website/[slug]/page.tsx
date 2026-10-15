@@ -63,36 +63,50 @@ export default async function TemplatePage({ params }: PageProps<"/mau-website/[
         )}
       </PageHeader>
 
-      <Section title={`Vì sao bố cục này phù hợp ${industry.shortName.toLowerCase()}?`}>
+      <Section title="Bản demo gồm những khối nào?">
         <div className="grid gap-6 md:grid-cols-3">
-          {industry.problems.map((problem) => (
-            <article key={problem.title} className="rounded-2xl border border-gray-200 p-6">
-              <h3 className="text-lg font-bold text-gray-900">{problem.title}</h3>
-              <p className="mt-3 text-gray-700">{problem.desc}</p>
+          {(template.highlights ?? []).map((highlight) => (
+            <article key={highlight} className="rounded-2xl border border-gray-200 p-6">
+              <p className="flex gap-3 text-gray-800 leading-relaxed">
+                <span aria-hidden="true" className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
+                {highlight}
+              </p>
             </article>
           ))}
         </div>
       </Section>
-      <Section title="Mẫu gồm những trang nào?" muted>
-        <div className="grid md:grid-cols-3 gap-6">
-          {industry.pages.map((page) => (
-            <div key={page.title} className="bg-white border border-gray-200 rounded-2xl p-6">
-              <h3 className="font-bold text-gray-900">{page.title}</h3>
-              <p className="mt-2 text-sm text-gray-600 leading-relaxed">{page.desc}</p>
-            </div>
-          ))}
+      <Section title="Xem demo hay tư vấn gói?" muted>
+        <div className="grid gap-6 md:grid-cols-2 max-w-[900px] mx-auto text-gray-700 leading-relaxed">
+          <p>
+            <strong className="text-gray-900">Trang này</strong> cho bạn thấy bố cục và trải nghiệm: khách
+            vào sẽ nhìn thấy gì, bấm ở đâu, bảng giá hiện thế nào.
+            {template.demoUrl && (
+              <>
+                {" "}Mở{" "}
+                <a
+                  href={template.demoUrl}
+                  target="_blank"
+                  rel="noopener"
+                  className="text-primary underline">
+                  bản demo {industry.shortName.toLowerCase()}
+                </a>{" "}
+                để xem nguyên một trang hoàn chỉnh.
+              </>
+            )}
+          </p>
+          <p>
+            <strong className="text-gray-900">Trang giải pháp</strong> trả lời câu hỏi mua hàng: gói nào phù hợp,
+            phí bao nhiêu, Nextchain làm những gì và bạn cần duyệt gì. Xem tại{" "}
+            <Link href={`/giai-phap/${industry.slug}`} className="text-primary underline">
+              giải pháp {industry.name.toLowerCase()}
+            </Link>{" "}
+            hoặc xem{" "}
+            <Link href="/bang-gia" className="text-primary underline">
+              bảng giá
+            </Link>
+            .
+          </p>
         </div>
-        <p className="mt-10 text-center text-gray-700">
-          Tìm hiểu vấn đề mẫu này giải quyết tại trang{" "}
-          <Link href={`/giai-phap/${industry.slug}`} className="text-primary underline">
-            giải pháp {industry.name.toLowerCase()}
-          </Link>
-          , hoặc xem{" "}
-          <Link href="/bang-gia" className="text-primary underline">
-            bảng giá
-          </Link>
-          .
-        </p>
       </Section>
 
       <CtaBanner />

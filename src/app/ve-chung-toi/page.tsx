@@ -56,7 +56,7 @@ export default function AboutPage() {
             ["Đơn vị vận hành", COMPANY_NAME],
             ["Email", CONTACT.email],
             ["Điện thoại", CONTACT.phone],
-            ["Địa chỉ", CONTACT.address],
+            ...CONTACT.addresses.map((office) => [office.label, office.value]),
           ].map(([label, value]) => (
             <div key={label} className="grid grid-cols-3 gap-4 py-4">
               <dt className="text-gray-500">{label}</dt>

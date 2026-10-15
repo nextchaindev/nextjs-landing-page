@@ -42,8 +42,11 @@ export default function Footer() {
             <div className="w-[120px] mb-6">
               <FooterLogo />
             </div>
-            <p className="text-[#99A1AF] leading-relaxed mb-6">
+            <p className="text-[#99A1AF] leading-relaxed mb-4">
               Website chuyên nghiệp cho doanh nghiệp nhỏ. Nextchain làm từ A–Z và quản lý theo gói tháng.
+            </p>
+            <p className="text-[#6A7282] text-sm leading-relaxed mb-6">
+              Nextchain.site là dịch vụ của {COMPANY_NAME}, hoạt động tại Thành phố Hồ Chí Minh.
             </p>
           </div>
 
@@ -67,6 +70,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>Địa chỉ: {CONTACT.address}</li>
+              {CONTACT.addresses.slice(1).map((office) => (
+                <li key={office.label}>
+                  {office.label}: {office.value}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

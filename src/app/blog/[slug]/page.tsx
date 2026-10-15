@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">) {
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt ?? post.publishedAt,
       authors: [post.author],
+      images: [{ url: post.cover.src, width: 1200, height: 630, alt: post.title }],
     },
   }
 }

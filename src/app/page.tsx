@@ -15,8 +15,10 @@ import PricingCards from "@/components/marketing/PricingCards"
 import BlogCard from "@/components/marketing/BlogCard"
 import FaqSection from "@/components/marketing/FaqSection"
 import IntroVideo from "@/components/marketing/IntroVideo"
+import JsonLdScript from "@/components/marketing/JsonLdScript"
 import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
 import { pageMetadata } from "@/lib/seo"
+import { absoluteUrl } from "@/lib/site"
 import { GENERAL_FAQS } from "@/content/faqs"
 import { sortedPosts } from "@/content/blog"
 
@@ -61,6 +63,26 @@ export default function HomePage() {
         title="Xem Nextchain làm website cho bạn"
         desc="Gửi thông tin, chọn mẫu theo ngành, website lên mạng với tên miền miễn phí hoặc tên miền riêng.">
         <IntroVideo title="Video giới thiệu: Nextchain làm website trọn gói cho spa, salon, homestay từ 249.000đ/tháng" />
+        <p className="mx-auto mt-6 max-w-2xl text-center text-sm md:text-base text-gray-600 leading-relaxed">
+          Video minh họa quy trình của chúng tôi: bạn gửi thông tin cơ sở, Nextchain viết nội dung và
+          thiết kế theo ngành, bạn duyệt, website lên mạng với tên miền miễn phí hoặc tên miền riêng —
+          từ 249.000đ/tháng, không phí khởi tạo.
+        </p>
+        <JsonLdScript
+          data={{
+            "@context": "https://schema.org",
+            "@type": "VideoObject",
+            name: "Nextchain làm website trọn gói cho spa, salon, homestay",
+            description:
+              "Quy trình Nextchain thiết kế, viết nội dung và xuất bản website theo gói tháng từ 249.000đ: bạn gửi thông tin, duyệt bố cục, website lên mạng.",
+            thumbnailUrl: absoluteUrl("/videos/nextchain-intro-16x9-poster.jpg"),
+            uploadDate: "2026-10-14",
+            contentUrl: absoluteUrl("/videos/nextchain-intro-16x9.mp4"),
+            embedUrl: absoluteUrl("/"),
+            inLanguage: "vi-VN",
+            isFamilyFriendly: true,
+          }}
+        />
       </Section>
 
       <Section

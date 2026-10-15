@@ -8,6 +8,8 @@ interface PageMetadataInput {
   noindex?: boolean
   /** Use the title verbatim instead of the "%s | Nextchain.site" template. */
   absoluteTitle?: boolean
+  /** Ảnh OG riêng của trang (đường dẫn public, vd "/videos/xxx-poster.jpg"). */
+  ogImage?: string
 }
 
 export function pageMetadata({
@@ -16,8 +18,12 @@ export function pageMetadata({
   path,
   noindex,
   absoluteTitle,
+  ogImage,
 }: PageMetadataInput): Metadata {
   const fullTitle = absoluteTitle ? title : `${title} | ${SITE_NAME}`
+  const images = ogImage
+    ? [{ url: ogImage, width: 1200, height: 630, alt: title }]
+    : [{ url: "/og-image-1200x630.jpg", width: 1200, height: 630, alt: SITE_NAME }]
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,
@@ -29,13 +35,13 @@ export function pageMetadata({
       siteName: SITE_NAME,
       title: fullTitle,
       description,
-      images: [{ url: "/og-image-1200x630.jpg", width: 1200, height: 630, alt: SITE_NAME }],
+      images,
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: ["/og-image-1200x630.jpg"],
+      images: [images[0].url],
     },
     ...(noindex && { robots: { index: false, follow: true } }),
   }

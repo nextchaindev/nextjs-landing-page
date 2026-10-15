@@ -6,7 +6,20 @@ export const CONTACT = {
   email: "contact@nextchain.kr",
   phone: "+84-909-807-687",
   phoneHref: "tel:+84909807687",
-  address: "Hồ Chí Minh, Việt Nam",
+  /** Địa chỉ chính — dùng khi chỉ hiển thị một dòng. */
+  address:
+    "Tầng 3, Khối đế - Tháp 1 và 2, Tòa nhà The Vista, Số 628C Đường Võ Nguyên Giáp, Phường An Khánh, Thành phố Hồ Chí Minh",
+  addresses: [
+    {
+      label: "Văn phòng The Vista",
+      value:
+        "Tầng 3, Khối đế - Tháp 1 và 2, Tòa nhà The Vista, Số 628C Đường Võ Nguyên Giáp, Phường An Khánh, Thành phố Hồ Chí Minh",
+    },
+    {
+      label: "Văn phòng Vinhomes Grand Park",
+      value: "S1.01 Vinhomes Grand Park, Phường Long Bình, Thành phố Hồ Chí Minh",
+    },
+  ],
   responseTime: "trong vòng 24 giờ làm việc",
 }
 

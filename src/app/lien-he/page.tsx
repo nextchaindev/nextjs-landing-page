@@ -15,10 +15,10 @@ export const metadata = pageMetadata({
 })
 
 export default function ContactPage() {
-  const channels = [
+  const channels: { icon: typeof Mail; label: string; value: string; href?: string }[] = [
     { icon: Mail, label: "Email", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
     { icon: Phone, label: "Điện thoại / Zalo", value: CONTACT.phone, href: CONTACT.phoneHref },
-    { icon: MapPin, label: "Địa chỉ", value: CONTACT.address },
+    ...CONTACT.addresses.map((office) => ({ icon: MapPin, label: office.label, value: office.value })),
     { icon: Clock, label: "Thời gian phản hồi", value: CONTACT.responseTime },
   ]
 
