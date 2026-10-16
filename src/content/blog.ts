@@ -652,6 +652,134 @@ export const BLOG_POSTS: BlogPost[] = [
       { href: "/bang-gia", label: "Bảng giá gói tháng" },
     ],
   },
+  {
+    slug: "toi-uu-google-maps-cho-nha-hang-spa",
+    title: "Tối ưu Google Maps cho nhà hàng, spa: 7 việc chủ cơ sở tự làm được",
+    metaTitle: "Tối ưu Google Maps cho nhà hàng, spa",
+    description:
+      "7 việc giúp nhà hàng, spa, homestay hiện rõ hơn trên Google Maps: xác minh hồ sơ, chọn đúng danh mục, giờ mở cửa, ảnh thật, đánh giá, bài đăng và website.",
+    category: "Marketing",
+    cover: coverMonthly,
+    publishedAt: "2026-10-16",
+    author: AUTHOR,
+    readingMinutes: 7,
+    answer:
+      "Khách tìm “nhà hàng gần đây” hay “spa Quận 1” thường chọn quán ngay trên Google Maps. Để hồ sơ hiện rõ và được chọn, chủ cơ sở cần: xác minh Hồ sơ doanh nghiệp trên Google, chọn đúng danh mục chính, giữ giờ mở cửa chính xác, đăng ảnh thật, nhờ khách đánh giá và trả lời đánh giá, cập nhật bài đăng, và gắn website có đủ thông tin. Phần lớn việc này miễn phí và tự làm được.",
+    keyTakeaways: [
+      "Thứ hạng trên Google Maps phụ thuộc vào mức độ liên quan, khoảng cách và độ nổi bật của cơ sở — không mua được vị trí tự nhiên.",
+      "Tên trên hồ sơ phải đúng tên thật của cơ sở; nhồi từ khóa vào tên có thể khiến hồ sơ bị tạm ngưng.",
+      "Không mua đánh giá hay tặng quà đổi đánh giá 5 sao — đây là hành vi Google cấm.",
+      "Website có thực đơn, bảng giá, giờ mở cửa khớp với hồ sơ giúp khách quyết định nhanh hơn sau khi thấy bạn trên bản đồ.",
+    ],
+    sections: [
+      {
+        heading: "Google Maps xếp hạng cơ sở địa phương thế nào?",
+        paragraphs: [
+          "Theo hướng dẫn công khai của Google, kết quả địa phương dựa chủ yếu vào ba yếu tố: mức độ liên quan (hồ sơ có khớp với điều khách tìm không), khoảng cách (cơ sở cách người tìm bao xa) và độ nổi bật (cơ sở được biết đến thế nào, gồm số lượng và chất lượng đánh giá, thông tin trên web).",
+          "Bạn không thay đổi được khoảng cách, nhưng làm được nhiều việc cho hai yếu tố còn lại. Bảy việc dưới đây đi theo đúng thứ tự nên làm.",
+        ],
+      },
+      {
+        heading: "1. Tạo và xác minh Hồ sơ doanh nghiệp trên Google",
+        bullets: [
+          "Vào business.google.com, tìm tên cơ sở — nếu đã có hồ sơ do người khác tạo, chọn yêu cầu quyền sở hữu thay vì tạo hồ sơ mới.",
+          "Hoàn tất bước xác minh theo cách Google đưa ra (video, điện thoại, email hoặc thư). Hồ sơ chưa xác minh bị hạn chế chỉnh sửa và hiển thị.",
+          "Dùng email công ty và thêm ít nhất một người quản lý dự phòng để không mất quyền truy cập.",
+        ],
+      },
+      {
+        heading: "2. Điền đúng tên, danh mục và thông tin cơ bản",
+        table: {
+          head: ["Mục", "Nên làm", "Tránh"],
+          rows: [
+            ["Tên", "Đúng tên trên biển hiệu", "“Nhà hàng Hải Âu – Hải sản ngon rẻ nhất Q1”"],
+            ["Danh mục chính", "Danh mục sát nhất: “Nhà hàng hải sản”, “Spa chăm sóc da”", "Danh mục chung chung hoặc sai ngành"],
+            ["Danh mục phụ", "Thêm vài danh mục đúng thực tế", "Thêm danh mục không phục vụ"],
+            ["Địa chỉ, SĐT", "Giống hệt website, Fanpage, biển hiệu", "Mỗi nơi ghi một kiểu"],
+            ["Mô tả", "Cơ sở phục vụ gì, cho ai, điểm khác biệt", "Lặp từ khóa, chèn link, khuyến mãi"],
+          ],
+        },
+      },
+      {
+        heading: "3. Giữ giờ mở cửa luôn chính xác",
+        bullets: [
+          "Cập nhật giờ mở cửa thường ngày và giờ đặc biệt cho lễ, Tết trước vài ngày.",
+          "Khách đến nơi thấy đóng cửa trong khi Maps ghi đang mở là trải nghiệm tệ và dễ dẫn đến đánh giá xấu.",
+          "Nếu nghỉ tạm thời, dùng trạng thái tạm đóng cửa thay vì xóa hồ sơ.",
+        ],
+      },
+      {
+        heading: "4. Đăng ảnh thật và cập nhật thường xuyên",
+        bullets: [
+          "Ảnh mặt tiền giúp khách nhận ra quán khi đến nơi.",
+          "Ảnh không gian, món ăn hoặc dịch vụ thật, chụp đủ sáng — không dùng ảnh mạng.",
+          "Nhà hàng: thêm thực đơn hoặc ảnh món; spa: ảnh phòng dịch vụ; homestay: ảnh từng phòng.",
+          "Bổ sung ảnh mới định kỳ, nhất là khi đổi món, đổi không gian.",
+        ],
+      },
+      {
+        heading: "5. Xin đánh giá đúng cách và trả lời mọi đánh giá",
+        paragraphs: [
+          "Đánh giá là phần khách đọc nhiều nhất trước khi chọn quán. Hãy chủ động xin đánh giá từ khách thật bằng đường link đánh giá của hồ sơ (lấy trong trang quản lý hồ sơ), ví dụ in mã QR tại quầy hoặc gửi kèm tin nhắn cảm ơn.",
+        ],
+        bullets: [
+          "Không mua đánh giá, không nhờ người quen viết đánh giá giả, không tặng quà để đổi đánh giá tốt.",
+          "Trả lời cả đánh giá tốt lẫn xấu, lịch sự và cụ thể. Với đánh giá xấu: xin lỗi, nêu cách khắc phục, mời liên hệ trực tiếp.",
+          "Không tranh cãi hay để lộ thông tin cá nhân của khách trong phần trả lời.",
+        ],
+      },
+      {
+        heading: "6. Dùng bài đăng và thông tin sản phẩm, dịch vụ",
+        bullets: [
+          "Đăng bài cập nhật: món mới, ưu đãi trong tháng, sự kiện — kèm ảnh và nút dẫn về website.",
+          "Điền mục sản phẩm/dịch vụ hoặc thực đơn với giá tham khảo nếu hồ sơ hỗ trợ.",
+          "Chọn các thuộc tính đúng thực tế: có chỗ đậu xe, có wifi, nhận thanh toán thẻ…",
+        ],
+      },
+      {
+        heading: "7. Gắn website có đủ thông tin và khớp với hồ sơ",
+        paragraphs: [
+          "Nhiều khách bấm vào website từ hồ sơ Google Maps để xem kỹ thực đơn, bảng giá hoặc phòng trước khi gọi. Website cần trả lời ngay những điều đó trên điện thoại và có nút gọi, Zalo, đặt bàn hoặc đặt hẹn.",
+          "Tên, địa chỉ, số điện thoại và giờ mở cửa trên website phải giống hồ sơ Google. Thông tin nhất quán giữa các nơi giúp cả khách lẫn Google tin rằng đó là cùng một cơ sở.",
+        ],
+      },
+      {
+        heading: "Checklist hằng tháng cho chủ cơ sở",
+        bullets: [
+          "Giờ mở cửa và giờ lễ đã đúng chưa?",
+          "Đã trả lời hết đánh giá mới chưa?",
+          "Có ít nhất vài ảnh mới và một bài đăng trong tháng?",
+          "Thực đơn, bảng giá trên hồ sơ và website có khớp nhau?",
+          "Đường link website trên hồ sơ còn hoạt động?",
+        ],
+      },
+      {
+        heading: "Khi nào nên nhờ đơn vị làm thay?",
+        paragraphs: [
+          `Nếu bạn không có thời gian cập nhật đều đặn, Nextchain có dịch vụ Marketing & SEO gồm tối ưu Hồ sơ doanh nghiệp trên Google, nội dung và báo cáo định kỳ. Với cơ sở chưa có website, gói tháng từ ${STARTING_PRICE} giúp bạn có trang thực đơn, bảng giá và đặt bàn để gắn vào Google Maps. Nextchain không cam kết thứ hạng cụ thể — thứ hạng do Google quyết định.`,
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Có trả tiền để lên top Google Maps được không?",
+        a: "Không mua được vị trí tự nhiên. Bạn có thể chạy quảng cáo Google để hiện ở vị trí quảng cáo, nhưng thứ hạng tự nhiên phụ thuộc vào mức độ liên quan, khoảng cách và độ nổi bật của cơ sở.",
+      },
+      {
+        q: "Đặt từ khóa vào tên quán trên Google Maps có giúp lên hạng không?",
+        a: "Không nên. Hướng dẫn của Google yêu cầu tên phản ánh đúng tên thật của cơ sở; thêm từ khóa có thể khiến hồ sơ bị chỉnh sửa hoặc tạm ngưng.",
+      },
+      {
+        q: "Bao lâu thì thấy hồ sơ hiện tốt hơn?",
+        a: "Không có mốc cố định. Thường cần vài tuần đến vài tháng cập nhật đều đặn và tích lũy đánh giá thật mới thấy thay đổi rõ.",
+      },
+    ],
+    relatedLinks: [
+      { href: "/dich-vu/marketing-seo", label: "Dịch vụ Marketing & SEO" },
+      { href: "/giai-phap/website-nha-hang", label: "Website nhà hàng" },
+      { href: "/giai-phap/website-spa", label: "Website spa" },
+    ],
+  },
 ]
 
 export function getPost(slug: string) {
