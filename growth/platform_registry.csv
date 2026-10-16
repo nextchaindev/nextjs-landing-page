@@ -1,0 +1,10 @@
+content_id,platform,account,audience,industry,content_type,draft_title,destination_url,utm_source,utm_medium,utm_campaign,status,blocker
+K01,KenhRao,nextchaintech,Chu co so kinh doanh nho,da-nganh,service-ad,"Thiết kế website theo mẫu cho nhà hàng, Spa, Homestay, cửa hàng — từ 249.000đ/tháng",https://www.nextchain.site/bang-gia,kenhrao,referral,nextchain_waas,LIVE,Đã đăng 16/10 (bản không link — tài khoản cần 5 bài mới chèn được link)
+V01,VietDesigner,chua-co,Designer - studio,da-nganh,showcase,"Showcase UI website nhà hàng, Spa và Homestay",https://www.nextchain.site/mau-website,vietdesigner,referral,nextchain_waas,DRAFTED,Can dang nhap tai khoan
+L01,LinkedIn,cong-ty,Doanh nghiep B2B,da-nganh,page-post,"Website cho doanh nghiệp nhỏ không cần là dự án công nghệ lớn",https://www.nextchain.site/,linkedin,organic_social,nextchain_waas,DRAFTED,Can quyen admin Company Page
+F01,Facebook,cong-ty,Chu co so,da-nganh,page-post,"249k và 790k khác nhau ở đâu?",https://www.nextchain.site/bang-gia,facebook,organic_social,nextchain_waas,DRAFTED,Can quyen Page
+F02,Facebook,cong-ty,Chu co so,da-nganh,page-post,"Fanpage có thay thế hoàn toàn website không?",https://www.nextchain.site/mau-website,facebook,organic_social,nextchain_waas,DRAFTED,Can quyen Page
+B01,Behance,chua-co,Khach quoc te - designer,spa,portfolio,"Spa Website Design — Service Menu, Booking Request & Mobile Experience",https://www.nextchain.site/mau-website,behance,referral,nextchain_waas,DRAFTED,Can dang nhap + anh chup demo that
+TV01,TrangVang,-,Khach VN,da-nganh,business-listing,"Hồ sơ Nextchain Tech",https://www.nextchain.site/,trangvang,referral,nextchain_waas,BLOCKED,Cloudflare — chu doanh nghiep tu dang ky tay
+BR01,BrandsVietnam,-,Marketer VN,da-nganh,editorial,"6 quyết định trải nghiệm mobile trước khi thiết kế website",https://www.nextchain.site/blog,brandsvietnam,referral,nextchain_waas,PREPARE_ONLY,Editorial review — khong phai PR thuan
+OCD01,OCD.vn,-,Doanh nghiep - tech VN,da-nganh,editorial-pitch,"Chọn phạm vi website cho doanh nghiệp nhỏ VN",https://www.nextchain.site/blog,ocd,referral,nextchain_waas,PREPARE_ONLY,Gui tu email cong ty duoc uy quyen

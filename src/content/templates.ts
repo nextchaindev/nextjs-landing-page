@@ -66,7 +66,7 @@ export const TEMPLATES: Template[] = [
     image: imageSpa,
     imageAlt: "Mẫu website spa chăm sóc da",
     industrySlug: "website-spa",
-    demoUrl: "https://vitrine-landing-page.onrender.com/preview/wyf47vx3cope3ibdjni8/v/1?owner=4f5f7db73b42434c84e41a3dec4565f9",
+    demoUrl: "https://api-portal.nextchain.site/preview/wyf47vx3cope3ibdjni8/v/1?owner=4f5f7db73b42434c84e41a3dec4565f9",
   },
   {
     slug: "salon",
@@ -85,12 +85,12 @@ export const TEMPLATES: Template[] = [
     image: imageSalon,
     imageAlt: "Mẫu website salon tóc",
     industrySlug: "website-salon",
-    demoUrl: "https://vitrine-landing-page.onrender.com/preview/neub4rkqqynga539ofmp/v/1?owner=a95774f9daec4d27b1c96056e3a929d3",
+    demoUrl: "https://api-portal.nextchain.site/preview/neub4rkqqynga539ofmp/v/1?owner=a95774f9daec4d27b1c96056e3a929d3",
   },
   {
     slug: "nail",
     industrySlug: "website-nail",
-    demoUrl: "https://vitrine-landing-page.onrender.com/preview/ddzpj67pku32s28o6fw7/v/1?owner=9856f16eb7084ff1885e7caef847a6d5",
+    demoUrl: "https://api-portal.nextchain.site/preview/ddzpj67pku32s28o6fw7/v/1?owner=9856f16eb7084ff1885e7caef847a6d5",
     name: "Tiệm nail",
     category: "lam-dep",
     style: "Tươi sáng, nữ tính",
@@ -115,7 +115,7 @@ export const TEMPLATES: Template[] = [
     image: imageHomestay,
     imageAlt: "Mẫu website homestay",
     industrySlug: "website-homestay",
-    demoUrl: "https://vitrine-landing-page.onrender.com/preview/nsvkv8t2fnfvwxquqpkq/v/1?owner=a18880b054064db696280ea484f58229",
+    demoUrl: "https://api-portal.nextchain.site/preview/nsvkv8t2fnfvwxquqpkq/v/1?owner=a18880b054064db696280ea484f58229",
   },
   {
     slug: "limousine",
@@ -129,7 +129,7 @@ export const TEMPLATES: Template[] = [
   {
     slug: "cafe",
     industrySlug: "website-quan-ca-phe",
-    demoUrl: "https://vitrine-landing-page.onrender.com/preview/a6sqguqktwgjspfgn5ii/v/1?owner=f6d7c885c4474e17952e23b5d7f79930",
+    demoUrl: "https://api-portal.nextchain.site/preview/a6sqguqktwgjspfgn5ii/v/1?owner=f6d7c885c4474e17952e23b5d7f79930",
     name: "Quán cà phê",
     category: "am-thuc",
     style: "Tối giản, nhiều ảnh",
@@ -172,7 +172,7 @@ export const TEMPLATES: Template[] = [
     image: imageDental,
     imageAlt: "Mẫu website phòng khám nha khoa",
     industrySlug: "website-nha-khoa",
-    demoUrl: "https://vitrine-landing-page.onrender.com/preview/jxgyqu4uz3cffu65ggfc/v/1?owner=e4cf1ab2e0a74fab91a0a2fb805b7182",
+    demoUrl: "https://api-portal.nextchain.site/preview/jxgyqu4uz3cffu65ggfc/v/1?owner=e4cf1ab2e0a74fab91a0a2fb805b7182",
   },
   {
     slug: "yoga",
@@ -218,7 +218,7 @@ export const TEMPLATES: Template[] = [
     image: imageRealEstate,
     imageAlt: "Mẫu landing page dự án căn hộ",
     industrySlug: "landing-page-bat-dong-san",
-    demoUrl: "https://vitrine-landing-page.onrender.com/preview/thfmu6aou4ntvvj8mgup/v/1?owner=477223d046954575a42affb088261003",
+    demoUrl: "https://api-portal.nextchain.site/preview/thfmu6aou4ntvvj8mgup/v/1?owner=477223d046954575a42affb088261003",
   },
   {
     slug: "giao-duc",
@@ -237,7 +237,7 @@ export const TEMPLATES: Template[] = [
     image: imageEducation,
     imageAlt: "Mẫu website trung tâm đào tạo",
     industrySlug: "landing-page-khoa-hoc",
-    demoUrl: "https://vitrine-landing-page.onrender.com/preview/ejbovui6fbkjpetrmg84/v/1?owner=55c2085ac65f4c01979fbfe9266629cc",
+    demoUrl: "https://api-portal.nextchain.site/preview/ejbovui6fbkjpetrmg84/v/1?owner=55c2085ac65f4c01979fbfe9266629cc",
   },
 ]
 

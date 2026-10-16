@@ -53,3 +53,5 @@ bun.lockb
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+# credentials — không commit
+growth/account-setup.md

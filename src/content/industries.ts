@@ -406,6 +406,7 @@ export const INDUSTRIES: Industry[] = [
       { q: "Ai cung cấp thông tin về khóa học?", a: "Trung tâm cung cấp chương trình, học phí và lịch thực tế; Nextchain biên tập cách trình bày để trung tâm duyệt." },
     ],
   },
+
 ]
 
 export function getIndustry(slug: string) {
