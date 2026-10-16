@@ -1,7 +1,7 @@
 # Week 1 — bản draft đã HIỆU ĐÍNH (2026-10-15)
 
-Khác biệt so với master prompt: mọi câu "không bắt buộc thời hạn tối thiểu" đã sửa thành
-"cam kết tối thiểu 6 tháng" — khớp trang /bang-gia và Chính sách hủy dịch vụ công khai.
+Cập nhật 2026-10-16: từ 15/10 gói tháng KHÔNG còn cam kết tối thiểu (đã bỏ khỏi /bang-gia,
+Điều khoản và Chính sách hủy). Mọi câu "cam kết tối thiểu 6 tháng" đã sửa lại cho khớp site.
 Kiểm tra số liệu lần cuối trước khi đăng: 249.000đ / 790.000đ / 1.490.000đ; không phí khởi tạo;
 tên miền miễn phí dạng ten-cua-ban.nextchain.site; tên miền riêng tự đăng ký, phí ngoài gói.
 
@@ -22,7 +22,7 @@ Nếu bạn đang kinh doanh nhà hàng, quán cà phê, spa, salon, homestay ho
 - Tăng trưởng — 790.000đ/tháng: website tối đa 5 trang, phù hợp cơ sở có nhiều dịch vụ.
 - Chuyên nghiệp — 1.490.000đ/tháng: website tối đa 10 trang và các quyền lợi mở rộng theo gói.
 
-Không thu phí khởi tạo. Thanh toán theo tháng, **cam kết tối thiểu 6 tháng** (điều kiện hủy công bố tại chính sách hủy dịch vụ).
+Không thu phí khởi tạo. Thanh toán theo tháng, không ràng buộc thời hạn tối thiểu (điều kiện ngừng dịch vụ công bố tại chính sách hủy dịch vụ).
 
 Bạn có thể dùng địa chỉ miễn phí ten-cua-ban.nextchain.site hoặc kết nối tên miền riêng — phí tên miền bạn trả trực tiếp cho nhà cung cấp tên miền.
 
@@ -54,7 +54,7 @@ Website 249.000đ/tháng và 790.000đ/tháng khác nhau thế nào?
 
 **790.000đ/tháng — Tăng trưởng:** website nhiều trang hơn (tối đa 5 trang), trang riêng cho từng dịch vụ, bảng giá, gallery, liên hệ và quyền lợi cập nhật nội dung theo gói.
 
-Cả hai đều được Nextchain thiết lập và vận hành. Không phí khởi tạo. **Cam kết tối thiểu 6 tháng**, điều kiện hủy công bố rõ.
+Cả hai đều được Nextchain thiết lập và vận hành. Không phí khởi tạo, trả theo tháng, không ràng buộc thời hạn tối thiểu.
 
 Xem mẫu: https://www.nextchain.site/mau-website — Bảng giá đầy đủ: https://www.nextchain.site/bang-gia
 
@@ -82,7 +82,7 @@ Một doanh nghiệp nhỏ có thể chưa cần hệ thống thương mại đi
 - Có cách liên hệ nhanh.
 - Hoạt động tốt trên điện thoại.
 
-Nextchain.site cung cấp website và landing page theo mẫu ngành, thiết lập và hỗ trợ vận hành theo gói tháng. Gói khởi điểm cho landing page là 249.000đ/tháng (cam kết tối thiểu 6 tháng); website nhiều trang có gói riêng.
+Nextchain.site cung cấp website và landing page theo mẫu ngành, thiết lập và hỗ trợ vận hành theo gói tháng. Gói khởi điểm cho landing page là 249.000đ/tháng, không phí khởi tạo; website nhiều trang có gói riêng.
 
 Xem mẫu và phạm vi từng gói: https://www.nextchain.site/
 

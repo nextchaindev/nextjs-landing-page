@@ -5,6 +5,8 @@ import coverCompare from "@/assets/project-3.png"
 import coverSpa from "@/assets/stock/spa.jpg"
 import coverMonthly from "@/assets/stock/cafe.jpg"
 import coverFacebook from "@/assets/stock/nail.jpg"
+import coverRestaurant from "@/assets/project-1.png"
+import coverHomestay from "@/assets/stock/homestay.jpg"
 import { FREE_SUBDOMAIN_EXAMPLE, PLANS, STARTING_PRICE, formatVnd } from "@/content/plans"
 
 /**
@@ -433,6 +435,221 @@ export const BLOG_POSTS: BlogPost[] = [
       { href: "/giai-phap", label: "Website theo ngành" },
       { href: "/bang-gia", label: "Bảng giá gói tháng" },
       { href: "/so-sanh/tu-lam-hay-thue-tron-goi", label: "Tự làm hay thuê trọn gói?" },
+    ],
+  },
+  {
+    slug: "website-nha-hang-khach-can-thay-gi",
+    title: "Website nhà hàng: khách cần thấy gì ngay khi mở trang?",
+    metaTitle: "Website nhà hàng cần có gì? Checklist",
+    description:
+      "Khách mở website nhà hàng trên điện thoại cần thấy ngay món, giá, địa chỉ và cách đặt bàn. Checklist sắp xếp màn hình đầu, thực đơn, đặt bàn và chi nhánh.",
+    category: "Ngành Nhà hàng",
+    cover: coverRestaurant,
+    publishedAt: "2026-10-16",
+    author: AUTHOR,
+    readingMinutes: 6,
+    answer:
+      "Khi mở website nhà hàng, khách cần trả lời được bốn câu hỏi mà không phải cuộn nhiều: quán bán món gì, giá khoảng bao nhiêu, quán ở đâu và mở cửa lúc nào, đặt bàn bằng cách nào. Đặt bốn thông tin này ở màn hình đầu trên điện thoại, các phần còn lại như câu chuyện thương hiệu hay tiệc sự kiện để phía dưới.",
+    keyTakeaways: [
+      "Màn hình đầu trên điện thoại quan trọng nhất: món đặc trưng, khoảng giá, địa chỉ, giờ mở cửa và nút đặt bàn.",
+      "Thực đơn phải là chữ đọc được, có giá — không chỉ là ảnh chụp tờ menu.",
+      "Form đặt bàn nên hỏi ít: ngày, giờ, số khách, số điện thoại. Ghi rõ quán sẽ gọi hoặc nhắn Zalo để xác nhận.",
+      "Thông tin trên website phải khớp với Google Maps và Fanpage, nhất là giờ mở cửa và số điện thoại.",
+    ],
+    sections: [
+      {
+        heading: "Khách vào website nhà hàng để làm gì?",
+        paragraphs: [
+          "Phần lớn khách mở website nhà hàng khi đã biết tên quán: thấy trên Google Maps, được bạn giới thiệu hoặc xem một bài đăng. Họ không cần đọc giới thiệu dài; họ đang kiểm tra nhanh xem quán có hợp với bữa ăn sắp tới không.",
+          "Vì vậy, website nhà hàng hiệu quả là website giúp khách quyết định nhanh và liên hệ dễ, chứ không phải website có nhiều hiệu ứng nhất.",
+        ],
+      },
+      {
+        heading: "Màn hình đầu tiên trên điện thoại nên có gì?",
+        bullets: [
+          "Ảnh món đặc trưng hoặc không gian thật của quán — không dùng ảnh mẫu trên mạng.",
+          "Một dòng mô tả quán bán gì: “Lẩu nấm và nướng than hoa”, “Cơm nhà kiểu Bắc”…",
+          "Khoảng giá tham khảo, ví dụ “150.000đ – 300.000đ/người”.",
+          "Địa chỉ ngắn và giờ mở cửa hôm nay.",
+          "Nút “Đặt bàn” và nút gọi hoặc Zalo luôn nhìn thấy, kể cả khi cuộn trang.",
+        ],
+      },
+      {
+        heading: "Thực đơn nên trình bày thế nào?",
+        table: {
+          head: ["Nên làm", "Nên tránh"],
+          rows: [
+            ["Chia nhóm: khai vị, món chính, lẩu, đồ uống…", "Một danh sách dài không phân nhóm"],
+            ["Thực đơn dạng chữ, có giá từng món", "Chỉ đăng ảnh chụp tờ menu (khó đọc, không phóng to được)"],
+            ["Ghi khẩu phần hoặc số người ăn với món lớn", "Để khách đoán món đủ cho mấy người"],
+            ["Ảnh thật cho món bán chạy", "Ảnh mạng không giống món thật"],
+            ["Ghi rõ ngày cập nhật giá", "Giá cũ không ai sửa sau khi tăng giá"],
+          ],
+        },
+      },
+      {
+        heading: "Đặt bàn: form, gọi điện hay Zalo?",
+        paragraphs: [
+          "Với đa số nhà hàng nhỏ và vừa, không cần hệ thống đặt bàn tự động. Một form ngắn gửi về Zalo hoặc email của quán, kèm nút gọi điện, là đủ để quán chủ động xác nhận và sắp xếp chỗ.",
+        ],
+        bullets: [
+          "Form chỉ hỏi: ngày, giờ, số khách, họ tên, số điện thoại, ghi chú (sinh nhật, ghế trẻ em…).",
+          "Ghi rõ sau khi gửi: “Quán sẽ gọi hoặc nhắn Zalo xác nhận trong 30 phút” — và làm đúng như vậy.",
+          "Đặt tiệc, đặt nhóm đông nên có mục riêng với set menu và sức chứa từng khu.",
+          "Nếu cần quản lý bàn trống hay đặt cọc online, đó là phần mềm riêng — nên tách khỏi website giới thiệu.",
+        ],
+      },
+      {
+        heading: "Nhiều chi nhánh thì sắp xếp ra sao?",
+        bullets: [
+          "Mỗi chi nhánh một mục hoặc một trang: địa chỉ, giờ mở cửa, số điện thoại, nút chỉ đường.",
+          "Nút đặt bàn hỏi rõ khách chọn chi nhánh nào.",
+          "Nếu thực đơn hoặc giá khác nhau giữa các chi nhánh, ghi chú rõ để tránh khách hiểu nhầm.",
+        ],
+      },
+      {
+        heading: "Checklist trước khi đưa website nhà hàng lên mạng",
+        bullets: [
+          "Mở website trên điện thoại: thấy món, giá, địa chỉ, giờ mở cửa và nút đặt bàn mà không cần cuộn nhiều.",
+          "Bấm thử nút gọi, nút Zalo, nút chỉ đường — tất cả mở đúng.",
+          "Gửi thử form đặt bàn và kiểm tra người phụ trách nhận được.",
+          "Giờ mở cửa, số điện thoại, địa chỉ khớp với Google Maps và Fanpage.",
+          "Giá trong thực đơn là giá hiện tại.",
+          "Có người chịu trách nhiệm cập nhật khi đổi món, đổi giá, nghỉ lễ.",
+        ],
+      },
+      {
+        heading: "Làm website nhà hàng tốn bao nhiêu?",
+        paragraphs: [
+          `Website giới thiệu nhà hàng với thực đơn, đặt bàn và chi nhánh không cần là dự án lớn. Nextchain.site làm theo gói tháng từ ${STARTING_PRICE}, không phí khởi tạo, gồm thiết kế, hosting và cập nhật thực đơn theo số lượt của gói. Bạn dùng miễn phí địa chỉ dạng ${FREE_SUBDOMAIN_EXAMPLE} hoặc kết nối tên miền riêng.`,
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Nhà hàng đã có Google Maps và Fanpage thì còn cần website không?",
+        a: "Google Maps giúp khách tìm thấy quán, Fanpage giúp trò chuyện và đăng món mới. Website là nơi đặt thực đơn, giá, chi nhánh và đặt bàn ở dạng dễ đọc, và là đường link bạn gắn vào Google Maps để khách xem thêm.",
+      },
+      {
+        q: "Có nên đăng ảnh chụp tờ menu lên website không?",
+        a: "Có thể thêm, nhưng không nên chỉ có ảnh. Thực đơn dạng chữ dễ đọc trên điện thoại, phóng to được và cập nhật giá nhanh hơn.",
+      },
+      {
+        q: "Website có nhận đặt cọc hoặc thanh toán online được không?",
+        a: "Website giới thiệu thường chỉ nhận yêu cầu đặt bàn để quán xác nhận. Đặt cọc, thanh toán hay quản lý bàn trống cần hệ thống riêng và được báo giá theo dự án.",
+      },
+    ],
+    relatedLinks: [
+      { href: "/giai-phap/website-nha-hang", label: "Giải pháp website nhà hàng" },
+      { href: "/mau-website/nha-hang", label: "Mẫu website nhà hàng" },
+      { href: "/bang-gia", label: "Bảng giá gói tháng" },
+    ],
+  },
+  {
+    slug: "website-homestay-7-thong-tin-khach-can",
+    title: "7 thông tin khách cần xem trước khi hỏi phòng homestay",
+    metaTitle: "Website homestay cần có gì? 7 thông tin",
+    description:
+      "Khách hỏi phòng homestay cần biết giá theo đêm, sức chứa, ảnh thật, vị trí, tiện ích, chính sách và cách đặt. Checklist website homestay nhận khách trực tiếp.",
+    category: "Ngành Homestay",
+    cover: coverHomestay,
+    publishedAt: "2026-10-16",
+    author: AUTHOR,
+    readingMinutes: 6,
+    answer:
+      "Trước khi nhắn hỏi phòng, khách muốn biết 7 điều: giá theo đêm, phòng ở được mấy người, ảnh thật từng phòng, vị trí và cách đi, tiện ích, chính sách nhận/trả phòng – cọc – hủy, và cách đặt. Website homestay trình bày đủ 7 điều này sẽ giảm tin nhắn hỏi đi hỏi lại và giúp bạn nhận khách đặt trực tiếp, bổ trợ cho các nền tảng đặt phòng.",
+    keyTakeaways: [
+      "Ghi giá theo đêm cho ngày thường và cuối tuần, kèm ghi chú phụ thu lễ Tết.",
+      "Mỗi loại phòng cần sức chứa, loại giường và ảnh thật riêng.",
+      "Chính sách cọc và hủy phải ghi rõ trước khi khách chuyển khoản.",
+      "Form hỏi phòng chỉ cần ngày đến, ngày đi, số khách và số điện thoại; trả lời qua Zalo nhanh nhất có thể.",
+    ],
+    sections: [
+      {
+        heading: "Vì sao homestay cần website khi đã có Booking, Airbnb?",
+        paragraphs: [
+          "Các nền tảng đặt phòng giúp khách mới tìm thấy bạn, nhưng mỗi đơn đều mất phí hoa hồng và bạn khó giữ liên lạc với khách cũ. Website là nơi khách quay lại, khách được giới thiệu và khách xem Fanpage có thể đặt trực tiếp với bạn.",
+          "Website không thay thế nền tảng đặt phòng — nó bổ trợ, và chỉ hiệu quả khi trả lời đủ những câu khách vẫn thường nhắn hỏi.",
+        ],
+      },
+      {
+        heading: "7 thông tin khách cần thấy trước khi hỏi phòng",
+        table: {
+          head: ["Thông tin", "Nên trình bày thế nào"],
+          rows: [
+            ["1. Giá theo đêm", "Giá ngày thường, cuối tuần; ghi chú phụ thu lễ Tết và giá thêm người"],
+            ["2. Sức chứa", "Số khách tối đa, loại giường, có kê thêm nệm được không"],
+            ["3. Ảnh thật từng phòng", "Ảnh phòng ngủ, phòng tắm, view — chụp ban ngày, không dùng ảnh mạng"],
+            ["4. Vị trí và cách đi", "Khoảng cách tới trung tâm, đường cho ô tô hay chỉ xe máy, nút chỉ đường"],
+            ["5. Tiện ích", "Bếp, BBQ, chỗ đậu xe, nước nóng, máy sưởi hoặc điều hòa, wifi"],
+            ["6. Chính sách", "Giờ nhận/trả phòng, mức cọc, điều kiện hủy, trẻ em, thú cưng"],
+            ["7. Cách đặt", "Form ngày đến – ngày đi – số khách, kèm nút Zalo và gọi điện"],
+          ],
+        },
+      },
+      {
+        heading: "Trang phòng nên sắp xếp thế nào?",
+        bullets: [
+          "Mỗi loại phòng một khối: tên phòng, ảnh, sức chứa, loại giường, giá theo đêm.",
+          "Nút “Hỏi phòng này” ngay dưới từng loại phòng, tự điền sẵn tên phòng vào form.",
+          "Nếu có nguyên căn cho nhóm, tách thành mục riêng với tổng sức chứa và giá nguyên căn.",
+          "Ghi rõ giá đã gồm gì: bữa sáng, nước uống, đưa đón — tránh khách hiểu nhầm khi thanh toán.",
+        ],
+      },
+      {
+        heading: "Chính sách: viết rõ để tránh tranh cãi",
+        paragraphs: [
+          "Phần lớn hiểu lầm giữa chủ homestay và khách đến từ cọc và hủy phòng. Ghi chính sách bằng câu ngắn, cụ thể, và nhắc lại khi xác nhận đặt phòng qua Zalo.",
+        ],
+        bullets: [
+          "Giờ nhận phòng và trả phòng; có nhận sớm/trả muộn không, phụ thu thế nào.",
+          "Mức cọc giữ phòng và thời hạn chuyển cọc.",
+          "Hủy trước bao lâu thì được hoàn cọc, hủy sát ngày thì xử lý ra sao.",
+          "Quy định về trẻ em, thú cưng, hút thuốc, giờ yên tĩnh.",
+        ],
+      },
+      {
+        heading: "Hỏi phòng: form hay Zalo?",
+        paragraphs: [
+          "Nên có cả hai. Form giúp khách gửi đủ thông tin một lần (ngày đến, ngày đi, số khách); Zalo giúp trao đổi nhanh và gửi ảnh. Website homestay thường chỉ nhận yêu cầu để chủ nhà xác nhận phòng trống — nếu cần lịch phòng tự động hoặc thanh toán online, đó là hệ thống riêng.",
+        ],
+      },
+      {
+        heading: "Checklist trước khi đưa website homestay lên mạng",
+        bullets: [
+          "Mở trên điện thoại: thấy ngay ảnh đẹp nhất, giá từ bao nhiêu và nút hỏi phòng.",
+          "Mỗi loại phòng có đủ ảnh, sức chứa, giá.",
+          "Chính sách cọc và hủy nằm ở chỗ dễ thấy, không chỉ trong chân trang.",
+          "Gửi thử form hỏi phòng và kiểm tra Zalo/email nhận được.",
+          "Địa chỉ, số điện thoại khớp với Google Maps và các nền tảng đặt phòng.",
+          "Có người cập nhật giá theo mùa và ngày lễ.",
+        ],
+      },
+      {
+        heading: "Làm website homestay tốn bao nhiêu?",
+        paragraphs: [
+          `Website homestay giới thiệu phòng, tiện ích, chính sách và nhận yêu cầu hỏi phòng không cần là dự án lớn. Nextchain.site làm theo gói tháng từ ${STARTING_PRICE}, không phí khởi tạo, gồm thiết kế, hosting và cập nhật giá, ảnh theo số lượt của gói. Bạn dùng miễn phí địa chỉ dạng ${FREE_SUBDOMAIN_EXAMPLE} hoặc kết nối tên miền riêng.`,
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Website homestay có tự động hiện phòng trống không?",
+        a: "Website giới thiệu thường không quản lý phòng trống. Khách gửi yêu cầu theo ngày, chủ nhà kiểm tra và xác nhận qua Zalo hoặc điện thoại. Lịch phòng tự động hoặc kết nối nền tảng đặt phòng là phần mềm riêng, báo giá theo dự án.",
+      },
+      {
+        q: "Có nên ghi giá công khai trên website không?",
+        a: "Nên ghi giá tham khảo theo đêm cho ngày thường và cuối tuần. Khách thấy giá trước sẽ hỏi phòng đúng nhu cầu hơn; giá lễ Tết có thể ghi “liên hệ” kèm thời gian áp dụng.",
+      },
+      {
+        q: "Homestay nhỏ chỉ 2–3 phòng có cần website không?",
+        a: "Có thể chỉ cần một trang: ảnh, từng phòng kèm giá, chính sách và nút hỏi phòng. Gói landing page một trang phù hợp với quy mô này.",
+      },
+    ],
+    relatedLinks: [
+      { href: "/giai-phap/website-homestay", label: "Giải pháp website homestay" },
+      { href: "/mau-website/homestay", label: "Mẫu website homestay" },
+      { href: "/bang-gia", label: "Bảng giá gói tháng" },
     ],
   },
 ]

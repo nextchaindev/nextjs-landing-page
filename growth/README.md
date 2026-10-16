@@ -15,10 +15,10 @@ Cập nhật: 2026-10-15. Chạy theo master prompt (bộ quy tắc do chủ doa
 
 ## Lỗi nội dung đã sửa trong bản draft (quan trọng)
 
-Master prompt ghi "No mandatory minimum subscription period" và draft K01/F01 viết
-"không bắt buộc thời hạn sử dụng tối thiểu" — **SAI so với website thật**:
-gói tháng **cam kết tối thiểu 6 tháng** (nêu rõ ở bảng giá và có chính sách hủy riêng).
-Đã sửa toàn bộ draft trong `content/week1-drafts.md`. Đăng bản cũ = quảng cáo sai.
+**Cập nhật 2026-10-16:** từ 15/10 site đã BỎ cam kết tối thiểu 6 tháng — gói tháng không ràng
+buộc thời hạn tối thiểu (khớp master prompt ban đầu). Draft trong `content/week1-drafts.md` đã sửa lại.
+Tin K01 trên KenhRao (đăng 16/10) vẫn ghi "cam kết tối thiểu 6 tháng" → cần sửa tin.
+Trước mỗi bài: đối chiếu giá/điều khoản với https://www.nextchain.site/bang-gia tại thời điểm đăng.
 
 ## Quy trình mỗi bài đăng
 
