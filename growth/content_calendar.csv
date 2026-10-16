@@ -1,0 +1,20 @@
+week,day_range,channel,content_id,action,status
+1,14-20/10,KenhRao,K01,Đăng 1 tin duy nhất tại category Dịch vụ doanh nghiệp .52 (sau khi audit nội quy),chờ tài khoản
+1,14-20/10,VietDesigner,V01,Đăng showcase trong box Quảng cáo (thiết kế web thuộc phạm vi box),chờ tài khoản
+1,14-20/10,LinkedIn,L01,Đăng bài Company Page #1,chờ quyền admin
+1,14-20/10,Facebook,F01,F02,Đăng 2 bài Page,chờ quyền Page
+1,14-20/10,TrangVang,TV01,Bạn tự đăng ký thủ công (Cloudflare),giao bạn
+1,14-20/10,Behance,B01,Chụp ảnh demo spa thật (desktop+mobile) chuẩn bị project,chuẩn bị
+2,21-27/10,Behance,B01,Đăng project Spa portfolio,chờ tài khoản + ảnh
+2,21-27/10,LinkedIn,L02,Bài #2: phân tích nhu cầu website mobile cho cơ sở nhỏ,viết mới
+2,21-27/10,TikTok/Shorts,T03,Video gói tháng từ bài viết + màn hình giá thật,cần quay
+2,21-27/10,Facebook,F03,Bài cập nhật: demo spa/salon/homestay mới (link /mau-website),viết mới
+2,21-27/10,BrandsVietnam,BR01,Dự thảo bài editorial (không PR thuần),dự thảo
+3,28-03/11,Behance,B02,Project thứ 2: Homestay portfolio,tùy B01
+3,28-03/11,TikTok/Shorts,T01,Video demo nhà hàng nếu có demo thật,tùy demo
+3,28-03/11,LinkedIn,L03,Bài #3,bám chủ đề tốt nhất tuần 1-2
+3,28-03/11,KenhRao,-,Chỉ kiểm tra trạng thái tin; KHÔNG đăng thêm (giới hạn pilot 1 tin),giám sát
+4,04-12/11,Behance,B03,Project thứ 3 nếu đủ chất liệu,tùy B02
+4,04-12/11,OCD.vn,OCD01,Gửi pitch từ email công ty nếu được ủy quyền,chờ phê duyệt
+4,04-12/11,tất cả,-,Đối chiếu publication_log: referral + lead hợp lệ theo nguồn;bỏ kênh kém,dự thảo tháng 2
+4,04-12/11,backlink,-,Kiểm tra lại link ngày 7/14/30 trong backlink_monitor.csv,định kỳ

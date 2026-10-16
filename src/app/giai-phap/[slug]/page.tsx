@@ -11,6 +11,7 @@ import { pageMetadata, serviceSchema } from "@/lib/seo"
 import { STARTING_PRICE } from "@/content/plans"
 import { INDUSTRIES, getIndustry } from "@/content/industries"
 import { TEMPLATES } from "@/content/templates"
+import { BLOG_POSTS } from "@/content/blog"
 
 export const dynamicParams = false
 
@@ -36,6 +37,7 @@ export default async function IndustryPage({ params }: PageProps<"/giai-phap/[sl
   if (!industry) notFound()
   const path = `/giai-phap/${industry.slug}`
   const template = TEMPLATES.find((t) => t.industrySlug === industry.slug)
+  const relatedPosts = BLOG_POSTS.filter((post) => post.relatedLinks.some((link) => link.href === path))
 
   return (
     <>
@@ -103,6 +105,23 @@ export default async function IndustryPage({ params }: PageProps<"/giai-phap/[sl
           .
         </p>
       </Section>
+
+      {relatedPosts.length > 0 && (
+        <Section title="Bài viết liên quan" muted>
+          <ul className="max-w-[760px] mx-auto space-y-3">
+            {relatedPosts.map((post) => (
+              <li key={post.slug}>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="block rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary transition-colors">
+                  <span className="font-bold text-gray-900">{post.title}</span>
+                  <span className="mt-1 block text-sm text-gray-600">{post.description}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
 
       <FaqSection faqs={industry.faqs} />
       <CtaBanner title={`Bắt đầu ${industry.name.toLowerCase()} của bạn`} />
