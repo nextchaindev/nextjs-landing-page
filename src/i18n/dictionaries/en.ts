@@ -1,4 +1,5 @@
 import type { Dictionary } from "./vi"
+import { LEGAL_REVIEWED_LOCALES } from "../config"
 import { CONTACT } from "@/lib/site"
 
 /**
@@ -19,14 +20,48 @@ export const en = {
     links: [{ href: "/", label: "Home" }],
   },
   nav: {
-    solutions: [],
-    services: [],
+    solutions: [
+      { href: "/en/solutions/spa-website", label: "Spa Website", description: "Service menu, gallery, booking requests" },
+      { href: "/en/solutions/salon-website", label: "Salon Website", description: "Portfolio, pricing, booking" },
+      { href: "/en/solutions/homestay-website", label: "Homestay Website", description: "Rooms, amenities, availability inquiries" },
+      { href: "/en/solutions/nail-salon-website", label: "Nail Salon Website", description: "Design gallery, pricing, booking" },
+      { href: "/en/solutions/cafe-website", label: "Cafe Website", description: "Menu, space, directions" },
+      { href: "/en/solutions/restaurant-website", label: "Restaurant Website", description: "Menu, reservations, events and branches" },
+      { href: "/en/solutions/dental-clinic-website", label: "Dental Clinic Website", description: "Services, doctors, appointment requests" },
+      { href: "/en/solutions/real-estate-landing-page", label: "Real Estate Landing Page", description: "Project info and consultation requests" },
+      { href: "/en/solutions/course-landing-page", label: "Course Landing Page", description: "Programs and enrollment" },
+    ],
+    services: [
+      { href: "/en/services/landing-page", label: "All-in-One Landing Page", description: "Monthly plan, free address included" },
+      { href: "/en/services/corporate-website", label: "Corporate Website", description: "Company, services and news" },
+      { href: "/en/services/ecommerce-website", label: "E-commerce Website", description: "Product catalog, order inquiries" },
+      { href: "/en/services/custom-website", label: "Custom Design", description: "Your own design and features" },
+      { href: "/en/services/marketing-seo", label: "Marketing & SEO", description: "SEO, advertising, content" },
+      { href: "/en/services/software-development", label: "Software Development", description: "Web & mobile apps, management systems" },
+      { href: "/en/services/monthly-website-management", label: "Monthly website management", description: "Updates, maintenance, support" },
+    ],
     main: [
+      { href: "/en/templates", label: "Templates" },
+      { href: "/en/projects", label: "Projects" },
       { href: "/en/pricing", label: "Pricing" },
+      { href: "/en/process", label: "Process" },
+      { href: "/en/blog", label: "Blog" },
       { href: "/en/contact", label: "Contact" },
     ],
-    company: [],
-    legal: [],
+    company: [
+      { href: "/en/about", label: "About us" },
+      { href: "/en/compare/diy-or-done-for-you", label: "DIY or done-for-you" },
+      { href: "/en/services", label: "All services" },
+      { href: "/en/solutions", label: "All solutions" },
+    ],
+    // Trang pháp lý chỉ hiện khi bản dịch đã được rà soát (NEXT_PUBLIC_LEGAL_REVIEWED_LOCALES, xem #27).
+    legal: LEGAL_REVIEWED_LOCALES.includes("en")
+      ? [
+          { href: "/en/terms", label: "Terms of Service" },
+          { href: "/en/privacy-policy", label: "Privacy Policy" },
+          { href: "/en/cancellation-policy", label: "Cancellation Policy" },
+        ]
+      : [],
   },
   header: {
     homeAria: "Home",
@@ -84,7 +119,7 @@ export const en = {
     text: "We use analytics cookies (Google Analytics, Microsoft Clarity) to measure and improve the website. See our",
     // Until the English privacy policy is published (#27) this links to the Vietnamese original.
     privacyLink: "privacy policy",
-    privacyHref: "/chinh-sach-bao-mat",
+    privacyHref: LEGAL_REVIEWED_LOCALES.includes("en") ? "/en/privacy-policy" : "/chinh-sach-bao-mat",
     reject: "Decline",
     accept: "Accept",
   },

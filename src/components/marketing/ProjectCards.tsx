@@ -3,15 +3,19 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import Reveal from "@/components/marketing/Reveal"
 import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
-import { PROJECTS, type Project } from "@/content/projects"
+import { getProjects, type Project } from "@/content/projects"
+import { CARD_TEXT } from "@/content/cardText"
+import { sectionPath } from "@/i18n/paths"
+import type { Locale } from "@/i18n/config"
 
-export default function ProjectCards({ projects = PROJECTS }: { projects?: Project[] }) {
+export default function ProjectCards({ projects, locale = "vi" }: { projects?: Project[]; locale?: Locale }) {
+  const items = projects ?? getProjects(locale)
   return (
     <div className={`${MOBILE_CAROUSEL} md:grid-cols-2 lg:grid-cols-3`}>
-      {projects.map((project, idx) => (
+      {items.map((project, idx) => (
         <Reveal key={project.slug} delay={(idx % 3) * 0.1} as="article" className={MOBILE_CAROUSEL_ITEM}>
           <Link
-            href={`/du-an/${project.slug}`}
+            href={sectionPath("projects", locale, project.slug)}
             className="group flex flex-col h-full bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
             <div className="relative aspect-video overflow-hidden bg-stone-100">
               <Image
@@ -30,7 +34,7 @@ export default function ProjectCards({ projects = PROJECTS }: { projects?: Proje
               <p className="mt-1 text-sm font-medium text-primary">{project.headline}</p>
               <p className="mt-3 text-gray-700 leading-relaxed flex-1">{project.summary}</p>
               <span className="mt-5 inline-flex items-center gap-2 font-semibold text-primary">
-                Xem dự án
+                {CARD_TEXT[locale].viewProject}
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </span>
             </div>

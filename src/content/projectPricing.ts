@@ -367,5 +367,5 @@ export function getProjectServices(locale: Locale = "vi"): typeof projectService
 }
 
 export function parsePrice(price: string) {
-  return { amount: Number(price.replace(/\D/g, "")), isMinimum: price.includes("+") }
+  return { amount: Number(price.replace(/\D/g, "")), isMinimum: /[+~]\s*$/.test(price) }
 }

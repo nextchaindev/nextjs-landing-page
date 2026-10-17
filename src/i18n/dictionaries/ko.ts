@@ -1,4 +1,5 @@
 import type { Dictionary } from "./vi"
+import { LEGAL_REVIEWED_LOCALES } from "../config"
 
 /**
  * 한국어 사전. 페이지가 번역·공개될 때마다 `nav`에 링크를 추가한다 (이슈 #24, #26, #27).
@@ -18,14 +19,48 @@ export const ko = {
     links: [{ href: "/", label: "홈" }],
   },
   nav: {
-    solutions: [],
-    services: [],
+    solutions: [
+      { href: "/ko/solutions/spa-website", label: "스파 웹사이트", description: "서비스 가격표, 갤러리, 예약 문의" },
+      { href: "/ko/solutions/salon-website", label: "미용실 웹사이트", description: "포트폴리오, 가격표, 예약" },
+      { href: "/ko/solutions/homestay-website", label: "숙박업소 웹사이트", description: "객실, 편의시설, 객실 문의" },
+      { href: "/ko/solutions/nail-salon-website", label: "네일숍 웹사이트", description: "디자인 갤러리, 가격표, 예약" },
+      { href: "/ko/solutions/cafe-website", label: "카페 웹사이트", description: "메뉴, 공간, 길 안내" },
+      { href: "/ko/solutions/restaurant-website", label: "레스토랑 웹사이트", description: "메뉴, 예약, 단체·지점 안내" },
+      { href: "/ko/solutions/dental-clinic-website", label: "치과 웹사이트", description: "진료 안내, 의료진, 예약 문의" },
+      { href: "/ko/solutions/real-estate-landing-page", label: "부동산 랜딩페이지", description: "단지 정보와 상담 신청" },
+      { href: "/ko/solutions/course-landing-page", label: "강좌 랜딩페이지", description: "교육과정과 수강생 모집" },
+    ],
+    services: [
+      { href: "/ko/services/landing-page", label: "랜딩페이지 올인원 제작", description: "월 구독, 무료 주소 제공" },
+      { href: "/ko/services/corporate-website", label: "기업 웹사이트", description: "회사·서비스·소식 소개" },
+      { href: "/ko/services/ecommerce-website", label: "쇼핑몰 웹사이트", description: "상품 카탈로그, 주문 문의" },
+      { href: "/ko/services/custom-website", label: "맞춤 제작", description: "전용 디자인과 기능" },
+      { href: "/ko/services/marketing-seo", label: "마케팅·SEO", description: "SEO, 광고, 콘텐츠" },
+      { href: "/ko/services/software-development", label: "소프트웨어 개발", description: "웹·모바일 앱, 관리 시스템" },
+      { href: "/ko/services/monthly-website-management", label: "월 단위 웹사이트 운영 관리", description: "수정, 유지보수, 지원" },
+    ],
     main: [
+      { href: "/ko/templates", label: "참고 템플릿" },
+      { href: "/ko/projects", label: "프로젝트" },
       { href: "/ko/pricing", label: "요금 안내" },
+      { href: "/ko/process", label: "진행 절차" },
+      { href: "/ko/blog", label: "블로그" },
       { href: "/ko/contact", label: "문의" },
     ],
-    company: [],
-    legal: [],
+    company: [
+      { href: "/ko/about", label: "회사 소개" },
+      { href: "/ko/compare/diy-or-done-for-you", label: "직접 vs 올인원" },
+      { href: "/ko/services", label: "전체 서비스" },
+      { href: "/ko/solutions", label: "전체 솔루션" },
+    ],
+    // Trang pháp lý chỉ hiện khi bản dịch đã được rà soát (NEXT_PUBLIC_LEGAL_REVIEWED_LOCALES, xem #27).
+    legal: LEGAL_REVIEWED_LOCALES.includes("ko")
+      ? [
+          { href: "/ko/terms", label: "이용약관" },
+          { href: "/ko/privacy-policy", label: "개인정보처리방침" },
+          { href: "/ko/cancellation-policy", label: "해지 정책" },
+        ]
+      : [],
   },
   header: {
     homeAria: "홈",
@@ -74,7 +109,7 @@ export const ko = {
     text: "웹사이트 이용 현황을 측정하고 개선하기 위해 분석 쿠키(Google Analytics, Microsoft Clarity)를 사용합니다. 자세한 내용은",
     // 한국어 개인정보처리방침 공개 전(#27)에는 베트남어 원문으로 연결된다.
     privacyLink: "개인정보처리방침",
-    privacyHref: "/chinh-sach-bao-mat",
+    privacyHref: LEGAL_REVIEWED_LOCALES.includes("ko") ? "/ko/privacy-policy" : "/chinh-sach-bao-mat",
     reject: "거부",
     accept: "동의",
   },

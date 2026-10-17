@@ -73,7 +73,7 @@ export default function Header() {
           href={localizePath("/", locale)}
           onClick={closeMenu}
           aria-label={`${SITE_NAME} - ${header.homeAria}`}
-          className="w-[70px] h-[37px] md:w-[91px] md:h-[48px] relative">
+          className={cn("w-[70px] h-[37px] md:w-[91px] md:h-[48px] relative", locale !== "vi" && "shrink-0")}>
           <Image src={ImageLogo} alt={SITE_NAME} fill className="object-cover" priority />
         </Link>
 

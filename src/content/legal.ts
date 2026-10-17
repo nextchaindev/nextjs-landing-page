@@ -1,6 +1,9 @@
 import type { LegalSection } from "@/components/marketing/LegalPage"
 import { COMPANY_NAME, CONTACT } from "@/lib/site"
 import { FREE_SUBDOMAIN_EXAMPLE } from "@/content/plans"
+import type { NonDefaultLocale } from "@/i18n/config"
+import { KO_LEGAL_TEXTS } from "./ko/legal"
+import { EN_LEGAL_TEXTS } from "./en/legal"
 
 /**
  * Nội dung pháp lý bản đầu. Cần bộ phận pháp chế/kinh doanh rà soát trước
@@ -114,3 +117,29 @@ export const CANCELLATION_SECTIONS: LegalSection[] = [
     ],
   },
 ]
+
+/** Một văn bản pháp lý đã dịch. */
+export interface LegalDocText {
+  title: string
+  /** Mô tả ngắn dưới tiêu đề, cũng dùng làm meta description. */
+  intro: string
+  sections: LegalSection[]
+}
+
+/**
+ * Bản dịch pháp lý (ko, en) — BẢN NHÁP, chỉ công khai sau khi pháp chế rà soát và ngôn ngữ nằm trong
+ * NEXT_PUBLIC_LEGAL_REVIEWED_LOCALES (xem issue #27). Bản tiếng Việt là bản gốc có giá trị ưu tiên.
+ */
+export interface LegalTexts {
+  terms: LegalDocText
+  privacy: LegalDocText
+  cancellation: LegalDocText
+  /** "Last updated" / "최종 업데이트" */
+  lastUpdatedLabel: string
+  /** Câu báo bản tiếng Việt là bản gốc, hiển thị đầu mỗi văn bản. */
+  originalNotice: string
+  /** Mã BCP 47 để định dạng ngày. */
+  dateLocale: string
+}
+
+export const LEGAL_TEXTS: Record<NonDefaultLocale, LegalTexts | null> = { ko: KO_LEGAL_TEXTS, en: EN_LEGAL_TEXTS }

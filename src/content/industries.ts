@@ -9,6 +9,9 @@ import imageCafe from "@/assets/stock/cafe.jpg"
 import imageRestaurant from "@/assets/project-1.png"
 import imageRealEstate from "@/assets/project-4.png"
 import imageEducation from "@/assets/project-3.png"
+import type { Locale, NonDefaultLocale } from "@/i18n/config"
+import { KO_INDUSTRY_TEXTS } from "./ko/industries"
+import { EN_INDUSTRY_TEXTS } from "./en/industries"
 
 export interface Industry {
   slug: string
@@ -411,4 +414,27 @@ export const INDUSTRIES: Industry[] = [
 
 export function getIndustry(slug: string) {
   return INDUSTRIES.find((industry) => industry.slug === slug)
+}
+
+/** Phần chữ của một giải pháp ngành ở ngôn ngữ khác (ảnh dùng chung với bản gốc). Khóa: slug tiếng Việt. */
+export type IndustryText = Omit<Industry, "image">
+export type IndustryTexts = Record<string, IndustryText>
+
+const INDUSTRY_TEXTS: Record<NonDefaultLocale, IndustryTexts> = { ko: KO_INDUSTRY_TEXTS, en: EN_INDUSTRY_TEXTS }
+
+/** Giải pháp ngành theo ngôn ngữ. Ngôn ngữ khác tiếng Việt chỉ gồm mục đã có bản dịch. */
+export function getIndustries(locale: Locale = "vi"): Industry[] {
+  if (locale === "vi") return INDUSTRIES
+  const texts = INDUSTRY_TEXTS[locale]
+  return INDUSTRIES.flatMap((base) => (texts[base.slug] ? [{ ...base, ...texts[base.slug] }] : []))
+}
+
+export function getIndustryFor(locale: Locale, slug: string) {
+  return getIndustries(locale).find((industry) => industry.slug === slug)
+}
+
+/** Slug tiếng Việt (gốc) của một giải pháp đã dịch. */
+export function defaultIndustrySlug(locale: Locale, slug: string) {
+  if (locale === "vi") return slug
+  return Object.entries(INDUSTRY_TEXTS[locale]).find(([, text]) => text.slug === slug)?.[0]
 }

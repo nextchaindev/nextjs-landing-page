@@ -2,11 +2,20 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Clock } from "lucide-react"
 import type { BlogPost } from "@/content/blog"
+import { CARD_TEXT } from "@/content/cardText"
+import { LANGUAGE_TAGS, type Locale } from "@/i18n/config"
+import { sectionPath } from "@/i18n/paths"
 
 export const dateFormat = new Intl.DateTimeFormat("vi-VN", { dateStyle: "long" })
 
-export default function BlogCard({ post }: { post: BlogPost; index?: number }) {
-  const href = `/blog/${post.slug}`
+export function getDateFormat(locale: Locale) {
+  return locale === "vi" ? dateFormat : new Intl.DateTimeFormat(LANGUAGE_TAGS[locale], { dateStyle: "long" })
+}
+
+export default function BlogCard({ post, locale = "vi" }: { post: BlogPost; index?: number; locale?: Locale }) {
+  const href = sectionPath("blog", locale, post.slug)
+  const text = CARD_TEXT[locale]
+  const format = getDateFormat(locale)
   return (
     <article className="group flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
       <Link
@@ -28,9 +37,9 @@ export default function BlogCard({ post }: { post: BlogPost; index?: number }) {
       </Link>
       <div className="flex flex-col flex-1 p-6">
         <div className="flex items-center gap-3 text-sm text-gray-500">
-          <time dateTime={post.publishedAt}>{dateFormat.format(new Date(post.publishedAt))}</time>
+          <time dateTime={post.publishedAt}>{format.format(new Date(post.publishedAt))}</time>
           <span className="inline-flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5" /> {post.readingMinutes} phút đọc
+            <Clock className="w-3.5 h-3.5" /> {text.readMinutes.replace("{n}", String(post.readingMinutes))}
           </span>
         </div>
         <h3 className="mt-3 text-lg font-bold text-gray-900 leading-snug">
@@ -40,7 +49,7 @@ export default function BlogCard({ post }: { post: BlogPost; index?: number }) {
         </h3>
         <p className="mt-2 text-sm text-gray-600 leading-relaxed flex-1">{post.description}</p>
         <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary">
-          Đọc bài <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          {text.readArticle} <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </span>
       </div>
     </article>

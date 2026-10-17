@@ -3,13 +3,16 @@ import type { LucideIcon } from "lucide-react"
 import { Boxes, FileText, Globe, PenTool, Search, ShoppingCart } from "lucide-react"
 import type { Faq } from "@/content/faqs"
 import type { ProjectServiceKey } from "@/content/projectPricing"
-import { FREE_SUBDOMAIN_EXAMPLE, STARTING_PRICE } from "@/content/plans"
+import { FREE_SUBDOMAIN_EXAMPLE, PLANS, STARTING_PRICE, getPlans } from "@/content/plans"
 import imageRestaurant from "@/assets/project-1.png"
 import imageEcommerce from "@/assets/stock/ecommerce.jpg"
 import imageEducation from "@/assets/project-3.png"
 import imageRealEstate from "@/assets/project-4.png"
 import imageLimousine from "@/assets/project-5.png"
 import imageDashboard from "@/assets/project-6.png"
+import type { Locale, NonDefaultLocale } from "@/i18n/config"
+import { KO_SERVICE_TEXTS } from "./ko/services"
+import { EN_SERVICE_TEXTS } from "./en/services"
 
 /**
  * Cách tính phí của dịch vụ:
@@ -379,4 +382,38 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
 
 export function getServiceBySlug(slug: string) {
   return SERVICE_DETAILS.find((service) => service.slug === slug)
+}
+
+/** Phần chữ của một dịch vụ ở ngôn ngữ khác (ảnh, icon, màu, cách tính giá dùng chung với bản gốc). Khóa: slug tiếng Việt. */
+export type ServiceText = Omit<ServiceDetail, "icon" | "accent" | "image" | "pricing">
+export type ServiceTexts = Record<string, ServiceText>
+
+const SERVICE_TEXTS: Record<NonDefaultLocale, ServiceTexts> = { ko: KO_SERVICE_TEXTS, en: EN_SERVICE_TEXTS }
+
+/** Dịch vụ theo ngôn ngữ. Ngôn ngữ khác tiếng Việt chỉ gồm dịch vụ đã có bản dịch. */
+export function getServices(locale: Locale = "vi"): ServiceDetail[] {
+  if (locale === "vi") return SERVICE_DETAILS
+  const texts = SERVICE_TEXTS[locale]
+  const plans = getPlans(locale)
+
+  return SERVICE_DETAILS.flatMap((base) => {
+    const text = texts[base.slug]
+    if (!text) return []
+    // Gói tháng: ánh xạ theo thứ tự (khoi-dau → starter …) vì mỗi ngôn ngữ có id gói riêng.
+    const pricing: ServicePricing =
+      base.pricing.model === "subscription"
+        ? { model: "subscription", planIds: base.pricing.planIds.map((id) => plans[PLANS.findIndex((plan) => plan.id === id)].id) }
+        : base.pricing
+    return [{ ...base, ...text, pricing }]
+  })
+}
+
+export function getServiceBySlugFor(locale: Locale, slug: string) {
+  return getServices(locale).find((service) => service.slug === slug)
+}
+
+/** Slug tiếng Việt (gốc) của một dịch vụ đã dịch — để lấy ảnh/giá từ bản gốc. */
+export function defaultServiceSlug(locale: Locale, slug: string) {
+  if (locale === "vi") return slug
+  return Object.entries(SERVICE_TEXTS[locale]).find(([, text]) => text.slug === slug)?.[0]
 }

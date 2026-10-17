@@ -45,3 +45,13 @@ export const LOCALE_NAMES: Record<Locale, { short: string; full: string }> = {
   ko: { short: "KO", full: "한국어" },
   en: { short: "EN", full: "English" },
 }
+
+/**
+ * Ngôn ngữ đã có bản dịch pháp lý được rà soát (điều khoản, bảo mật, hủy dịch vụ). Bản dịch pháp lý
+ * chỉ công khai khi ngôn ngữ nằm trong danh sách này: NEXT_PUBLIC_LEGAL_REVIEWED_LOCALES=ko,en
+ * (xem issue #27). Chưa có thì các trang pháp lý ko/en trả 404 và liên kết trỏ về bản tiếng Việt.
+ */
+export const LEGAL_REVIEWED_LOCALES: Locale[] = (process.env.NEXT_PUBLIC_LEGAL_REVIEWED_LOCALES ?? "")
+  .split(",")
+  .map((value) => value.trim())
+  .filter(isLocale)
