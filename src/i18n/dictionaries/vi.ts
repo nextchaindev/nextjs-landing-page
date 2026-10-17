@@ -107,6 +107,9 @@ export const vi = {
     message: "Nội dung cần tư vấn",
     messagePlaceholder: "Mô tả ngắn gọn về dự án của bạn...",
     trust: ["Tư vấn miễn phí 100%", "Thông tin chỉ dùng để liên hệ tư vấn", "Phản hồi trong 24 giờ làm việc"],
+    /** Kênh liên hệ ưu tiên; để trống thì không hiện ô chọn (tiếng Việt dùng Zalo/điện thoại như cũ). */
+    contactMethod: "",
+    contactMethods: [] as { value: string; label: string }[],
     submit: "Gửi yêu cầu",
     recaptchaLang: "vi",
     /** Nhãn hiển thị, cùng thứ tự với LEAD_INDUSTRIES / LEAD_WEBSITE_TYPES (giá trị lưu vào DB luôn là tiếng Việt). */

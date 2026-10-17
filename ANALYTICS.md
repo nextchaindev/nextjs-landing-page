@@ -15,8 +15,8 @@ Event gtag khi chưa đồng ý là no-op an toàn.
 |---|---|---|---|
 | `form_start` | Focus vào trường đầu tiên trong modal tư vấn (một lần/phiên) | `form_id` | Đo tỷ lệ mở form → bắt đầu điền. |
 | `form_error` | Bấm gửi nhưng validate lỗi | `fields` (vd. `phone,email`) | Chẩn đoán trường gây rơi. |
-| `form_submit` | Bấm gửi, đã qua validate + captcha | `form_id` | Submit attempt. |
-| `generate_lead` | API trả `{success: true, verified: true}` (lead đã lưu Supabase) | `form_id`, `currency` | **Conversion chính** — đánh dấu conversion trong GA4 Admin. |
+| `form_submit` | Bấm gửi, đã qua validate + captcha | `form_id`, `lead_locale` | Submit attempt. |
+| `generate_lead` | API trả `{success: true, verified: true}` (lead đã lưu Supabase) | `form_id`, `lead_locale`, `currency` | **Conversion chính** — đánh dấu conversion trong GA4 Admin. |
 | `conversion` | Ngay sau generate_lead khi đã cấu hình Ads | `send_to`, `currency`, `value` | Google Ads conversion; chỉ bắn khi có `NEXT_PUBLIC_GAW_ID` + `NEXT_PUBLIC_GAW_LABEL`. |
 
 Honeypot (bot đi qua UI) nhận `{success: true, verified: false}` → không bắn
@@ -51,3 +51,12 @@ Toàn bộ chữ thường, gạch ngang; ghi vào bảng này khi tạo campaig
 | `NEXT_PUBLIC_BLOG_AUTHOR_JOB` | Chức danh tác giả (tuỳ chọn) |
 | `NEXT_PUBLIC_FACEBOOK_URL` | Fanpage — thêm vào `sameAs` của Organization |
 | `GOOGLE_SITE_VERIFICATION` | Mã xác minh Search Console (meta) |
+
+## Ngôn ngữ (vi / ko)
+
+- `lead_locale` (`vi` | `ko`) có trên `form_submit` và `generate_lead`. Trong GA4 Admin → Custom definitions tạo
+  custom dimension **event-scoped** `lead_locale` để lọc/so sánh conversion theo ngôn ngữ.
+- `language_switch` (`from`, `to`) bắn khi khách bấm bộ chuyển ngôn ngữ trên header.
+- Lead lưu thêm cột `locale` (vi | ko) và `preferred_contact` trong bảng `consultations` — chạy `supabase_lead_locale.sql`.
+- Lead tiếng Hàn gửi về Discord qua `DISCORD_WEBHOOK_URL_KO` (nếu không đặt thì dùng `DISCORD_WEBHOOK_URL`), nội dung bằng tiếng Hàn.
+- Số điện thoại Hàn Quốc được lưu dạng E.164 (`+8210…`); số Việt Nam giữ dạng cũ (`0901…`).

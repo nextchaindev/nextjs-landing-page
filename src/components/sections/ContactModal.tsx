@@ -250,6 +250,27 @@ export default function ContactModal() {
                 ))}
               </div>
 
+              {form.contactMethods.length > 0 && (
+                <div>
+                  <label htmlFor="preferredContact" className="block text-sm font-semibold text-gray-700 mb-2">
+                    {form.contactMethod}
+                  </label>
+                  <select
+                    id="preferredContact"
+                    name="preferredContact"
+                    value={formData.preferredContact}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2.5 md:py-3 border-2 border-gray-200 rounded-xl bg-white text-gray-900 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all">
+                    <option value="">{form.selectPlaceholder}</option>
+                    {form.contactMethods.map((method) => (
+                      <option key={method.value} value={method.value}>
+                        {method.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               {/* Message Field */}
               <div>
                 <label

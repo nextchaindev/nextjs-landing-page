@@ -95,6 +95,12 @@ export const ko = {
     message: "상담 내용",
     messagePlaceholder: "프로젝트에 대해 간단히 적어 주세요...",
     trust: ["100% 무료 상담", "입력하신 정보는 상담 연락에만 사용됩니다", "영업일 기준 24시간 이내 회신"],
+    contactMethod: "희망 연락 방법",
+    contactMethods: [
+      { value: "phone", label: "전화" },
+      { value: "email", label: "이메일" },
+      { value: "kakao", label: "카카오톡" },
+    ],
     submit: "문의 보내기",
     recaptchaLang: "ko",
     // vi.ts의 LEAD_INDUSTRIES / LEAD_WEBSITE_TYPES와 같은 순서 (저장되는 값은 베트남어 원문).
