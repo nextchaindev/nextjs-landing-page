@@ -1,5 +1,7 @@
 # Checklist go-live nextchain.site
 
+> Related: [README – multi-language setup](./README.md#multi-language-support-vi--ko--en--english-summary) · [ANALYTICS.md](./ANALYTICS.md) · [PRODUCT.md](./PRODUCT.md) · [`supabase_lead_locale.sql`](./supabase_lead_locale.sql)
+
 Cập nhật: 2026-10-14. Chạy theo thứ tự; tick xong mục nào ghi ngày vào cạnh mục đó.
 
 ## 1. Trước deploy

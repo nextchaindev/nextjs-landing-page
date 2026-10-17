@@ -1,5 +1,7 @@
 # Chuẩn event & UTM — Nextchain.site
 
+> Related: [GOLIVE.md](./GOLIVE.md) · [README – multi-language setup](./README.md#multi-language-support-vi--ko--en--english-summary)
+
 Cập nhật: 2026-10-14. Tools: GA4 (G-Z8NT4N1ZKB, G-M1WX07RXCV), GTM (GTM-MCFFZTLK), Microsoft Clarity.
 Nguyên tắc: đếm conversion từ nguồn chân truth (bảng `consultations` trong Supabase); event client chỉ để đo phễu.
 

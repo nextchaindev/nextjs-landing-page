@@ -1,5 +1,7 @@
 # Nextchain.site
 
+> Related: [README – multi-language setup](./README.md#multi-language-support-vi--ko--en--english-summary) · [GOLIVE.md](./GOLIVE.md)
+
 register: brand
 
 ## Product purpose
