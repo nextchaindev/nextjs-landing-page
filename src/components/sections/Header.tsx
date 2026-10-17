@@ -9,21 +9,34 @@ import ImageLogo from "@/assets/logo.png"
 import Image from "next/image"
 import Link from "next/link"
 import { useModal } from "@/context/ModalContext"
-import { MAIN_NAV, SERVICE_LINKS, SITE_NAME, SOLUTION_LINKS, type NavItem } from "@/lib/site"
+import { SITE_NAME, type NavItem } from "@/lib/site"
 import { cn } from "@/components/ui/utils"
+import { useDictionary, useLocale } from "@/i18n/LocaleProvider"
+import { localizePath } from "@/i18n/config"
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher"
 
-const MENU_GROUPS: { title: string; links: NavItem[]; allHref?: string; allLabel?: string }[] = [
-  { title: "Giải pháp", links: SOLUTION_LINKS, allHref: "/giai-phap", allLabel: "Xem tất cả giải pháp →" },
-  { title: "Dịch vụ", links: SERVICE_LINKS, allHref: "/dich-vu", allLabel: "Xem tất cả dịch vụ →" },
-]
+interface MenuGroup {
+  title: string
+  links: NavItem[]
+  allHref?: string
+  allLabel?: string
+}
 
 export default function Header() {
   const pathname = usePathname()
+  const locale = useLocale()
+  const { header, nav } = useDictionary()
+  // Nhóm không có trang nào (vd. tiếng Hàn khi chưa dịch xong) thì không hiển thị.
+  const MENU_GROUPS: MenuGroup[] = [
+    { title: header.solutionsTitle, links: nav.solutions, allHref: header.solutionsAllHref, allLabel: header.solutionsAll },
+    { title: header.servicesTitle, links: nav.services, allHref: header.servicesAllHref, allLabel: header.servicesAll },
+  ].filter((group) => group.links.length > 0)
+  const MAIN_NAV = nav.main
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { openModalClean } = useModal()
 
   const isActive = (href: string) => pathname === href || pathname?.startsWith(`${href}/`)
-  const isGroupActive = (group: (typeof MENU_GROUPS)[number]) =>
+  const isGroupActive = (group: MenuGroup) =>
     group.links.some((link) => isActive(link.href)) || (group.allHref !== undefined && pathname === group.allHref)
   const [openGroup, setOpenGroup] = useState<string | null>(null)
 
@@ -57,14 +70,14 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur border-b border-gray-200 z-50">
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
         <Link
-          href="/"
+          href={localizePath("/", locale)}
           onClick={closeMenu}
-          aria-label={`${SITE_NAME} - Trang chủ`}
+          aria-label={`${SITE_NAME} - ${header.homeAria}`}
           className="w-[70px] h-[37px] md:w-[91px] md:h-[48px] relative">
           <Image src={ImageLogo} alt={SITE_NAME} fill className="object-cover" priority />
         </Link>
 
-        <nav aria-label="Điều hướng chính" className="hidden xl:flex items-center gap-6 whitespace-nowrap">
+        <nav aria-label={header.mainNavAria} className="hidden xl:flex items-center gap-6 whitespace-nowrap">
           {MENU_GROUPS.map((group) => (
             <div key={group.title} className="relative group/dd">
               <button
@@ -112,16 +125,17 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <LanguageSwitcher className="hidden xl:flex" />
           <Button
             onClick={openModalClean}
             className="bg-blue-600 hover:bg-blue-600/90 text-white text-sm md:text-base px-5 md:px-6 rounded-lg font-medium transition-all shadow-md active:scale-95 hidden xl:block whitespace-nowrap">
-            Nhận tư vấn
+            {header.cta}
           </Button>
           <button
             onClick={toggleMenu}
             className="xl:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
             aria-expanded={isMenuOpen}
-            aria-label="Mở menu">
+            aria-label={header.openMenuAria}>
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
@@ -130,7 +144,7 @@ export default function Header() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.nav
-            aria-label="Điều hướng di động"
+            aria-label={header.mobileNavAria}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -192,13 +206,14 @@ export default function Header() {
               ))}
             </div>
             <div className="shrink-0 border-t border-gray-100 bg-white p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+              <LanguageSwitcher className="mb-3 justify-center" onNavigate={closeMenu} />
               <Button
                 onClick={() => {
                   closeMenu()
                   openModalClean()
                 }}
                 className="w-full h-12 bg-blue-600 hover:bg-blue-600/90 text-white rounded-lg font-medium text-base">
-                Nhận tư vấn miễn phí
+                {header.ctaMobile}
               </Button>
             </div>
           </motion.nav>

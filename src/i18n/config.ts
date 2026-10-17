@@ -25,3 +25,18 @@ export const OG_LOCALES: Record<Locale, string> = {
   vi: "vi_VN",
   ko: "ko_KR",
 }
+
+/**
+ * Ngôn ngữ đã công khai. Route của ngôn ngữ chưa bật vẫn tồn tại (noindex) để xem thử,
+ * nhưng không hiện trong bộ chuyển ngôn ngữ. Bật khi sẵn sàng: NEXT_PUBLIC_ENABLED_LOCALES=vi,ko
+ */
+export const ENABLED_LOCALES: Locale[] = (process.env.NEXT_PUBLIC_ENABLED_LOCALES ?? DEFAULT_LOCALE)
+  .split(",")
+  .map((value) => value.trim())
+  .filter(isLocale)
+
+/** Tên ngôn ngữ viết bằng chính ngôn ngữ đó — dùng cho bộ chuyển ngôn ngữ. */
+export const LOCALE_NAMES: Record<Locale, { short: string; full: string }> = {
+  vi: { short: "VI", full: "Tiếng Việt" },
+  ko: { short: "KO", full: "한국어" },
+}

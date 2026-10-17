@@ -46,14 +46,14 @@ export default function SiteShell({ locale, fontClassName, fontVariable, childre
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={`${fontClassName} antialiased`} style={bodyStyle}>
-        <JsonLd />
-        <ConsentGate>
-          {(GA_IDS.length > 0 || process.env.NEXT_PUBLIC_GAW_ID) && <GoogleAnalytics gaId={GA_IDS} />}
-          {CLARITY_ID && <ClarityAnalytics projectId={CLARITY_ID} />}
-          {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
-        </ConsentGate>
-
         <LocaleProvider locale={locale} dictionary={getDictionary(locale)}>
+          <JsonLd />
+          <ConsentGate>
+            {(GA_IDS.length > 0 || process.env.NEXT_PUBLIC_GAW_ID) && <GoogleAnalytics gaId={GA_IDS} />}
+            {CLARITY_ID && <ClarityAnalytics projectId={CLARITY_ID} />}
+            {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
+          </ConsentGate>
+
           <ModalProvider>
             <ConditionalLayout>{children}</ConditionalLayout>
           </ModalProvider>

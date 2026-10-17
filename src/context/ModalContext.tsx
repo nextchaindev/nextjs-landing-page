@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState, useRef, ReactNod
 import { toast } from "sonner"
 import { trackEvent } from "@/lib/analytics"
 import { captureAttribution, readAttribution } from "@/lib/attribution"
+import { useDictionary } from "@/i18n/LocaleProvider"
 
 interface FormData {
   name: string
@@ -61,6 +62,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     {},
   )
   const formStartFired = useRef(false)
+  const { form } = useDictionary()
 
   const notifyFormStart = () => {
     if (formStartFired.current) return
@@ -98,15 +100,15 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const validateField = (name: string, value: string) => {
     switch (name) {
       case "name":
-        return !value.trim() ? "Vui lòng nhập họ và tên" : ""
+        return !value.trim() ? form.errors.nameRequired : ""
       case "email":
         if (value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()))
-          return "Email không hợp lệ"
+          return form.errors.emailInvalid
         return ""
       case "phone":
-        if (!value.trim()) return "Vui lòng nhập số điện thoại"
+        if (!value.trim()) return form.errors.phoneRequired
         if (!/^(0|\+84)[35789][0-9]{8}$/.test(value.replace(/\s/g, "")))
-          return "Số điện thoại chưa đúng, ví dụ: 0901234567"
+          return form.errors.phoneInvalid
         return ""
       default:
         return ""
@@ -154,7 +156,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     if (!validate()) return
 
     if (!recaptchaToken) {
-      toast.error("Vui lòng xác nhận bạn không phải robot.")
+      toast.error(form.toast.recaptcha)
       return
     }
 
@@ -212,12 +214,12 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         // setIsModalOpen(false)
         setFormData(initialFormData)
       } else if (response.status === 429) {
-        toast.error("Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau 10 phút.")
+        toast.error(form.toast.rateLimited)
       } else {
-        toast.error("Có lỗi xảy ra, vui lòng thử lại.")
+        toast.error(form.toast.failed)
       }
     } catch {
-      toast.error("Có lỗi xảy ra, vui lòng kết nối mạng và thử lại.")
+      toast.error(form.toast.network)
     } finally {
       setLoadingSubmit(false)
     }
