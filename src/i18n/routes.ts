@@ -7,6 +7,8 @@ import { DEFAULT_LOCALE, LOCALES, localizePath, type Locale } from "./config"
  */
 export const ROUTE_TRANSLATIONS: Record<string, Partial<Record<Exclude<Locale, "vi">, string>>> = {
   "/": { ko: "/" },
+  "/bang-gia": { ko: "/pricing" },
+  "/lien-he": { ko: "/contact" },
 }
 
 function stripLocale(pathname: string): { locale: Locale; path: string } {

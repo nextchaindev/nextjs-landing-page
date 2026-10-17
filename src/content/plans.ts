@@ -6,6 +6,9 @@
  *
  * Sửa giá tại đây — bảng giá, trang dịch vụ, trang ngành và JSON-LD dùng chung.
  */
+import type { Locale } from "@/i18n/config"
+import { KO_FREE_SUBDOMAIN_EXAMPLE, KO_PLANS } from "./ko/plans"
+
 export interface Plan {
   id: string
   name: string
@@ -68,6 +71,25 @@ export const PLANS: Plan[] = [
 
 export function formatVnd(value: number) {
   return `${value.toLocaleString("vi-VN")}đ`
+}
+
+/** Định dạng giá theo ngôn ngữ: vi → "249.000đ", ko → "39,000원". */
+export function formatPrice(value: number, locale: Locale = "vi") {
+  if (locale === "ko") return `${value.toLocaleString("ko-KR")}원`
+  return formatVnd(value)
+}
+
+/** Gói tháng theo ngôn ngữ (giá cố định theo từng thị trường, không quy đổi tỷ giá). */
+export function getPlans(locale: Locale = "vi"): Plan[] {
+  return locale === "ko" ? KO_PLANS : PLANS
+}
+
+export function getStartingPrice(locale: Locale = "vi") {
+  return formatPrice(Math.min(...getPlans(locale).map((plan) => plan.monthlyPrice)), locale)
+}
+
+export function getFreeSubdomainExample(locale: Locale = "vi") {
+  return locale === "ko" ? KO_FREE_SUBDOMAIN_EXAMPLE : FREE_SUBDOMAIN_EXAMPLE
 }
 
 /** e.g. "249.000đ" — cheapest monthly plan, for copy like "từ 249.000đ/tháng". */

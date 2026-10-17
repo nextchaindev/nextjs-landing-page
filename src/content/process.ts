@@ -1,3 +1,6 @@
+import type { Locale } from "@/i18n/config"
+import { KO_PROCESS_STEPS } from "./ko/process"
+
 export interface ProcessStep {
   title: string
   desc: string
@@ -30,3 +33,7 @@ export const PROCESS_STEPS: ProcessStep[] = [
       "Với gói tháng, Nextchain cập nhật nội dung và bảo trì liên tục. Với dự án, bạn được hướng dẫn sử dụng và hỗ trợ trong thời gian bảo hành của gói.",
   },
 ]
+
+export function getProcessSteps(locale: Locale = "vi"): ProcessStep[] {
+  return locale === "ko" ? KO_PROCESS_STEPS : PROCESS_STEPS
+}

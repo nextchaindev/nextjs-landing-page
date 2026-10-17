@@ -5,6 +5,8 @@ import {
   Search,
   Boxes,
 } from "lucide-react"
+import type { Locale } from "@/i18n/config"
+import { KO_PROJECT_SERVICES } from "./ko/projectPricing"
 
 /**
  * Bảng giá theo dự án cho website/phần mềm quy mô lớn hơn.
@@ -357,6 +359,11 @@ export const projectServices = {
 }
 
 export type ProjectServiceKey = keyof typeof projectServices
+
+/** Bảng giá dự án theo ngôn ngữ (giá cố định theo từng thị trường, không quy đổi tỷ giá). */
+export function getProjectServices(locale: Locale = "vi"): typeof projectServices {
+  return locale === "ko" ? KO_PROJECT_SERVICES : projectServices
+}
 
 export function parsePrice(price: string) {
   return { amount: Number(price.replace(/\D/g, "")), isMinimum: price.includes("+") }

@@ -2,7 +2,8 @@
 
 import { motion } from "motion/react"
 import { Target, Lightbulb, Code, Rocket } from "lucide-react"
-import { PROCESS_STEPS } from "@/content/process"
+import { getProcessSteps } from "@/content/process"
+import { useDictionary, useLocale } from "@/i18n/LocaleProvider"
 import Link from "next/link"
 import {
   fadeInUp,
@@ -41,9 +42,10 @@ const STEP_STYLES = [
   { icon: Rocket, color: "green" },
 ]
 
-const steps = PROCESS_STEPS.map((step, idx) => ({ ...step, ...STEP_STYLES[idx], step: idx + 1 }))
-
 export default function Process() {
+  const locale = useLocale()
+  const { process } = useDictionary()
+  const steps = getProcessSteps(locale).map((step, idx) => ({ ...step, ...STEP_STYLES[idx], step: idx + 1 }))
   const { ref: processRef, isVisible: processVisible } = useScrollAnimation(0.1)
   return (
     <section id="process" className="py-20 px-6" ref={processRef}>
@@ -54,10 +56,10 @@ export default function Process() {
           animate={processVisible ? "visible" : "hidden"}
           variants={fadeInUp}>
           <h2 className="text-2xl md:text-4xl text-gray-900 mb-4">
-            Quy trình làm việc
+            {process.heading}
           </h2>
           <p className="text-[16px] md:text-xl text-gray-600">
-            Phương pháp chuyên nghiệp, minh bạch từng bước
+            {process.subheading}
           </p>
         </motion.div>
 
@@ -84,7 +86,7 @@ export default function Process() {
                     </div>
                     <div
                       className={`text-sm w-full md:w-fit text-center ${colors.text} font-bold tracking-wider uppercase`}>
-                      BƯỚC {item.step}
+                      {process.step.replace("{n}", String(item.step))}
                     </div>
                   </div>
                   <div className="md:flex-1">
@@ -100,11 +102,13 @@ export default function Process() {
             )
           })}
         </motion.div>
-        <p className="mt-12 text-center">
-          <Link href="/quy-trinh" className="font-semibold text-primary hover:underline">
-            Xem chi tiết quy trình làm website →
-          </Link>
-        </p>
+        {process.moreHref && (
+          <p className="mt-12 text-center">
+            <Link href={process.moreHref} className="font-semibold text-primary hover:underline">
+              {process.moreLink}
+            </Link>
+          </p>
+        )}
       </div>
     </section>
   )

@@ -18,3 +18,8 @@ body {
 body[data-menu-open] .floating-contact {
   display: none;
 }
+
+/* Tiếng Hàn: không ngắt từ giữa chừng khi xuống dòng. */
+html[lang="ko"] {
+  word-break: keep-all;
+}

@@ -5,6 +5,8 @@ import JsonLdScript from "@/components/marketing/JsonLdScript"
 import Reveal from "@/components/marketing/Reveal"
 import { breadcrumbSchema, type Crumb } from "@/lib/seo"
 import { cn } from "@/components/ui/utils"
+import { getDictionary } from "@/i18n/dictionaries"
+import { localizePath, type Locale } from "@/i18n/config"
 
 interface PageHeaderProps {
   title: string
@@ -14,6 +16,7 @@ interface PageHeaderProps {
   crumbs: Crumb[]
   image?: StaticImageData
   imageAlt?: string
+  locale?: Locale
   children?: React.ReactNode
 }
 
@@ -24,9 +27,10 @@ export default function PageHeader({
   crumbs,
   image,
   imageAlt = "",
+  locale = "vi",
   children,
 }: PageHeaderProps) {
-  const trail: Crumb[] = [{ name: "Trang chủ", path: "/" }, ...crumbs]
+  const trail: Crumb[] = [{ name: getDictionary(locale).common.home, path: localizePath("/", locale) }, ...crumbs]
 
   return (
     <section className="relative overflow-hidden pt-24 md:pt-36 pb-12 md:pb-20 px-4 md:px-6 bg-linear-to-b from-orange-50/50 to-white">
