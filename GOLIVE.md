@@ -24,6 +24,8 @@ Cập nhật: 2026-10-14. Chạy theo thứ tự; tick xong mục nào ghi ngày
 - [ ] Xác minh bằng **DNS TXT** (khuyên dùng) hoặc lấy mã content của meta method rồi đặt vào env `GOOGLE_SITE_VERIFICATION` và deploy lại.
 - [ ] Submit `https://www.nextchain.site/sitemap.xml` (đếm: `curl -s https://www.nextchain.site/sitemap.xml | grep -c "<loc>"` — phải khớp số URL trong `src/app/sitemap.ts`).
 - [ ] Kiểm tra URL Inspection cho `/`, `/bang-gia`, một trang `/dich-vu/*`.
+- [ ] Sau khi bật tiếng Hàn (`NEXT_PUBLIC_ENABLED_LOCALES=vi,ko`): sitemap tự có thêm các URL `/ko/...` kèm hreflang; chạy `SEO_BASE_URL=... npm run seo:check` (kiểm tra hreflang hai chiều, `<html lang>`) rồi URL Inspection `/ko/pricing`. Hiện tại trang `/ko` tự `noindex` và không có trong sitemap cho tới khi bật biến này.
+- [ ] Chạy `npm run i18n:check` sau `npm run build`: trang `/ko` không được còn chữ tiếng Việt hoặc giá VND.
 
 ## 3. Sau deploy — kiểm tra nhanh (15 phút)
 

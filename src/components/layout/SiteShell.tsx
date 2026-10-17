@@ -47,7 +47,7 @@ export default function SiteShell({ locale, fontClassName, fontVariable, childre
       </head>
       <body className={`${fontClassName} antialiased`} style={bodyStyle}>
         <LocaleProvider locale={locale} dictionary={getDictionary(locale)}>
-          <JsonLd />
+          <JsonLd locale={locale} />
           <ConsentGate>
             {(GA_IDS.length > 0 || process.env.NEXT_PUBLIC_GAW_ID) && <GoogleAnalytics gaId={GA_IDS} />}
             {CLARITY_ID && <ClarityAnalytics projectId={CLARITY_ID} />}

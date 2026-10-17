@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { SITE_NAME, absoluteUrl } from "@/lib/site"
 import { DEFAULT_LOCALE, ENABLED_LOCALES, OG_LOCALES, type Locale } from "@/i18n/config"
+import { alternateLanguages } from "@/i18n/routes"
 
 interface PageMetadataInput {
   title: string
@@ -25,6 +26,7 @@ export function pageMetadata({
   locale = DEFAULT_LOCALE,
 }: PageMetadataInput): Metadata {
   const published = locale === DEFAULT_LOCALE || ENABLED_LOCALES.includes(locale)
+  const languages = alternateLanguages(path)
   const fullTitle = absoluteTitle ? title : `${title} | ${SITE_NAME}`
   const images = ogImage
     ? [{ url: ogImage, width: 1200, height: 630, alt: title }]
@@ -32,7 +34,7 @@ export function pageMetadata({
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,
-    alternates: { canonical: path },
+    alternates: { canonical: path, ...(languages && { languages }) },
     openGraph: {
       type: "website",
       locale: OG_LOCALES[locale],

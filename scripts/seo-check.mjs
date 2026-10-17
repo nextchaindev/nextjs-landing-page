@@ -31,6 +31,7 @@ if (urls.length === 0) fail("sitemap rỗng")
 const seenTitles = new Map()
 const seenDescs = new Map()
 const internalLinks = new Set()
+const alternatesByUrl = new Map() // url -> { hreflang: href }
 
 for (const url of urls) {
   const path = url.replace(/^https?:\/\/[^/]+/, "") || "/"
@@ -47,6 +48,19 @@ for (const url of urls) {
   const xRobots = res.headers.get("x-robots-tag") ?? ""
   const h1 = (html.match(/<h1[\s>]/g) || []).length
   const imgNoAlt = (html.match(/<img(?![^>]*\balt=)[^>]*>/g) || []).length
+
+  // <html lang> phải khớp ngôn ngữ của đường dẫn (/ko/... → ko, còn lại → vi).
+  const htmlLang = html.match(/<html[^>]*\blang="([^"]*)"/)?.[1]
+  const expectedLang = path === "/ko" || path.startsWith("/ko/") ? "ko" : "vi"
+  if (htmlLang !== expectedLang) fail(`${path}: <html lang="${htmlLang}"> khác ngôn ngữ mong đợi "${expectedLang}"`)
+
+  const alternates = {}
+  for (const tag of html.match(/<link[^>]*\brel="alternate"[^>]*>/gi) ?? []) {
+    const hreflang = tag.match(/\bhreflang="([^"]+)"/i)?.[1]
+    const href = tag.match(/\bhref="([^"]+)"/i)?.[1]
+    if (hreflang && href) alternates[hreflang] = decode(href)
+  }
+  if (Object.keys(alternates).length > 0) alternatesByUrl.set(url, alternates)
 
   if (/noindex/.test(robotsMeta + xRobots)) fail(`${path}: bị noindex nhưng nằm trong sitemap`)
   if (canonical !== url) fail(`${path}: canonical "${canonical}" khác URL sitemap`)
@@ -68,6 +82,19 @@ for (const url of urls) {
   seenDescs.set(desc, [...(seenDescs.get(desc) ?? []), path])
 }
 
+// hreflang: trang phải tự tham chiếu, có x-default, và các bản dịch phải trỏ ngược lại nhau.
+for (const [url, alternates] of alternatesByUrl) {
+  const path = url.replace(/^https?:\/\/[^/]+/, "") || "/"
+  if (!Object.values(alternates).includes(url)) fail(`${path}: hreflang không tự tham chiếu chính nó`)
+  if (!alternates["x-default"]) fail(`${path}: hreflang thiếu x-default`)
+  for (const [lang, href] of Object.entries(alternates)) {
+    if (lang === "x-default" || href === url) continue
+    const back = alternatesByUrl.get(href)
+    if (!back) fail(`${path}: hreflang ${lang} → ${href} không nằm trong sitemap hoặc không có hreflang`)
+    else if (!Object.values(back).includes(url)) fail(`${path}: hreflang ${lang} → ${href} nhưng trang đó không trỏ ngược lại`)
+  }
+}
+
 for (const [title, paths] of seenTitles) if (paths.length > 1) fail(`Trùng title "${title}": ${paths.join(", ")}`)
 for (const [, paths] of seenDescs) if (paths.length > 1) fail(`Trùng description: ${paths.join(", ")}`)
 
@@ -87,6 +114,7 @@ if (missing.status !== 404) fail(`URL không tồn tại trả ${missing.status}
 const success = await (await get("/success")).text()
 if (!/<meta name="robots" content="[^"]*noindex/.test(success)) fail("/success thiếu noindex")
 
+console.log(`${alternatesByUrl.size} trang có hreflang`)
 console.log(`Đã kiểm tra ${urls.length} URL trong sitemap, ${internalLinks.size} link nội bộ — ${BASE}`)
 for (const w of warnings) console.log(`  ⚠ ${w}`)
 for (const e of errors) console.log(`  ✗ ${e}`)

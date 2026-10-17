@@ -1,4 +1,5 @@
-import { DEFAULT_LOCALE, LOCALES, localizePath, type Locale } from "./config"
+import { absoluteUrl } from "@/lib/site"
+import { DEFAULT_LOCALE, ENABLED_LOCALES, LOCALES, localizePath, type Locale } from "./config"
 
 /**
  * Bảng đối ứng đường dẫn giữa các ngôn ngữ, khóa là đường dẫn tiếng Việt (ngôn ngữ gốc).
@@ -35,4 +36,37 @@ export function alternatePath(pathname: string, target: Locale): string {
 
   const translated = ROUTE_TRANSLATIONS[viPath]?.[target as "ko"]
   return localizePath(translated ?? "/", target)
+}
+
+/** Đường dẫn tiếng Việt (gốc) của một trang ở bất kỳ ngôn ngữ nào; undefined nếu trang đó không có bản gốc tương ứng. */
+export function toDefaultPath(pathname: string): string | undefined {
+  const { locale, path } = stripLocale(pathname)
+  if (locale === DEFAULT_LOCALE) return path
+  return Object.entries(ROUTE_TRANSLATIONS).find(([, translations]) => translations[locale as "ko"] === path)?.[0]
+}
+
+/** Đường dẫn (có tiền tố) của trang gốc `viPath` ở ngôn ngữ `locale`; undefined nếu chưa có bản dịch. */
+export function pathForLocale(viPath: string, locale: Locale): string | undefined {
+  if (locale === DEFAULT_LOCALE) return viPath
+  const translated = ROUTE_TRANSLATIONS[viPath]?.[locale as "ko"]
+  return translated === undefined ? undefined : localizePath(translated, locale)
+}
+
+/**
+ * Bản đồ hreflang của một trang, chỉ gồm các ngôn ngữ đã bật (NEXT_PUBLIC_ENABLED_LOCALES) và có bản dịch.
+ * Trả về undefined nếu trang chỉ có một ngôn ngữ — không cần khai báo hreflang.
+ * Mỗi bản dịch đều phải gọi hàm này để các trang trỏ ngược lại nhau (yêu cầu của Google).
+ */
+export function alternateLanguages(pathname: string): Record<string, string> | undefined {
+  const viPath = toDefaultPath(pathname)
+  if (viPath === undefined) return undefined
+
+  const languages: Record<string, string> = {}
+  for (const locale of ENABLED_LOCALES) {
+    const path = pathForLocale(viPath, locale)
+    if (path !== undefined) languages[locale] = absoluteUrl(path)
+  }
+  if (Object.keys(languages).length < 2) return undefined
+
+  return { ...languages, "x-default": absoluteUrl(viPath) }
 }
