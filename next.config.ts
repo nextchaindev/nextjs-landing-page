@@ -62,6 +62,9 @@ const nextConfig: NextConfig = {
     ]
   },
 
+  // Nhiều root layout (mỗi ngôn ngữ một cái) → 404 toàn cục render ở app/global-not-found.tsx.
+  experimental: { globalNotFound: true },
+
   // Enable React strict mode for better development
   reactStrictMode: true,
 

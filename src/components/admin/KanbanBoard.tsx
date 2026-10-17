@@ -16,7 +16,7 @@ import {
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { Column } from './KanbanColumn'
 import { Card } from './KanbanCard'
-import { updateConsultationStatus } from '@/app/admin/actions'
+import { updateConsultationStatus } from '@/app/(vi)/admin/actions'
 import { toast } from 'sonner'
 import { ConsultationDetail } from './ConsultationDetail'
 

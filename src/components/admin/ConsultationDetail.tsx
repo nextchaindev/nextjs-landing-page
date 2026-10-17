@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { createClient } from '@/utils/supabase/client'
-import { updateConsultationMemo } from '@/app/admin/actions'
+import { updateConsultationMemo } from '@/app/(vi)/admin/actions'
 import { toast } from 'sonner'
 import { Consultation } from './KanbanBoard'
 
