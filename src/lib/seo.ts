@@ -16,6 +16,26 @@ interface PageMetadataInput {
   locale?: Locale
 }
 
+const MAX_DESCRIPTION = 160
+
+/**
+ * Meta description dài hơn 160 ký tự bị Google cắt giữa câu. Cho ngôn ngữ ngoài tiếng Việt (bản dịch
+ * thường dài hơn): cắt ở ranh giới câu gần nhất, không có thì cắt ở từ cuối rồi thêm "…".
+ * Không đụng tới tiếng Việt để giữ nguyên nội dung hiện có.
+ */
+function fitDescription(description: string, locale: Locale) {
+  if (locale === DEFAULT_LOCALE || description.length <= MAX_DESCRIPTION) return description
+  const sentences = description.match(/[^.!?。]+[.!?。]+(\s|$)/g) ?? []
+  let fitted = ""
+  for (const sentence of sentences) {
+    if ((fitted + sentence).trim().length > MAX_DESCRIPTION) break
+    fitted += sentence
+  }
+  if (fitted.trim().length >= 70) return fitted.trim()
+  const cut = description.slice(0, MAX_DESCRIPTION - 1)
+  return `${cut.slice(0, Math.max(cut.lastIndexOf(" "), 60)).trimEnd()}…`
+}
+
 export function pageMetadata({
   title,
   description,
@@ -27,6 +47,7 @@ export function pageMetadata({
 }: PageMetadataInput): Metadata {
   const published = locale === DEFAULT_LOCALE || ENABLED_LOCALES.includes(locale)
   const languages = alternateLanguages(path)
+  description = fitDescription(description, locale)
   const fullTitle = absoluteTitle ? title : `${title} | ${SITE_NAME}`
   const images = ogImage
     ? [{ url: ogImage, width: 1200, height: 630, alt: title }]
