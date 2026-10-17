@@ -1,5 +1,7 @@
-export const LOCALES = ["vi", "ko"] as const
+export const LOCALES = ["vi", "ko", "en"] as const
 export type Locale = (typeof LOCALES)[number]
+/** Ngôn ngữ có tiền tố URL (/ko, /en). */
+export type NonDefaultLocale = Exclude<Locale, "vi">
 
 /** Ngôn ngữ mặc định: URL không có tiền tố (/bang-gia). Các ngôn ngữ khác nằm dưới /<locale>. */
 export const DEFAULT_LOCALE: Locale = "vi"
@@ -18,12 +20,14 @@ export function localizePath(path: string, locale: Locale) {
 export const LANGUAGE_TAGS: Record<Locale, string> = {
   vi: "vi-VN",
   ko: "ko-KR",
+  en: "en-US",
 }
 
 /** Giá trị `og:locale`. */
 export const OG_LOCALES: Record<Locale, string> = {
   vi: "vi_VN",
   ko: "ko_KR",
+  en: "en_US",
 }
 
 /**
@@ -39,4 +43,5 @@ export const ENABLED_LOCALES: Locale[] = (process.env.NEXT_PUBLIC_ENABLED_LOCALE
 export const LOCALE_NAMES: Record<Locale, { short: string; full: string }> = {
   vi: { short: "VI", full: "Tiếng Việt" },
   ko: { short: "KO", full: "한국어" },
+  en: { short: "EN", full: "English" },
 }

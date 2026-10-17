@@ -4,14 +4,13 @@ import { checkConsultationRateLimit } from '@/lib/consultationRateLimit'
 import { SITE_URL } from '@/lib/site'
 import { ATTRIBUTION_KEYS } from '@/lib/attribution'
 import { LEAD_INDUSTRIES, LEAD_WEBSITE_TYPES, pickOption } from '@/content/leadOptions'
-import { parsePhone, type PhoneCountry } from '@/lib/phone'
+import { parsePhoneForLocale } from '@/lib/phone'
 import { DEFAULT_LOCALE, isLocale, type Locale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
 
 const ATTRIBUTION_FIELDS = [...ATTRIBUTION_KEYS, 'landing_page', 'referrer', 'captured_at', 'ga_client_id'] as const
 const DUPLICATE_WINDOW_MS = 24 * 60 * 60 * 1000
-const PREFERRED_CONTACTS = ['phone', 'email', 'kakao'] as const
-const PHONE_PREFERENCE: Record<Locale, PhoneCountry> = { vi: 'VN', ko: 'KR' }
+const PREFERRED_CONTACTS = ['phone', 'email', 'kakao', 'whatsapp'] as const
 
 /** Nhãn hiển thị cho nhân viên: lead tiếng Hàn gửi về Discord của đội Hàn bằng tiếng Hàn. */
 function discordLabels(locale: Locale) {
@@ -34,7 +33,8 @@ function discordLabels(locale: Locale) {
         }
     }
     return {
-        title: 'New Consultation Request',
+        // en: nhân viên nhận lead là đội Việt Nam nên giữ nhãn như tiếng Việt, chỉ đánh dấu ngôn ngữ trang.
+        title: locale === 'en' ? 'New Consultation Request (English page)' : 'New Consultation Request',
         duplicateTitle: 'Khách gửi lại yêu cầu (trùng SĐT trong 24h)',
         industry: 'Ngành',
         need: 'Cần',
@@ -51,9 +51,9 @@ function discordLabels(locale: Locale) {
     }
 }
 
-/** Giá trị ngành/loại website lưu DB luôn là tiếng Việt; dịch sang ngôn ngữ của nhân viên nhận lead. */
+/** Giá trị ngành/loại website lưu DB luôn là tiếng Việt; chỉ dịch cho đội Hàn (lead tiếng Hàn). Đội Việt Nam (vi, en) đọc nguyên bản. */
 function displayOption(value: string, options: readonly string[], labels: string[], locale: Locale) {
-    if (locale === DEFAULT_LOCALE) return value
+    if (locale !== 'ko') return value
     return labels[options.indexOf(value)] ?? value
 }
 
@@ -110,7 +110,7 @@ export async function POST(request: Request) {
             typeof name !== 'string' || !name.trim() || name.length > 150 ||
             (email !== undefined && typeof email !== 'string') ||
             (typeof email === 'string' && (email.length > 254 || (email.trim() !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())))) ||
-            !parsePhone(phone, PHONE_PREFERENCE[locale]) ||
+            !parsePhoneForLocale(phone, locale) ||
             typeof message !== 'string' || message.length > 5000
         ) {
             return NextResponse.json({ error: 'Invalid consultation details' }, { status: 400 })
@@ -153,7 +153,7 @@ export async function POST(request: Request) {
         }
 
         // validate ở trên đã đảm bảo parse được
-        const parsedPhone = parsePhone(phone, PHONE_PREFERENCE[locale])!
+        const parsedPhone = parsePhoneForLocale(phone, locale)!
         const normalizedPhone = parsedPhone.normalized
         try {
             if (!await checkConsultationRateLimit(normalizedPhone, request)) {

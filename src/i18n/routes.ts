@@ -1,15 +1,15 @@
 import { absoluteUrl } from "@/lib/site"
-import { DEFAULT_LOCALE, ENABLED_LOCALES, LOCALES, localizePath, type Locale } from "./config"
+import { DEFAULT_LOCALE, ENABLED_LOCALES, LOCALES, localizePath, type Locale, type NonDefaultLocale } from "./config"
 
 /**
  * Bảng đối ứng đường dẫn giữa các ngôn ngữ, khóa là đường dẫn tiếng Việt (ngôn ngữ gốc).
  * Thêm một dòng khi một trang được dịch và công khai — bảng này cũng là nguồn cho hreflang (#25).
  * Đường dẫn ở đây KHÔNG gồm tiền tố ngôn ngữ.
  */
-export const ROUTE_TRANSLATIONS: Record<string, Partial<Record<Exclude<Locale, "vi">, string>>> = {
-  "/": { ko: "/" },
-  "/bang-gia": { ko: "/pricing" },
-  "/lien-he": { ko: "/contact" },
+export const ROUTE_TRANSLATIONS: Record<string, Partial<Record<NonDefaultLocale, string>>> = {
+  "/": { ko: "/", en: "/" },
+  "/bang-gia": { ko: "/pricing", en: "/pricing" },
+  "/lien-he": { ko: "/contact", en: "/contact" },
 }
 
 function stripLocale(pathname: string): { locale: Locale; path: string } {
@@ -29,12 +29,12 @@ export function alternatePath(pathname: string, target: Locale): string {
   const viPath =
     current === DEFAULT_LOCALE
       ? path
-      : Object.entries(ROUTE_TRANSLATIONS).find(([, translations]) => translations[current as "ko"] === path)?.[0]
+      : Object.entries(ROUTE_TRANSLATIONS).find(([, translations]) => translations[current as NonDefaultLocale] === path)?.[0]
 
   if (viPath === undefined) return localizePath("/", target)
   if (target === DEFAULT_LOCALE) return viPath
 
-  const translated = ROUTE_TRANSLATIONS[viPath]?.[target as "ko"]
+  const translated = ROUTE_TRANSLATIONS[viPath]?.[target as NonDefaultLocale]
   return localizePath(translated ?? "/", target)
 }
 
@@ -42,13 +42,13 @@ export function alternatePath(pathname: string, target: Locale): string {
 export function toDefaultPath(pathname: string): string | undefined {
   const { locale, path } = stripLocale(pathname)
   if (locale === DEFAULT_LOCALE) return path
-  return Object.entries(ROUTE_TRANSLATIONS).find(([, translations]) => translations[locale as "ko"] === path)?.[0]
+  return Object.entries(ROUTE_TRANSLATIONS).find(([, translations]) => translations[locale as NonDefaultLocale] === path)?.[0]
 }
 
 /** Đường dẫn (có tiền tố) của trang gốc `viPath` ở ngôn ngữ `locale`; undefined nếu chưa có bản dịch. */
 export function pathForLocale(viPath: string, locale: Locale): string | undefined {
   if (locale === DEFAULT_LOCALE) return viPath
-  const translated = ROUTE_TRANSLATIONS[viPath]?.[locale as "ko"]
+  const translated = ROUTE_TRANSLATIONS[viPath]?.[locale as NonDefaultLocale]
   return translated === undefined ? undefined : localizePath(translated, locale)
 }
 

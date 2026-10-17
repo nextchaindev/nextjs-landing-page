@@ -6,7 +6,7 @@ import { TEMPLATES, isTemplateIndexable } from "@/content/templates"
 import { BLOG_POSTS } from "@/content/blog"
 import { LEGAL_UPDATED_AT } from "@/content/legal"
 import { PROJECTS } from "@/content/projects"
-import { ENABLED_LOCALES, LOCALES, localizePath } from "@/i18n/config"
+import { ENABLED_LOCALES, LOCALES, localizePath, type NonDefaultLocale } from "@/i18n/config"
 import { ROUTE_TRANSLATIONS, alternateLanguages } from "@/i18n/routes"
 
 /**
@@ -46,7 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const translatedEntries = LOCALES.filter((locale) => locale !== "vi" && ENABLED_LOCALES.includes(locale)).flatMap(
     (locale) =>
       Object.values(ROUTE_TRANSLATIONS).flatMap((translations) => {
-        const path = translations[locale as "ko"]
+        const path = translations[locale as NonDefaultLocale]
         return path === undefined ? [] : [entry(localizePath(path, locale), CONTENT_UPDATED_AT)]
       }),
   )

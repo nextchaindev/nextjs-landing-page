@@ -1,50 +1,35 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Phone } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import Image from "next/image";
 import { useDictionary, useLocale } from "@/i18n/LocaleProvider";
 import type { Locale } from "@/i18n/config";
+import { getMessenger } from "@/lib/messenger";
 
-interface Messenger {
-  href: string | undefined;
-  /** Tailwind class đầy đủ (không ghép chuỗi để Tailwind quét được). */
-  bg: string;
-  event: string;
-  icon: ReactNode;
+/** Biểu tượng của từng kênh; cấu hình (href, màu, event) nằm ở lib/messenger.ts. */
+const MESSENGER_ICONS: Record<Locale, ReactNode> = {
+  vi: <Image src="/images/zalo-icon.png" alt="Zalo" width={56} height={56} />,
+  ko: (
+    <svg viewBox="0 0 56 56" width={56} height={56} role="img" aria-label="KakaoTalk">
+      <path
+        fill="#191919"
+        d="M28 13C18.6 13 11 19.1 11 26.6c0 4.8 3.1 9 7.8 11.4l-1.6 5.9c-.1.5.4.8.8.6l6.9-4.6c1 .1 2 .2 3.1.2 9.4 0 17-6.1 17-13.6S37.4 13 28 13z"
+      />
+    </svg>
+  ),
+  en: (
+    <span role="img" aria-label="WhatsApp" className="flex h-[56px] w-[56px] items-center justify-center">
+      <MessageCircle className="h-7 w-7" strokeWidth={2.5} />
+    </span>
+  ),
 }
-
-/**
- * Kênh nhắn tin theo ngôn ngữ: Zalo (vi), KakaoTalk (ko).
- * Đường dẫn KakaoTalk lấy từ env; chưa có thì ẩn nút (xem issue #20).
- */
-const MESSENGERS: Record<Locale, Messenger> = {
-  vi: {
-    href: "https://zalo.me/0909807687",
-    bg: "bg-[#0068FF]",
-    event: "click_zalo",
-    icon: <Image src="/images/zalo-icon.png" alt="Zalo" width={56} height={56} />,
-  },
-  ko: {
-    href: process.env.NEXT_PUBLIC_KAKAO_CHANNEL_URL || undefined,
-    bg: "bg-[#FEE500]",
-    event: "click_kakao",
-    icon: (
-      <svg viewBox="0 0 56 56" width={56} height={56} role="img" aria-label="KakaoTalk">
-        <path
-          fill="#191919"
-          d="M28 13C18.6 13 11 19.1 11 26.6c0 4.8 3.1 9 7.8 11.4l-1.6 5.9c-.1.5.4.8.8.6l6.9-4.6c1 .1 2 .2 3.1.2 9.4 0 17-6.1 17-13.6S37.4 13 28 13z"
-        />
-      </svg>
-    ),
-  },
-};
 
 export default function FloatingContact() {
   const locale = useLocale();
   const { floating } = useDictionary();
-  const messenger = MESSENGERS[locale];
+  const messenger = getMessenger(locale);
 
   if (!messenger.href && !floating.phoneHref) return null;
 
@@ -66,7 +51,7 @@ export default function FloatingContact() {
           <div className={`absolute inset-0 rounded-full ${messenger.bg} animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] opacity-40`} />
 
           <div className={`relative flex items-center justify-center rounded-full ${messenger.bg} text-white shadow-xl transition-transform duration-300 group-hover:scale-110`}>
-            {messenger.icon}
+            {MESSENGER_ICONS[locale]}
           </div>
         </a>
       )}

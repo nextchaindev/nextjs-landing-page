@@ -2,7 +2,7 @@ import { CheckCircle2, Info } from "lucide-react"
 import ContactButton from "@/components/marketing/ContactButton"
 import Reveal from "@/components/marketing/Reveal"
 import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
-import { formatPrice, getPlans } from "@/content/plans"
+import { formatPrice, getDailyPrice, getPlans } from "@/content/plans"
 import { cn } from "@/components/ui/utils"
 import { getDictionary } from "@/i18n/dictionaries"
 import type { Locale } from "@/i18n/config"
@@ -38,7 +38,7 @@ export default function PricingCards({ planIds, locale = "vi" }: { planIds?: str
                   <span className="text-gray-500 font-medium">{pricing.perMonth}</span>
                 </p>
                 <p className="mt-1 text-sm text-gray-500">
-                  {pricing.perDay.replace("{price}", price(Math.ceil(plan.monthlyPrice / 30 / 100) * 100))}
+                  {pricing.perDay.replace("{price}", price(getDailyPrice(plan.monthlyPrice, locale)))}
                 </p>
                 <p className="mt-2 inline-block rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-gray-700">
                   {pricing.terms}

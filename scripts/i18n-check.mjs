@@ -11,7 +11,7 @@ import { readdirSync, readFileSync, statSync, existsSync } from "node:fs"
 import { join } from "node:path"
 
 const BUILD_DIR = join(process.cwd(), ".next/server/app")
-const LOCALES = ["ko"]
+const LOCALES = ["ko", "en"]
 
 // Ký tự chỉ có trong tiếng Việt (chữ cái riêng + nguyên âm có dấu thanh).
 const VIETNAMESE = /[ăâđêôơưĂÂĐÊÔƠƯàáạảãằắặẳẵầấậẩẫèéẹẻẽềếệểễìíịỉĩòóọỏõồốộổỗờớợởỡùúụủũừứựửữỳýỵỷỹ]/

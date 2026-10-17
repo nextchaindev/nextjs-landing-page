@@ -7,6 +7,7 @@ import {
 } from "lucide-react"
 import type { Locale } from "@/i18n/config"
 import { KO_PROJECT_SERVICES } from "./ko/projectPricing"
+import { EN_PROJECT_SERVICES } from "./en/projectPricing"
 
 /**
  * Bảng giá theo dự án cho website/phần mềm quy mô lớn hơn.
@@ -362,7 +363,7 @@ export type ProjectServiceKey = keyof typeof projectServices
 
 /** Bảng giá dự án theo ngôn ngữ (giá cố định theo từng thị trường, không quy đổi tỷ giá). */
 export function getProjectServices(locale: Locale = "vi"): typeof projectServices {
-  return locale === "ko" ? KO_PROJECT_SERVICES : projectServices
+  return { vi: projectServices, ko: KO_PROJECT_SERVICES, en: EN_PROJECT_SERVICES }[locale]
 }
 
 export function parsePrice(price: string) {

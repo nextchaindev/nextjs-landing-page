@@ -6,7 +6,7 @@ import { trackEvent } from "@/lib/analytics"
 import { captureAttribution, readAttribution } from "@/lib/attribution"
 import { useDictionary, useLocale } from "@/i18n/LocaleProvider"
 import { localizePath } from "@/i18n/config"
-import { parsePhone } from "@/lib/phone"
+import { parsePhoneForLocale } from "@/lib/phone"
 
 interface FormData {
   name: string
@@ -58,9 +58,6 @@ function readGaClientId() {
   return match?.[1]
 }
 
-/** Ngôn ngữ nào ưu tiên số nước nào khi dãy số hợp lệ ở cả VN và KR. */
-const PHONE_PREFERENCE = { vi: "VN", ko: "KR" } as const
-
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [loadingSubmit, setLoadingSubmit] = useState(false)
@@ -72,7 +69,6 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const formStartFired = useRef(false)
   const { form } = useDictionary()
   const locale = useLocale()
-  const phonePreference = PHONE_PREFERENCE[locale]
 
   const notifyFormStart = () => {
     if (formStartFired.current) return
@@ -117,7 +113,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         return ""
       case "phone":
         if (!value.trim()) return form.errors.phoneRequired
-        if (!parsePhone(value, phonePreference)) return form.errors.phoneInvalid
+        if (!parsePhoneForLocale(value, locale)) return form.errors.phoneInvalid
         return ""
       default:
         return ""
@@ -211,7 +207,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
           if (gawId && gawLabel) {
             // Enhanced Conversions for leads: gtag tự băm SHA-256 trước khi gửi.
             const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
-            const phone = parsePhone(formData.phone, phonePreference)?.e164
+            const phone = parsePhoneForLocale(formData.phone, locale)?.e164
             gtag?.("set", "user_data", {
               ...(phone && { phone_number: phone }),
               ...(formData.email.trim() && { email: formData.email.trim().toLowerCase() }),

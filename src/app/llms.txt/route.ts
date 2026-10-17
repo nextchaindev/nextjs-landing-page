@@ -2,6 +2,7 @@ import { FREE_SUBDOMAIN_EXAMPLE, PLANS, formatVnd } from "@/content/plans"
 import { SERVICE_DETAILS } from "@/content/services"
 import { INDUSTRIES } from "@/content/industries"
 import { KO_PLANS } from "@/content/ko/plans"
+import { EN_PLANS } from "@/content/en/plans"
 import { ENABLED_LOCALES } from "@/i18n/config"
 import { CONTACT, SITE_NAME, SITE_URL } from "@/lib/site"
 
@@ -41,6 +42,21 @@ ${KO_PLANS.map(
 `
     : ""
 
+  const englishSection = ENABLED_LOCALES.includes("en")
+    ? `
+## English
+
+${SITE_NAME} — all-in-one monthly websites and landing pages for small businesses; project-based corporate websites, online stores and software. Operated by Nextchain Tech, Ho Chi Minh City.
+
+${EN_PLANS.map(
+  (plan) => `- ${plan.name}: $${plan.monthlyPrice}/month (excludes taxes) — ${plan.tagline}`,
+).join("\n")}
+- [Pricing](${SITE_URL}/en/pricing)
+- [Contact](${SITE_URL}/en/contact)
+- Price list (text): ${SITE_URL}/en/pricing.md
+`
+    : ""
+
   const body = `> ${SITE_NAME} — dịch vụ làm website trọn gói theo tháng cho spa, salon, homestay, cửa hàng và cơ sở dịch vụ nhỏ tại Việt Nam; website doanh nghiệp, bán hàng và phần mềm theo dự án. Chủ quản: Nextchain Tech, Hồ Chí Minh.
 
 Liên hệ: ${CONTACT.email} | ${CONTACT.phone} | phản hồi ${CONTACT.responseTime}
@@ -62,7 +78,7 @@ ${industryLines.join("\n")}
 ## Nội dung
 
 ${blogLines}
-${koreanSection}`
+${koreanSection}${englishSection}`
 
   return new Response(body, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

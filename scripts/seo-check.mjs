@@ -49,9 +49,9 @@ for (const url of urls) {
   const h1 = (html.match(/<h1[\s>]/g) || []).length
   const imgNoAlt = (html.match(/<img(?![^>]*\balt=)[^>]*>/g) || []).length
 
-  // <html lang> phải khớp ngôn ngữ của đường dẫn (/ko/... → ko, còn lại → vi).
+  // <html lang> phải khớp ngôn ngữ của đường dẫn (/ko/... → ko, /en/... → en, còn lại → vi).
   const htmlLang = html.match(/<html[^>]*\blang="([^"]*)"/)?.[1]
-  const expectedLang = path === "/ko" || path.startsWith("/ko/") ? "ko" : "vi"
+  const expectedLang = ["ko", "en"].find((code) => path === `/${code}` || path.startsWith(`/${code}/`)) ?? "vi"
   if (htmlLang !== expectedLang) fail(`${path}: <html lang="${htmlLang}"> khác ngôn ngữ mong đợi "${expectedLang}"`)
 
   const alternates = {}

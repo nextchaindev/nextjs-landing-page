@@ -20,6 +20,13 @@ const ORGANIZATION_TEXT: Record<Locale, { description: string; priceRange: strin
     ],
     alternateName: ["넥스트체인", "Nextchain", "nextchain.site"],
   },
+  en: {
+    description:
+      "Website and landing page design, publishing and management on monthly plans for small businesses, plus project-based websites and software.",
+    priceRange: "$29 - $4,990+",
+    areaServed: [{ "@type": "Country", name: "Vietnam" }],
+    alternateName: ["Nextchain", "nextchain.site"],
+  },
 }
 
 /** Site-wide entity data. Page-level Service/Breadcrumb schemas live on each route. */

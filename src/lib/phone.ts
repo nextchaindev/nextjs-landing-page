@@ -1,8 +1,10 @@
+import type { Locale } from "@/i18n/config"
+
 /**
  * Kiểm tra và chuẩn hóa số điện thoại — dùng chung cho client (form) và server (API),
- * để hai bên luôn cùng một quy tắc. Hỗ trợ số Việt Nam và Hàn Quốc.
+ * để hai bên luôn cùng một quy tắc. Hỗ trợ số Việt Nam, Hàn Quốc và (trang tiếng Anh) số quốc tế.
  */
-export type PhoneCountry = "VN" | "KR"
+export type PhoneCountry = "VN" | "KR" | "INTL"
 
 export interface ParsedPhone {
   country: PhoneCountry
@@ -42,11 +44,28 @@ function parseKorea(cleaned: string): ParsedPhone | null {
   return { country: "KR", normalized: e164, e164 }
 }
 
+// Số quốc tế khác (E.164): bắt buộc có "+" để không nhầm với số nội địa.
+const INTL_PATTERN = /^\+[1-9]\d{7,14}$/
+
+function parseInternational(cleaned: string): ParsedPhone | null {
+  if (!INTL_PATTERN.test(cleaned)) return null
+  return { country: "INTL", normalized: cleaned, e164: cleaned }
+}
+
+export interface ParsePhoneOptions {
+  /** Cho phép số quốc tế bất kỳ dạng +<mã nước><số> (dùng cho trang tiếng Anh). */
+  international?: boolean
+}
+
 /**
  * `prefer` quyết định nước nào được thử trước khi một dãy số hợp lệ ở cả hai nước
  * (vd. 032… vừa là di động VN vừa là máy bàn Incheon). Mặc định VN để giữ hành vi cũ.
  */
-export function parsePhone(raw: unknown, prefer: PhoneCountry = "VN"): ParsedPhone | null {
+export function parsePhone(
+  raw: unknown,
+  prefer: Exclude<PhoneCountry, "INTL"> = "VN",
+  options: ParsePhoneOptions = {},
+): ParsedPhone | null {
   if (typeof raw !== "string" || raw.length > 40) return null
   const cleaned = clean(raw)
   if (!/^\+?\d+$/.test(cleaned)) return null
@@ -56,5 +75,17 @@ export function parsePhone(raw: unknown, prefer: PhoneCountry = "VN"): ParsedPho
     const parsed = parse(cleaned)
     if (parsed) return parsed
   }
-  return null
+  return options.international ? parseInternational(cleaned) : null
+}
+
+/** Quy tắc theo ngôn ngữ của trang: nước ưu tiên khi trùng, và có cho số quốc tế hay không. */
+const LOCALE_PHONE_RULES: Record<Locale, { prefer: Exclude<PhoneCountry, "INTL">; international: boolean }> = {
+  vi: { prefer: "VN", international: false },
+  ko: { prefer: "KR", international: false },
+  en: { prefer: "VN", international: true },
+}
+
+export function parsePhoneForLocale(raw: unknown, locale: Locale): ParsedPhone | null {
+  const { prefer, international } = LOCALE_PHONE_RULES[locale]
+  return parsePhone(raw, prefer, { international })
 }

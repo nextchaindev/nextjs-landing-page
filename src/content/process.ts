@@ -1,5 +1,6 @@
 import type { Locale } from "@/i18n/config"
 import { KO_PROCESS_STEPS } from "./ko/process"
+import { EN_PROCESS_STEPS } from "./en/process"
 
 export interface ProcessStep {
   title: string
@@ -35,5 +36,5 @@ export const PROCESS_STEPS: ProcessStep[] = [
 ]
 
 export function getProcessSteps(locale: Locale = "vi"): ProcessStep[] {
-  return locale === "ko" ? KO_PROCESS_STEPS : PROCESS_STEPS
+  return { vi: PROCESS_STEPS, ko: KO_PROCESS_STEPS, en: EN_PROCESS_STEPS }[locale]
 }

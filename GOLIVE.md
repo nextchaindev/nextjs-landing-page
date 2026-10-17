@@ -13,8 +13,9 @@ Cập nhật: 2026-10-14. Chạy theo thứ tự; tick xong mục nào ghi ngày
   - `NEXT_PUBLIC_GAW_ID`, `NEXT_PUBLIC_GAW_LABEL` (sau khi có conversion Ads)
 - [ ] Đa ngôn ngữ (tiếng Hàn) — xem issue #20. Chỉ bật khi các trang `/ko` đã được duyệt:
   - Chạy `supabase_lead_locale.sql` trong Supabase (cột `locale`, `preferred_contact`) trước khi bật form tiếng Hàn
-  - `NEXT_PUBLIC_ENABLED_LOCALES=vi,ko` (hiện bộ chuyển ngôn ngữ; mặc định chỉ `vi`)
+  - `NEXT_PUBLIC_ENABLED_LOCALES=vi,ko,en` (hiện bộ chuyển ngôn ngữ; mặc định chỉ `vi`; bật từng ngôn ngữ riêng được, vd `vi,ko`)
   - `NEXT_PUBLIC_KAKAO_CHANNEL_URL` (dạng `https://pf.kakao.com/_xxxx`; trống = ẩn nút KakaoTalk)
+  - `NEXT_PUBLIC_WHATSAPP_URL` (dạng `https://wa.me/84909807687`; trống = ẩn nút WhatsApp ở trang tiếng Anh)
   - `DISCORD_WEBHOOK_URL_KO` (lead tiếng Hàn → đội Hàn; trống = dùng `DISCORD_WEBHOOK_URL`)
 - [ ] Build local sạch: `npm run build` (44+ trang tĩnh).
 

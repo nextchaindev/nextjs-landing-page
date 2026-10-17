@@ -75,6 +75,7 @@ export function breadcrumbSchema(crumbs: Crumb[]) {
 const SERVICE_SCHEMA_TEXT: Record<Locale, { serviceType: string; country: string }> = {
   vi: { serviceType: "Thiết kế và quản trị website", country: "Vietnam" },
   ko: { serviceType: "웹사이트 디자인 및 운영 관리", country: "South Korea" },
+  en: { serviceType: "Website design and management", country: "Vietnam" },
 }
 
 export function serviceSchema({

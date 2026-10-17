@@ -103,6 +103,50 @@ const KO_DEMOS: readonly HeroDemo[] = [
   },
 ]
 
+const EN_DEMOS: readonly HeroDemo[] = [
+  {
+    url: "lotus-spa.example",
+    name: "Lotus Spa",
+    tagline: "Skin care & relaxation",
+    image: imageSpa,
+    cta: "Book an appointment",
+    accent: "bg-[#C2410C]",
+    items: [
+      ["Facial care", "$15"],
+      ["Scalp treatment", "$7"],
+      ["Aroma massage", "$18"],
+    ],
+  },
+  {
+    url: "studio-mia.example",
+    name: "Studio Mia",
+    tagline: "Cut, color & perm",
+    image: imageSalon,
+    cta: "Book a haircut",
+    accent: "bg-[#1F2937]",
+    items: [
+      ["Cut & style", "$8"],
+      ["Fashion color", "$20"],
+      ["Volume perm", "$25"],
+    ],
+  },
+  {
+    url: "pine-hill-stay.example",
+    name: "Pine Hill Stay",
+    tagline: "A retreat among the pines",
+    image: imageHomestay,
+    cta: "Check availability",
+    accent: "bg-[#166534]",
+    items: [
+      ["Hill-view double room", "$28"],
+      ["Family room", "$48"],
+      ["Wooden cabin", "$105"],
+    ],
+  },
+]
+
+const DEMOS: Record<Locale, readonly HeroDemo[]> = { vi: VI_DEMOS, ko: KO_DEMOS, en: EN_DEMOS }
+
 export function getHeroDemos(locale: Locale): readonly HeroDemo[] {
-  return locale === "ko" ? KO_DEMOS : VI_DEMOS
+  return DEMOS[locale]
 }
