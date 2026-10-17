@@ -20,6 +20,14 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Đa ngôn ngữ (vi / ko / en)
+
+- Tiếng Việt là mặc định, URL không có tiền tố; `/ko/...` và `/en/...` là bản dịch (mỗi ngôn ngữ một root layout, `<html lang>` tĩnh).
+- Cấu trúc: `src/i18n/` (config, từ điển UI, slug, bảng đối ứng đường dẫn), `src/content/{ko,en}/` (nội dung dịch, giá cố định theo thị trường), `src/components/pages/` (trang dùng chung cho ko/en), `src/content/pageCopy/` và `src/content/pages.ts` (chữ cố định của từng trang).
+- Bật ngôn ngữ bằng biến môi trường `NEXT_PUBLIC_ENABLED_LOCALES=vi,ko,en` (mặc định chỉ `vi`: trang `/ko`, `/en` tự `noindex`, không có trong sitemap/hreflang). Biến khác: `NEXT_PUBLIC_KAKAO_CHANNEL_URL`, `NEXT_PUBLIC_WHATSAPP_URL`, `DISCORD_WEBHOOK_URL_KO`, `NEXT_PUBLIC_LEGAL_REVIEWED_LOCALES` (xem `GOLIVE.md`).
+- Thêm một trang đã dịch: tạo route mỏng trong `src/app/<locale>/...`, thêm slug vào `src/i18n/slugs.ts` (nếu cần), rồi chạy `npm run build && npm run i18n:check` và `npm run seo:check` (kiểm tra hreflang hai chiều).
+- Thêm ngôn ngữ mới: `LOCALES` trong `src/i18n/config.ts`, từ điển `dictionaries/<locale>.ts`, root layout `src/app/<locale>/layout.tsx`, nội dung `content/<locale>/*`.
+
 ## Form tư vấn và chống spam
 
 Form yêu cầu số điện thoại, email tùy chọn. Honeypot và reCAPTCHA v2 được xác minh ở API trước khi lưu lead. Giới hạn chia sẻ giữa các instance qua Supabase: tối đa 3 yêu cầu mỗi số điện thoại và 10 yêu cầu mỗi IP trong 10 phút. CAPTCHA và giới hạn tần suất chỉ giảm spam, không chặn tuyệt đối bot hoặc lead không hợp lệ.
