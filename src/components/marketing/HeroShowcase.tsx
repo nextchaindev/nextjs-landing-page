@@ -4,60 +4,15 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { CalendarCheck, Lock, MapPin, Phone } from "lucide-react"
-import imageSpa from "@/assets/stock/spa.jpg"
-import imageSalon from "@/assets/stock/salon.jpg"
-import imageHomestay from "@/assets/stock/homestay.jpg"
-
-/**
- * Hero visual: a browser frame cycling through example customer sites, so a
- * visitor sees what they get and that the address can be a free
- * *.nextchain.site subdomain or their own domain. Illustrative examples only.
- */
-const DEMOS = [
-  {
-    url: "spa-hoa-mai.example",
-    name: "Spa Hoa Mai",
-    tagline: "Chăm sóc da & thư giãn",
-    image: imageSpa,
-    cta: "Đặt lịch hẹn",
-    accent: "bg-[#C2410C]",
-    items: [
-      ["Chăm sóc da mặt", "350.000đ"],
-      ["Gội đầu dưỡng sinh", "150.000đ"],
-      ["Massage thư giãn", "300.000đ"],
-    ],
-  },
-  {
-    url: "salon-minh-anh.example",
-    name: "Salon Minh Anh",
-    tagline: "Cắt, nhuộm, uốn tóc",
-    image: imageSalon,
-    cta: "Đặt lịch cắt tóc",
-    accent: "bg-[#1F2937]",
-    items: [
-      ["Cắt tạo kiểu", "120.000đ"],
-      ["Nhuộm thời trang", "450.000đ"],
-      ["Uốn phồng", "550.000đ"],
-    ],
-  },
-  {
-    url: "homestay-doi-thong.example",
-    name: "Homestay Đồi Thông",
-    tagline: "Nghỉ dưỡng giữa rừng thông",
-    image: imageHomestay,
-    cta: "Hỏi phòng trống",
-    accent: "bg-[#166534]",
-    items: [
-      ["Phòng đôi view đồi", "650.000đ"],
-      ["Phòng gia đình", "1.100.000đ"],
-      ["Nguyên căn gỗ", "2.400.000đ"],
-    ],
-  },
-] as const
+import { getHeroDemos } from "@/content/heroDemos"
+import { useDictionary, useLocale } from "@/i18n/LocaleProvider"
 
 const EASE_OUT_QUART = [0.25, 1, 0.5, 1] as const
 
 export default function HeroShowcase() {
+  const locale = useLocale()
+  const { hero } = useDictionary()
+  const DEMOS = getHeroDemos(locale)
   const [index, setIndex] = useState(0)
   const reduceMotion = useReducedMotion()
   const demo = DEMOS[index]
@@ -66,7 +21,7 @@ export default function HeroShowcase() {
     if (reduceMotion) return
     const timer = setInterval(() => setIndex((i) => (i + 1) % DEMOS.length), 4200)
     return () => clearInterval(timer)
-  }, [reduceMotion])
+  }, [reduceMotion, DEMOS.length])
 
   return (
     <div className="relative">
@@ -107,7 +62,7 @@ export default function HeroShowcase() {
             <div className="relative h-[190px] md:h-[240px]">
               <Image
                 src={demo.image}
-                alt={`Ví dụ website ${demo.name}`}
+                alt={hero.demoAlt.replace("{name}", demo.name)}
                 fill
                 priority={index === 0}
                 placeholder="blur"
@@ -149,17 +104,17 @@ export default function HeroShowcase() {
         animate={reduceMotion ? undefined : { y: [0, -8, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
         <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
-        <span className="text-sm font-semibold text-gray-900">Tên miền riêng hoặc miễn phí</span>
+        <span className="text-sm font-semibold text-gray-900">{hero.floatingDomain}</span>
       </motion.div>
       <motion.div
         className="absolute -right-3 md:-right-6 bottom-5 rounded-xl bg-primary px-4 py-3 text-white shadow-xl shadow-primary/30"
         animate={reduceMotion ? undefined : { y: [0, 8, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}>
-        <p className="text-xs text-white/85">Đã gồm hosting, SSL, cập nhật</p>
-        <p className="text-base font-bold">Bạn chỉ cần duyệt nội dung</p>
+        <p className="text-xs text-white/85">{hero.floatingIncluded}</p>
+        <p className="text-base font-bold">{hero.floatingApprove}</p>
       </motion.div>
 
-      <div className="relative mt-3 flex justify-center gap-2" role="tablist" aria-label="Ví dụ website">
+      <div className="relative mt-3 flex justify-center gap-2" role="tablist" aria-label={hero.showcaseAria}>
         {DEMOS.map((item, i) => (
           <button
             key={item.name}

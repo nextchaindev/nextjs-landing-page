@@ -1,5 +1,7 @@
 # Checklist go-live nextchain.site
 
+> Related: [README – multi-language setup](./README.md#multi-language-support-vi--ko--en--english-summary) · [ANALYTICS.md](./ANALYTICS.md) · [PRODUCT.md](./PRODUCT.md) · [`supabase_lead_locale.sql`](./supabase_lead_locale.sql)
+
 Cập nhật: 2026-10-14. Chạy theo thứ tự; tick xong mục nào ghi ngày vào cạnh mục đó.
 
 ## 1. Trước deploy
@@ -11,6 +13,12 @@ Cập nhật: 2026-10-14. Chạy theo thứ tự; tick xong mục nào ghi ngày
   - `DISCORD_WEBHOOK_URL`
   - `GOOGLE_SITE_VERIFICATION` (xem mục 2)
   - `NEXT_PUBLIC_GAW_ID`, `NEXT_PUBLIC_GAW_LABEL` (sau khi có conversion Ads)
+- [ ] Đa ngôn ngữ (tiếng Hàn) — xem issue #20. Chỉ bật khi các trang `/ko` đã được duyệt:
+  - Chạy `supabase_lead_locale.sql` trong Supabase (cột `locale`, `preferred_contact`) trước khi bật form tiếng Hàn
+  - `NEXT_PUBLIC_ENABLED_LOCALES=vi,ko,en` (hiện bộ chuyển ngôn ngữ; mặc định chỉ `vi`; bật từng ngôn ngữ riêng được, vd `vi,ko`)
+  - `NEXT_PUBLIC_KAKAO_CHANNEL_URL` (dạng `https://pf.kakao.com/_xxxx`; trống = ẩn nút KakaoTalk)
+  - `NEXT_PUBLIC_WHATSAPP_URL` (dạng `https://wa.me/84909807687`; trống = ẩn nút WhatsApp ở trang tiếng Anh)
+  - `DISCORD_WEBHOOK_URL_KO` (lead tiếng Hàn → đội Hàn; trống = dùng `DISCORD_WEBHOOK_URL`)
 - [ ] Build local sạch: `npm run build` (44+ trang tĩnh).
 
 ## 2. Search Console
@@ -19,6 +27,8 @@ Cập nhật: 2026-10-14. Chạy theo thứ tự; tick xong mục nào ghi ngày
 - [ ] Xác minh bằng **DNS TXT** (khuyên dùng) hoặc lấy mã content của meta method rồi đặt vào env `GOOGLE_SITE_VERIFICATION` và deploy lại.
 - [ ] Submit `https://www.nextchain.site/sitemap.xml` (đếm: `curl -s https://www.nextchain.site/sitemap.xml | grep -c "<loc>"` — phải khớp số URL trong `src/app/sitemap.ts`).
 - [ ] Kiểm tra URL Inspection cho `/`, `/bang-gia`, một trang `/dich-vu/*`.
+- [ ] Sau khi bật tiếng Hàn (`NEXT_PUBLIC_ENABLED_LOCALES=vi,ko`): sitemap tự có thêm các URL `/ko/...` kèm hreflang; chạy `SEO_BASE_URL=... npm run seo:check` (kiểm tra hreflang hai chiều, `<html lang>`) rồi URL Inspection `/ko/pricing`. Hiện tại trang `/ko` tự `noindex` và không có trong sitemap cho tới khi bật biến này.
+- [ ] Chạy `npm run i18n:check` sau `npm run build`: trang `/ko` không được còn chữ tiếng Việt hoặc giá VND.
 
 ## 3. Sau deploy — kiểm tra nhanh (15 phút)
 

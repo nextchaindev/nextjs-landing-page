@@ -6,6 +6,10 @@
  *
  * Sửa giá tại đây — bảng giá, trang dịch vụ, trang ngành và JSON-LD dùng chung.
  */
+import type { Locale } from "@/i18n/config"
+import { KO_FREE_SUBDOMAIN_EXAMPLE, KO_PLANS } from "./ko/plans"
+import { EN_FREE_SUBDOMAIN_EXAMPLE, EN_PLANS } from "./en/plans"
+
 export interface Plan {
   id: string
   name: string
@@ -68,6 +72,32 @@ export const PLANS: Plan[] = [
 
 export function formatVnd(value: number) {
   return `${value.toLocaleString("vi-VN")}đ`
+}
+
+/** Định dạng giá theo ngôn ngữ: vi → "249.000đ", ko → "39,000원", en → "$29". */
+export function formatPrice(value: number, locale: Locale = "vi") {
+  if (locale === "ko") return `${value.toLocaleString("ko-KR")}원`
+  if (locale === "en") return `$${value.toLocaleString("en-US")}`
+  return formatVnd(value)
+}
+
+/** Gói tháng theo ngôn ngữ (giá cố định theo từng thị trường, không quy đổi tỷ giá). */
+export function getPlans(locale: Locale = "vi"): Plan[] {
+  return { vi: PLANS, ko: KO_PLANS, en: EN_PLANS }[locale]
+}
+
+/** Giá mỗi ngày (làm tròn lên): vi/ko theo bậc 100 đơn vị, en theo đô la nguyên. */
+export function getDailyPrice(monthlyPrice: number, locale: Locale = "vi") {
+  const perDay = monthlyPrice / 30
+  return locale === "en" ? Math.ceil(perDay) : Math.ceil(perDay / 100) * 100
+}
+
+export function getStartingPrice(locale: Locale = "vi") {
+  return formatPrice(Math.min(...getPlans(locale).map((plan) => plan.monthlyPrice)), locale)
+}
+
+export function getFreeSubdomainExample(locale: Locale = "vi") {
+  return { vi: FREE_SUBDOMAIN_EXAMPLE, ko: KO_FREE_SUBDOMAIN_EXAMPLE, en: EN_FREE_SUBDOMAIN_EXAMPLE }[locale]
 }
 
 /** e.g. "249.000đ" — cheapest monthly plan, for copy like "từ 249.000đ/tháng". */

@@ -1,4 +1,7 @@
 import { STARTING_PRICE } from "@/content/plans"
+import type { Locale } from "@/i18n/config"
+import { KO_GENERAL_FAQS } from "./ko/faqs"
+import { EN_GENERAL_FAQS } from "./en/faqs"
 
 export interface Faq {
   q: string
@@ -27,3 +30,7 @@ export const GENERAL_FAQS: Faq[] = [
     a: "Xem chi tiết tại Chính sách hủy dịch vụ, gồm thời hạn báo trước, việc bàn giao nội dung và tên miền.",
   },
 ]
+
+export function getGeneralFaqs(locale: Locale = "vi"): Faq[] {
+  return { vi: GENERAL_FAQS, ko: KO_GENERAL_FAQS, en: EN_GENERAL_FAQS }[locale]
+}

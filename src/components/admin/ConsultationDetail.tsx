@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { createClient } from '@/utils/supabase/client'
-import { updateConsultationMemo } from '@/app/admin/actions'
+import { updateConsultationMemo } from '@/app/(vi)/admin/actions'
 import { toast } from 'sonner'
 import { Consultation } from './KanbanBoard'
 
@@ -91,6 +91,14 @@ export function ConsultationDetail({ isOpen, onClose, consultation }: Consultati
                             <span>{consultation.contact.includes('@') ? consultation.contact : 'Không cung cấp'}</span>
                             <span className="text-gray-500">Phone:</span>
                             <span>{consultation.phone}</span>
+                            <span className="text-gray-500">Language:</span>
+                            <span className="uppercase">{consultation.locale || 'vi'}</span>
+                            {consultation.preferred_contact && (
+                                <>
+                                    <span className="text-gray-500">Preferred contact:</span>
+                                    <span>{consultation.preferred_contact}</span>
+                                </>
+                            )}
                             <span className="text-gray-500">Ngành:</span>
                             <span>{consultation.industry || '—'}</span>
                             <span className="text-gray-500">Cần:</span>

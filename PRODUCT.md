@@ -1,5 +1,7 @@
 # Nextchain.site
 
+> Related: [README – multi-language setup](./README.md#multi-language-support-vi--ko--en--english-summary) · [GOLIVE.md](./GOLIVE.md)
+
 register: brand
 
 ## Product purpose
@@ -16,7 +18,13 @@ Owners of spa, salon, nail, homestay, café, small shops in Vietnam. Busy, mobil
 
 ## Brand voice
 
-Warm, plain-spoken, trustworthy. "Chúng tôi làm từ A–Z, bạn chỉ cần duyệt." Vietnamese only, no English marketing jargon (no "Done-for-You"). Concrete and specific over hype.
+Warm, plain-spoken, trustworthy. "Chúng tôi làm từ A–Z, bạn chỉ cần duyệt." Vietnamese pages (the default, no URL prefix) stay Vietnamese-only with no English marketing jargon (no "Done-for-You"). Concrete and specific over hype.
+
+### Other languages (ko, en)
+
+- Korean (`/ko`) serves Korean customers handled by the Korean HQ: polite professional 합니다/하세요체, natural Korean rather than word-for-word, prices in KRW, KakaoTalk instead of Zalo. English (`/en`) is plain, concrete and friendly, prices in USD, WhatsApp instead of Zalo.
+- Prices are fixed per-market tables (`content/ko/*`, `content/en/*`), never converted by exchange rate.
+- Same rules everywhere: no invented facts, claims or metrics; every translation is a draft until a native speaker has reviewed it; legal pages stay unpublished until a lawyer has reviewed them.
 
 ## Hard rules
 

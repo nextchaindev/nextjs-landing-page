@@ -13,6 +13,10 @@ import imageRestaurant from "@/assets/project-1.png"
 import imageEducation from "@/assets/project-3.png"
 import imageRealEstate from "@/assets/project-4.png"
 import imageLimousine from "@/assets/project-5.png"
+import type { Locale, NonDefaultLocale } from "@/i18n/config"
+import { TEMPLATE_SLUGS } from "@/i18n/slugs"
+import { KO_TEMPLATE_TEXTS } from "./ko/templates"
+import { EN_TEMPLATE_TEXTS } from "./en/templates"
 
 /**
  * Mẫu website tham khảo. Đây không phải danh sách giới hạn — mỗi website
@@ -259,4 +263,39 @@ export function templateIndustry(template: Template) {
   const industry = template.industrySlug ? getIndustry(template.industrySlug) : undefined
   if (!industry) throw new Error(`Template ${template.slug} has no industry page`)
   return industry
+}
+
+/** Tên nhóm mẫu website ở các ngôn ngữ khác. */
+export const TEMPLATE_CATEGORY_LABELS: Record<NonDefaultLocale, Record<TemplateCategory, string>> = {
+  ko: {
+    "lam-dep": "뷰티",
+    "luu-tru": "숙박·여행",
+    "am-thuc": "식음료",
+    "suc-khoe": "건강",
+    "ban-le": "소매",
+    "doanh-nghiep": "기업",
+  },
+  en: {
+    "lam-dep": "Beauty",
+    "luu-tru": "Stay & Travel",
+    "am-thuc": "Food & Drink",
+    "suc-khoe": "Health",
+    "ban-le": "Retail",
+    "doanh-nghiep": "Business",
+  },
+}
+
+/** Phần chữ của một mẫu website ở ngôn ngữ khác (ảnh, nhóm, demo, liên kết ngành dùng chung). Khóa: slug tiếng Việt. */
+export type TemplateText = Pick<Template, "name" | "style" | "description" | "highlights" | "imageAlt">
+export type TemplateTexts = Record<string, TemplateText>
+
+const TEMPLATE_TEXTS: Record<NonDefaultLocale, TemplateTexts> = { ko: KO_TEMPLATE_TEXTS, en: EN_TEMPLATE_TEXTS }
+
+export function getTemplates(locale: Locale = "vi"): Template[] {
+  if (locale === "vi") return TEMPLATES
+  const texts = TEMPLATE_TEXTS[locale]
+  // Slug trang chi tiết dùng slug tiếng Anh (i18n/slugs.ts); khóa nội dung vẫn là slug tiếng Việt.
+  return TEMPLATES.flatMap((base) =>
+    texts[base.slug] ? [{ ...base, ...texts[base.slug], slug: TEMPLATE_SLUGS[base.slug] ?? base.slug }] : [],
+  )
 }

@@ -4,6 +4,9 @@ import React, { createContext, useContext, useEffect, useState, useRef, ReactNod
 import { toast } from "sonner"
 import { trackEvent } from "@/lib/analytics"
 import { captureAttribution, readAttribution } from "@/lib/attribution"
+import { useDictionary, useLocale } from "@/i18n/LocaleProvider"
+import { localizePath } from "@/i18n/config"
+import { parsePhoneForLocale } from "@/lib/phone"
 
 interface FormData {
   name: string
@@ -12,6 +15,8 @@ interface FormData {
   message: string
   industry: string
   websiteType: string
+  /** Kênh liên hệ ưu tiên (phone | email | kakao) — chỉ hiện ở ngôn ngữ có cấu hình `form.contactMethods`. */
+  preferredContact: string
 }
 
 interface ModalContextType {
@@ -44,6 +49,7 @@ const initialFormData: FormData = {
   message: "",
   industry: "",
   websiteType: "",
+  preferredContact: "",
 }
 
 /** client_id của GA4 lấy từ cookie _ga (GA1.1.<id>.<ts>) để gửi trạng thái lead về GA4 sau này. */
@@ -61,6 +67,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     {},
   )
   const formStartFired = useRef(false)
+  const { form } = useDictionary()
+  const locale = useLocale()
 
   const notifyFormStart = () => {
     if (formStartFired.current) return
@@ -98,15 +106,14 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const validateField = (name: string, value: string) => {
     switch (name) {
       case "name":
-        return !value.trim() ? "Vui lòng nhập họ và tên" : ""
+        return !value.trim() ? form.errors.nameRequired : ""
       case "email":
         if (value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()))
-          return "Email không hợp lệ"
+          return form.errors.emailInvalid
         return ""
       case "phone":
-        if (!value.trim()) return "Vui lòng nhập số điện thoại"
-        if (!/^(0|\+84)[35789][0-9]{8}$/.test(value.replace(/\s/g, "")))
-          return "Số điện thoại chưa đúng, ví dụ: 0901234567"
+        if (!value.trim()) return form.errors.phoneRequired
+        if (!parsePhoneForLocale(value, locale)) return form.errors.phoneInvalid
         return ""
       default:
         return ""
@@ -154,11 +161,11 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     if (!validate()) return
 
     if (!recaptchaToken) {
-      toast.error("Vui lòng xác nhận bạn không phải robot.")
+      toast.error(form.toast.recaptcha)
       return
     }
 
-    trackEvent("form_submit", { form_id: "consultation_modal" })
+    trackEvent("form_submit", { form_id: "consultation_modal", lead_locale: locale })
 
     try {
       setLoadingSubmit(true)
@@ -170,6 +177,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         },
         body: JSON.stringify({
           ...formData,
+          locale,
           verify_sum: honeypot,
           recaptchaToken,
           attribution: { ...readAttribution(), ga_client_id: readGaClientId() },
@@ -187,6 +195,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         if (result.verified) {
           trackEvent("generate_lead", {
             form_id: "consultation_modal",
+            lead_locale: locale,
             currency: "VND",
             ...(formData.industry && { lead_industry: formData.industry }),
             ...(formData.websiteType && { lead_website_type: formData.websiteType }),
@@ -198,9 +207,9 @@ export function ModalProvider({ children }: { children: ReactNode }) {
           if (gawId && gawLabel) {
             // Enhanced Conversions for leads: gtag tự băm SHA-256 trước khi gửi.
             const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
-            const phone = formData.phone.replace(/\s/g, "").replace(/^0/, "+84")
+            const phone = parsePhoneForLocale(formData.phone, locale)?.e164
             gtag?.("set", "user_data", {
-              phone_number: phone,
+              ...(phone && { phone_number: phone }),
               ...(formData.email.trim() && { email: formData.email.trim().toLowerCase() }),
             })
             // Không gửi value/currency: tài khoản Ads dùng KRW, giá trị lấy từ cài đặt conversion.
@@ -208,16 +217,16 @@ export function ModalProvider({ children }: { children: ReactNode }) {
           }
         }
         // router.push("/success")
-        window.location.href = "/success"
+        window.location.href = localizePath("/success", locale)
         // setIsModalOpen(false)
         setFormData(initialFormData)
       } else if (response.status === 429) {
-        toast.error("Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau 10 phút.")
+        toast.error(form.toast.rateLimited)
       } else {
-        toast.error("Có lỗi xảy ra, vui lòng thử lại.")
+        toast.error(form.toast.failed)
       }
     } catch {
-      toast.error("Có lỗi xảy ra, vui lòng kết nối mạng và thử lại.")
+      toast.error(form.toast.network)
     } finally {
       setLoadingSubmit(false)
     }

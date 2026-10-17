@@ -4,50 +4,42 @@ import Link from "next/link"
 import { motion } from "motion/react"
 import { CheckCircle2, Crown, Target, Zap, Heart } from "lucide-react"
 import { fadeInUp } from "@/hooks/useScrollAnimation"
+import { useDictionary } from "@/i18n/LocaleProvider"
+
+const FEATURE_STYLES = [
+  {
+    icon: Crown,
+    iconBg: "bg-[#FFEDD4]",
+    iconColor: "text-[#F54900]",
+    statBg: "bg-[#FFF7ED]",
+    statColor: "text-[#F54900]",
+  },
+  {
+    icon: Target,
+    iconBg: "bg-[#DCFCE7]",
+    iconColor: "text-[#008236]",
+    statBg: "bg-[#F0FDF4]",
+    statColor: "text-[#00A63E]",
+  },
+  {
+    icon: Zap,
+    iconBg: "bg-[#DBEAFE]",
+    iconColor: "text-[#155DFC]",
+    statBg: "bg-[#EFF6FF]",
+    statColor: "text-[#155DFC]",
+  },
+  {
+    icon: Heart,
+    iconBg: "bg-[#FCE7F3]",
+    iconColor: "text-[#E60076]",
+    statBg: "bg-[#FDF2F8]",
+    statColor: "text-[#E60076]",
+  },
+]
 
 export default function WhyChooseUs() {
-  const features = [
-    {
-      title: "Bạn duyệt mọi nội dung",
-      desc: "Đội ngũ Nextchain chuẩn bị thiết kế và nội dung; không nội dung nào được xuất bản khi chưa có bạn xác nhận.",
-      stat: "Duyệt trước khi đăng",
-      icon: Crown,
-      iconBg: "bg-[#FFEDD4]",
-      iconColor: "text-[#F54900]",
-      statBg: "bg-[#FFF7ED]",
-      statColor: "text-[#F54900]",
-    },
-    {
-      title: "Phạm vi rõ ràng",
-      desc: "Mỗi gói ghi rõ bao gồm gì, không bao gồm gì. Việc phát sinh được báo giá trước khi làm.",
-      stat: "Không phí ẩn",
-      icon: Target,
-      iconBg: "bg-[#DCFCE7]",
-      iconColor: "text-[#008236]",
-      statBg: "bg-[#F0FDF4]",
-      statColor: "text-[#00A63E]",
-    },
-    {
-      title: "Nền tảng kỹ thuật rõ ràng",
-      desc: "Trang có tiêu đề, mô tả và sơ đồ website; các hạng mục SEO và kiểm tra tốc độ tùy phạm vi gói.",
-      stat: "SEO kỹ thuật",
-      icon: Zap,
-      iconBg: "bg-[#DBEAFE]",
-      iconColor: "text-[#155DFC]",
-      statBg: "bg-[#EFF6FF]",
-      statColor: "text-[#155DFC]",
-    },
-    {
-      title: "Đồng hành sau khi xuất bản",
-      desc: "Không làm xong rồi bỏ. Nextchain cập nhật nội dung, bảo trì và hỗ trợ theo gói tháng.",
-      stat: "Quản lý hằng tháng",
-      icon: Heart,
-      iconBg: "bg-[#FCE7F3]",
-      iconColor: "text-[#E60076]",
-      statBg: "bg-[#FDF2F8]",
-      statColor: "text-[#E60076]",
-    },
-  ]
+  const { why } = useDictionary()
+  const features = why.features.map((feature, idx) => ({ ...feature, ...FEATURE_STYLES[idx] }))
 
   return (
     <section className="py-20 px-4 md:px-6 bg-white overflow-hidden">
@@ -60,13 +52,13 @@ export default function WhyChooseUs() {
             variants={fadeInUp}>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#F0FDF4] text-[#008236] rounded-full text-sm font-medium mb-6">
               <CheckCircle2 className="w-4 h-4" />
-              Cam kết của Nextchain
+              {why.badge}
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-[#101828] mb-6 leading-tight">
-              Minh bạch, có thể kiểm chứng
+              {why.heading}
             </h2>
             <p className="text-sm md:text-base text-[#4A5565] leading-relaxed max-w-2xl mx-auto">
-              Phạm vi công việc và chi phí rõ ràng. Không hứa thứ hạng Google hay doanh số không thể kiểm chứng.
+              {why.subheading}
             </p>
           </motion.div>
         </div>
@@ -103,15 +95,21 @@ export default function WhyChooseUs() {
             </motion.div>
           ))}
         </div>
-        <p className="mt-12 text-center text-gray-700">
-          <Link href="/ve-chung-toi" className="font-semibold text-primary hover:underline">
-            Về đơn vị vận hành
-          </Link>
-          {" · "}
-          <Link href="/chinh-sach-huy-dich-vu" className="font-semibold text-primary hover:underline">
-            Chính sách hủy dịch vụ
-          </Link>
-        </p>
+        {(why.aboutHref || why.cancelHref) && (
+          <p className="mt-12 text-center text-gray-700">
+            {why.aboutHref && (
+              <Link href={why.aboutHref} className="font-semibold text-primary hover:underline">
+                {why.aboutLink}
+              </Link>
+            )}
+            {why.aboutHref && why.cancelHref && " · "}
+            {why.cancelHref && (
+              <Link href={why.cancelHref} className="font-semibold text-primary hover:underline">
+                {why.cancelLink}
+              </Link>
+            )}
+          </p>
+        )}
       </div>
     </section>
   )

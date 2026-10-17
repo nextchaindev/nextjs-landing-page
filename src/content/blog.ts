@@ -8,6 +8,9 @@ import coverFacebook from "@/assets/stock/nail.jpg"
 import coverRestaurant from "@/assets/project-1.png"
 import coverHomestay from "@/assets/stock/homestay.jpg"
 import { FREE_SUBDOMAIN_EXAMPLE, PLANS, STARTING_PRICE, formatVnd } from "@/content/plans"
+import type { Locale, NonDefaultLocale } from "@/i18n/config"
+import { KO_BLOG_TEXTS } from "./ko/blog"
+import { EN_BLOG_TEXTS } from "./en/blog"
 
 /**
  * Bài viết blog Nextchain.site.
@@ -788,4 +791,24 @@ export function getPost(slug: string) {
 
 export function sortedPosts() {
   return [...BLOG_POSTS].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+}
+
+/**
+ * Phần chữ của một bài blog ở ngôn ngữ khác (ảnh bìa, ngày đăng, thời gian đọc dùng chung với bản gốc).
+ * Khóa: slug tiếng Việt. Chỉ khai báo các bài đã dịch; slug tiếng Anh phải khớp BLOG_SLUGS (i18n/slugs.ts).
+ */
+export type BlogPostText = Omit<BlogPost, "cover" | "publishedAt" | "updatedAt" | "readingMinutes">
+export type BlogPostTexts = Record<string, BlogPostText>
+
+const BLOG_TEXTS: Record<NonDefaultLocale, BlogPostTexts> = { ko: KO_BLOG_TEXTS, en: EN_BLOG_TEXTS }
+
+/** Bài blog theo ngôn ngữ (mới nhất trước). Ngôn ngữ khác tiếng Việt chỉ gồm bài đã dịch. */
+export function getBlogPosts(locale: Locale = "vi"): BlogPost[] {
+  if (locale === "vi") return sortedPosts()
+  const texts = BLOG_TEXTS[locale]
+  return sortedPosts().flatMap((base) => (texts[base.slug] ? [{ ...base, ...texts[base.slug] }] : []))
+}
+
+export function getPostFor(locale: Locale, slug: string) {
+  return getBlogPosts(locale).find((post) => post.slug === slug)
 }

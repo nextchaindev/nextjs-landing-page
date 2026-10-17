@@ -6,6 +6,9 @@ import imageRcSport from "@/assets/projects/rc-sport.jpg"
 import imageImr from "@/assets/projects/imr.jpg"
 import imageHrdData from "@/assets/projects/hrd-data.jpg"
 import imageYoungFeel from "@/assets/projects/young-feel.jpg"
+import type { Locale, NonDefaultLocale } from "@/i18n/config"
+import { KO_PROJECT_TEXTS } from "./ko/projects"
+import { EN_PROJECT_TEXTS } from "./en/projects"
 
 /**
  * Dự án thật do đội ngũ Nextchain thực hiện (nguồn: nextchain.tech/products).
@@ -259,4 +262,20 @@ export const PROJECTS: Project[] = [
 
 export function getProject(slug: string) {
   return PROJECTS.find((project) => project.slug === slug)
+}
+
+/** Phần chữ của một dự án ở ngôn ngữ khác (ảnh, công nghệ, liên kết dịch vụ dùng chung). Khóa: slug (giữ nguyên ở mọi ngôn ngữ). */
+export type ProjectText = Omit<Project, "image" | "tech" | "serviceSlug">
+export type ProjectTexts = Record<string, ProjectText>
+
+const PROJECT_TEXTS: Record<NonDefaultLocale, ProjectTexts> = { ko: KO_PROJECT_TEXTS, en: EN_PROJECT_TEXTS }
+
+export function getProjects(locale: Locale = "vi"): Project[] {
+  if (locale === "vi") return PROJECTS
+  const texts = PROJECT_TEXTS[locale]
+  return PROJECTS.flatMap((base) => (texts[base.slug] ? [{ ...base, ...texts[base.slug] }] : []))
+}
+
+export function getProjectFor(locale: Locale, slug: string) {
+  return getProjects(locale).find((project) => project.slug === slug)
 }

@@ -1,0 +1,232 @@
+import { CONTACT, LEGAL_LINKS, MAIN_NAV, SERVICE_LINKS, SOLUTION_LINKS, type NavItem } from "@/lib/site"
+import { LEAD_INDUSTRIES, LEAD_WEBSITE_TYPES } from "@/content/leadOptions"
+
+/**
+ * Từ điển phải là dữ liệu thuần (JSON-serializable): nó được truyền từ Server Component
+ * sang LocaleProvider (Client Component), nên không đặt hàm vào đây. Chỗ cần chèn giá trị
+ * dùng placeholder dạng {company} và thay ở nơi hiển thị.
+ */
+export const vi = {
+  meta: {
+    defaultTitle: "Nextchain.site | Landing page & website làm trọn gói",
+    defaultDescription:
+      "Bạn tập trung bán hàng, Nextchain viết nội dung, thiết kế, xuất bản và vận hành website. Landing page theo tháng cho cơ sở nhỏ; website và phần mềm theo dự án cho doanh nghiệp.",
+  },
+  notFound: {
+    title: "Không tìm thấy trang",
+    code: "Lỗi 404",
+    heading: "Không tìm thấy trang bạn cần",
+    body: "Đường dẫn có thể đã đổi hoặc gõ nhầm. Bạn có thể xem các trang dưới đây hoặc liên hệ để được tư vấn trực tiếp.",
+    links: [
+      { href: "/", label: "Trang chủ" },
+      { href: "/bang-gia", label: "Bảng giá" },
+      { href: "/mau-website", label: "Mẫu website" },
+      { href: "/dich-vu", label: "Dịch vụ" },
+      { href: "/lien-he", label: "Liên hệ" },
+    ],
+  },
+  /** Liên kết điều hướng — href đã gồm tiền tố ngôn ngữ. */
+  nav: {
+    solutions: SOLUTION_LINKS as NavItem[],
+    services: SERVICE_LINKS as NavItem[],
+    main: MAIN_NAV as NavItem[],
+    /** Cột "Nextchain" ở chân trang (ngoài `main`). */
+    company: [
+      { href: "/ve-chung-toi", label: "Về chúng tôi" },
+      { href: "/dich-vu", label: "Tất cả dịch vụ" },
+      { href: "/giai-phap", label: "Tất cả giải pháp" },
+    ] as NavItem[],
+    legal: LEGAL_LINKS as NavItem[],
+  },
+  header: {
+    homeAria: "Trang chủ",
+    mainNavAria: "Điều hướng chính",
+    mobileNavAria: "Điều hướng di động",
+    openMenuAria: "Mở menu",
+    solutionsTitle: "Giải pháp",
+    solutionsAll: "Xem tất cả giải pháp →",
+    solutionsAllHref: "/giai-phap",
+    servicesTitle: "Dịch vụ",
+    servicesAll: "Xem tất cả dịch vụ →",
+    servicesAllHref: "/dich-vu",
+    cta: "Nhận tư vấn",
+    ctaMobile: "Nhận tư vấn miễn phí",
+    languageAria: "Ngôn ngữ",
+  },
+  footer: {
+    tagline: "Website chuyên nghiệp cho doanh nghiệp nhỏ. Nextchain làm từ A–Z và quản lý theo gói tháng.",
+    companyNote: "Nextchain.site là dịch vụ của {company}, hoạt động tại Thành phố Hồ Chí Minh.",
+    solutions: "Giải pháp",
+    services: "Dịch vụ",
+    company: "Nextchain",
+    contact: "Liên hệ",
+    email: "Email",
+    phone: "Điện thoại",
+    address: "Địa chỉ",
+    hours: "Giờ làm việc",
+    rights: "All rights reserved.",
+  },
+  contact: {
+    email: CONTACT.email as string,
+    phone: CONTACT.phone as string | null,
+    phoneHref: CONTACT.phoneHref as string | null,
+    addresses: CONTACT.addresses as { label: string; value: string }[],
+    hours: null as string | null,
+  },
+  floating: {
+    messengerAria: "Liên hệ Zalo",
+    messengerName: "Zalo",
+    phoneAria: "Gọi điện thoại",
+    phoneHref: "tel:0909807687" as string | null,
+  },
+  consent: {
+    ariaLabel: "Cookie phân tích",
+    text: "Chúng tôi dùng cookie phân tích (Google Analytics, Microsoft Clarity) để đo lường và cải thiện website. Chi tiết tại",
+    privacyLink: "chính sách bảo mật",
+    privacyHref: "/chinh-sach-bao-mat",
+    reject: "Từ chối",
+    accept: "Chấp nhận",
+  },
+  common: {
+    home: "Trang chủ",
+    contactLabel: "Nhận tư vấn miễn phí",
+    /** Tin nhắn điền sẵn khi mở form từ một nút có ngữ cảnh. */
+    interest: "Tôi quan tâm: {context}. ",
+  },
+  hero: {
+    badge: "Landing page theo tháng · Website doanh nghiệp theo dự án",
+    headingLead: "Website cho cơ sở của bạn.",
+    headingAccent: "Nextchain làm, bạn duyệt.",
+    lead: "Bạn gửi thông tin. Chúng tôi viết nội dung, thiết kế, xuất bản và chăm sóc website theo gói.",
+    primaryCta: "Xem gói theo tháng",
+    primaryHref: "/dich-vu/thiet-ke-landing-page",
+    secondaryCta: "Xem dịch vụ theo dự án",
+    secondaryHref: "/dich-vu/thiet-ke-website-doanh-nghiep",
+    priceNote: "Gói tháng từ {price}/tháng. Dự án lớn báo giá riêng.",
+    highlights: ["Không phí khởi tạo cho gói tháng", "Tên miền riêng hoặc địa chỉ miễn phí"],
+    showcaseAria: "Ví dụ website",
+    demoAlt: "Ví dụ website {name}",
+    floatingDomain: "Tên miền riêng hoặc miễn phí",
+    floatingIncluded: "Đã gồm hosting, SSL, cập nhật",
+    floatingApprove: "Bạn chỉ cần duyệt nội dung",
+  },
+  pricing: {
+    popular: "Phổ biến nhất",
+    planTitle: "Gói {name}",
+    perMonth: "/tháng",
+    perDay: "khoảng {price} mỗi ngày",
+    terms: "Trả theo tháng · chưa gồm VAT",
+    register: "Đăng ký gói {name}",
+    interest: "gói {name} {price}/tháng",
+    noSetupFee: "Không phí khởi tạo.",
+    footerLine1: " Thanh toán theo tháng, không ràng buộc thời hạn tối thiểu. Giá chưa gồm VAT.",
+    footerLine2: "Bạn xem và duyệt thiết kế, nội dung trước khi website lên mạng.",
+  },
+  projectPricing: {
+    defaultTitle: "Bảng giá dự án cho doanh nghiệp",
+    defaultDesc: "Website và phần mềm quy mô lớn hơn được báo giá theo dự án",
+    popular: "Phổ biến nhất",
+    cta: "Tư vấn ngay",
+    interest: "Tôi quan tâm đến gói {service} - {package} ({price}). ",
+    detailLink: "Tìm hiểu chi tiết dịch vụ {service} →",
+    note: "Các gói giá trên là mức tham khảo. Liên hệ với chúng tôi để được tư vấn chi tiết và báo giá chính xác cho dự án của bạn.",
+  },
+  process: {
+    heading: "Quy trình làm việc",
+    subheading: "Phương pháp chuyên nghiệp, minh bạch từng bước",
+    step: "BƯỚC {n}",
+    moreLink: "Xem chi tiết quy trình làm website →",
+    moreHref: "/quy-trinh" as string | null,
+  },
+  why: {
+    badge: "Cam kết của Nextchain",
+    heading: "Minh bạch, có thể kiểm chứng",
+    subheading: "Phạm vi công việc và chi phí rõ ràng. Không hứa thứ hạng Google hay doanh số không thể kiểm chứng.",
+    features: [
+      {
+        title: "Bạn duyệt mọi nội dung",
+        desc: "Đội ngũ Nextchain chuẩn bị thiết kế và nội dung; không nội dung nào được xuất bản khi chưa có bạn xác nhận.",
+        stat: "Duyệt trước khi đăng",
+      },
+      {
+        title: "Phạm vi rõ ràng",
+        desc: "Mỗi gói ghi rõ bao gồm gì, không bao gồm gì. Việc phát sinh được báo giá trước khi làm.",
+        stat: "Không phí ẩn",
+      },
+      {
+        title: "Nền tảng kỹ thuật rõ ràng",
+        desc: "Trang có tiêu đề, mô tả và sơ đồ website; các hạng mục SEO và kiểm tra tốc độ tùy phạm vi gói.",
+        stat: "SEO kỹ thuật",
+      },
+      {
+        title: "Đồng hành sau khi xuất bản",
+        desc: "Không làm xong rồi bỏ. Nextchain cập nhật nội dung, bảo trì và hỗ trợ theo gói tháng.",
+        stat: "Quản lý hằng tháng",
+      },
+    ],
+    aboutLink: "Về đơn vị vận hành",
+    aboutHref: "/ve-chung-toi" as string | null,
+    cancelLink: "Chính sách hủy dịch vụ",
+    cancelHref: "/chinh-sach-huy-dich-vu" as string | null,
+  },
+  cta: {
+    headingLead: "Chưa biết nên chọn",
+    headingAccent: "gói tháng hay làm theo dự án?",
+    desc: "Cho Nextchain biết bạn cần website để làm gì. Chúng tôi sẽ tư vấn phạm vi và chi phí phù hợp.",
+    button: "Nhận tư vấn miễn phí",
+    orContact: "Hoặc liên hệ trực tiếp:",
+    trust: ["Tư vấn 100% miễn phí", "Không cần đăng ký ngay", "Phản hồi trong 24 giờ làm việc"],
+  },
+  ctaBanner: {
+    title: "Sẵn sàng có website cho cơ sở của bạn?",
+    desc: "Gửi nhu cầu của bạn. Nextchain sẽ phản hồi trong 24 giờ làm việc để trao đổi phương án phù hợp.",
+    secondaryLabel: "Xem bảng giá",
+    secondaryHref: "/bang-gia",
+  },
+  faq: {
+    title: "Câu hỏi thường gặp",
+  },
+  form: {
+    title: "Nhận tư vấn miễn phí",
+    subtitle: "Để lại thông tin, Nextchain sẽ phản hồi trong 24 giờ làm việc.",
+    closeAria: "Đóng",
+    name: "Họ và tên",
+    namePlaceholder: "Nguyễn Văn A",
+    email: "Email",
+    optional: "(không bắt buộc)",
+    emailPlaceholder: "email@example.com",
+    emailSuggestPrefix: "Ý bạn là",
+    emailSuggestSuffix: "?",
+    phone: "Số điện thoại",
+    phonePlaceholder: "0901 234 567",
+    phoneNote: "Bắt buộc để nhân viên gọi lại tư vấn — không dùng cho mục đích khác.",
+    industry: "Ngành kinh doanh",
+    websiteType: "Bạn cần",
+    selectPlaceholder: "Chọn (không bắt buộc)",
+    message: "Nội dung cần tư vấn",
+    messagePlaceholder: "Mô tả ngắn gọn về dự án của bạn...",
+    trust: ["Tư vấn miễn phí 100%", "Thông tin chỉ dùng để liên hệ tư vấn", "Phản hồi trong 24 giờ làm việc"],
+    /** Kênh liên hệ ưu tiên; để trống thì không hiện ô chọn (tiếng Việt dùng Zalo/điện thoại như cũ). */
+    contactMethod: "",
+    contactMethods: [] as { value: string; label: string }[],
+    submit: "Gửi yêu cầu",
+    recaptchaLang: "vi",
+    /** Nhãn hiển thị, cùng thứ tự với LEAD_INDUSTRIES / LEAD_WEBSITE_TYPES (giá trị lưu vào DB luôn là tiếng Việt). */
+    industries: [...LEAD_INDUSTRIES] as string[],
+    websiteTypes: [...LEAD_WEBSITE_TYPES] as string[],
+    errors: {
+      nameRequired: "Vui lòng nhập họ và tên",
+      emailInvalid: "Email không hợp lệ",
+      phoneRequired: "Vui lòng nhập số điện thoại",
+      phoneInvalid: "Số điện thoại chưa đúng, ví dụ: 0901234567",
+    },
+    toast: {
+      recaptcha: "Vui lòng xác nhận bạn không phải robot.",
+      rateLimited: "Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau 10 phút.",
+      failed: "Có lỗi xảy ra, vui lòng thử lại.",
+      network: "Có lỗi xảy ra, vui lòng kết nối mạng và thử lại.",
+    },
+  },
+}
+
+export type Dictionary = typeof vi

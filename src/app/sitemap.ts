@@ -6,6 +6,8 @@ import { TEMPLATES, isTemplateIndexable } from "@/content/templates"
 import { BLOG_POSTS } from "@/content/blog"
 import { LEGAL_UPDATED_AT } from "@/content/legal"
 import { PROJECTS } from "@/content/projects"
+import { ENABLED_LOCALES, LOCALES, localizePath, type NonDefaultLocale } from "@/i18n/config"
+import { ROUTE_TRANSLATIONS, alternateLanguages } from "@/i18n/routes"
 
 /**
  * Date of the last substantive content change to the marketing pages.
@@ -31,10 +33,23 @@ const STATIC_PATHS = [
 const LEGAL_PATHS = ["/dieu-khoan", "/chinh-sach-bao-mat", "/chinh-sach-huy-dich-vu"]
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const entry = (path: string, lastModified: string) => ({
-    url: absoluteUrl(path),
-    lastModified,
-  })
+  const entry = (path: string, lastModified: string) => {
+    const languages = alternateLanguages(path)
+    return {
+      url: absoluteUrl(path),
+      lastModified,
+      ...(languages && { alternates: { languages } }),
+    }
+  }
+
+  // Trang đã dịch của các ngôn ngữ đã bật. Ngôn ngữ chưa bật không vào sitemap (và tự noindex).
+  const translatedEntries = LOCALES.filter((locale) => locale !== "vi" && ENABLED_LOCALES.includes(locale)).flatMap(
+    (locale) =>
+      Object.values(ROUTE_TRANSLATIONS).flatMap((translations) => {
+        const path = translations[locale as NonDefaultLocale]
+        return path === undefined ? [] : [entry(localizePath(path, locale), CONTENT_UPDATED_AT)]
+      }),
+  )
 
   return [
     ...STATIC_PATHS.map((path) => entry(path, CONTENT_UPDATED_AT)),
@@ -54,5 +69,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       : []),
     ...BLOG_POSTS.map((post) => entry(`/blog/${post.slug}`, post.updatedAt ?? post.publishedAt)),
     ...LEGAL_PATHS.map((path) => entry(path, LEGAL_UPDATED_AT)),
+    ...translatedEntries,
   ]
 }
