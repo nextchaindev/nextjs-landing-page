@@ -89,7 +89,7 @@ export function solutionDetailMetadata(locale: NonDefaultLocale, slug: string) {
     title: industry.metaTitle,
     description: industry.metaDescription,
     path: sectionPath("solutions", locale, industry.slug),
-    ogImage: industry.image.src,
+    ogImage: industry.image,
     locale,
   })
 }

@@ -10,6 +10,7 @@ export interface CardText {
   viewDetails: string
   viewSolution: string
   viewProject: string
+  ownProduct: string
   all: string
   sampleBadge: string
   viewDemo: string
@@ -27,6 +28,7 @@ export const CARD_TEXT: Record<Locale, CardText> = {
     viewDetails: "Xem chi tiết",
     viewSolution: "Xem giải pháp {name}",
     viewProject: "Xem dự án",
+    ownProduct: "Sản phẩm Nextchain",
     all: "Tất cả",
     sampleBadge: "Mẫu tham khảo",
     viewDemo: "Xem bản demo",
@@ -42,6 +44,7 @@ export const CARD_TEXT: Record<Locale, CardText> = {
     viewDetails: "자세히 보기",
     viewSolution: "{name} 솔루션 보기",
     viewProject: "프로젝트 보기",
+    ownProduct: "넥스트체인 자체 제품",
     all: "전체",
     sampleBadge: "참고 템플릿",
     viewDemo: "데모 보기",
@@ -57,6 +60,7 @@ export const CARD_TEXT: Record<Locale, CardText> = {
     viewDetails: "View details",
     viewSolution: "See the {name} solution",
     viewProject: "View project",
+    ownProduct: "Nextchain product",
     all: "All",
     sampleBadge: "Reference template",
     viewDemo: "View demo",

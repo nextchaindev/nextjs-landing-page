@@ -9,7 +9,8 @@ import ContactButton from "@/components/marketing/ContactButton"
 import JsonLdScript from "@/components/marketing/JsonLdScript"
 import { pageMetadata } from "@/lib/seo"
 import { SITE_URL, absoluteUrl } from "@/lib/site"
-import { PROJECTS, getProject } from "@/content/projects"
+import { PROJECTS, getProject, relatedProjects } from "@/content/projects"
+import { CARD_TEXT } from "@/content/cardText"
 
 export const dynamicParams = false
 
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: PageProps<"/du-an/[slug]">) {
     title: project.metaTitle,
     description: project.metaDescription,
     path: `/du-an/${project.slug}`,
-    ogImage: project.image.src,
+    ogImage: project.image,
   })
 }
 
@@ -34,8 +35,7 @@ export default async function ProjectPage({ params }: PageProps<"/du-an/[slug]">
   const project = getProject(slug)
   if (!project) notFound()
   const path = `/du-an/${project.slug}`
-  const related = PROJECTS.filter((p) => p.slug !== project.slug && p.serviceSlug === project.serviceSlug)
-  const others = (related.length >= 3 ? related : [...related, ...PROJECTS.filter((p) => p.slug !== project.slug && !related.includes(p))]).slice(0, 3)
+  const others = relatedProjects(PROJECTS, project)
 
   return (
     <>
@@ -49,6 +49,7 @@ export default async function ProjectPage({ params }: PageProps<"/du-an/[slug]">
           image: absoluteUrl(project.image.src),
           inLanguage: "vi-VN",
           genre: project.kind,
+          keywords: project.tech.join(", "),
           creator: { "@id": `${SITE_URL}#organization` },
         }}
       />
@@ -57,7 +58,7 @@ export default async function ProjectPage({ params }: PageProps<"/du-an/[slug]">
           { name: "Dự án", path: "/du-an" },
           { name: project.name, path },
         ]}
-        eyebrow={project.kind}
+        eyebrow={project.ownProduct ? `${project.kind} · ${CARD_TEXT.vi.ownProduct}` : project.kind}
         title={`${project.name}: ${project.headline.charAt(0).toLowerCase()}${project.headline.slice(1)}`}
         intro={project.summary}
         image={project.image}

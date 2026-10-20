@@ -39,6 +39,9 @@ export const ENABLED_LOCALES: Locale[] = (process.env.NEXT_PUBLIC_ENABLED_LOCALE
   .map((value) => value.trim())
   .filter(isLocale)
 
+/** Cookie lưu ngôn ngữ người dùng tự chọn ở bộ chuyển ngôn ngữ — luôn thắng ngôn ngữ đoán theo vị trí (src/i18n/detect.ts). */
+export const LOCALE_COOKIE = "NEXT_LOCALE"
+
 /** Tên ngôn ngữ viết bằng chính ngôn ngữ đó — dùng cho bộ chuyển ngôn ngữ. */
 export const LOCALE_NAMES: Record<Locale, { short: string; full: string }> = {
   vi: { short: "VI", full: "Tiếng Việt" },

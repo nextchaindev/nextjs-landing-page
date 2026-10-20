@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/dich-vu/[slug]">)
     title: detail.metaTitle,
     description: detail.metaDescription,
     path: `/dich-vu/${detail.slug}`,
-    ogImage: detail.image.src,
+    ogImage: detail.image,
   })
 }
 

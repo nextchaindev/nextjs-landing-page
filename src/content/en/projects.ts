@@ -185,7 +185,7 @@ export const EN_PROJECT_TEXTS: ProjectTexts = {
     headline: "Platform connecting clients with video production companies",
     summary:
       "A platform where clients submit video requests, compare quotes from production companies, and review videos and leave feedback together in one shared workspace.",
-    metaTitle: "Young Feel video production platform project",
+    metaTitle: "Young Feel video production platform",
     metaDescription:
       "Young Feel connects clients with video production companies: submit requests, compare quotes, review videos and give feedback. A project by Nextchain.",
     imageAlt: "Video review screen on the Young Feel platform",
@@ -202,5 +202,315 @@ export const EN_PROJECT_TEXTS: ProjectTexts = {
       { title: "Project administration", desc: "Administrators follow partners and project status and resolve issues." },
     ],
     serviceName: "Custom Design",
+  },
+  z2w: {
+    slug: "z2w",
+    name: "Z2W",
+    kind: "Reference website",
+    headline: "Game item reference website",
+    summary:
+      "A website where players find, compare and understand items in popular games: stats, rarity, how to get them, and details contributed by the community.",
+    metaTitle: "Z2W game item reference website project",
+    metaDescription:
+      "Z2W is a game item reference website with search, side-by-side comparison, detailed item profiles and community contributions. A project by Nextchain.",
+    imageAlt: "Z2W game item reference website",
+    platform: "Website",
+    challenge:
+      "Give players one place to find, compare and understand items in popular games so they can make better decisions while they play.",
+    solution:
+      "A website with an item database for each game, fast search, side-by-side comparison and a detailed profile for every item, where players can submit additions and corrections.",
+    features: [
+      { title: "Many games in one place", desc: "Items from many popular games gathered in one database." },
+      { title: "Search and compare", desc: "Find items quickly and compare several side by side." },
+      { title: "Detailed item profiles", desc: "Stats, descriptions, attributes, rarity and how to get each item." },
+      { title: "Community contributions", desc: "Players submit new items, corrections and updates." },
+    ],
+    serviceName: "Custom Design",
+  },
+  gotax: {
+    slug: "gotax",
+    name: "Gotax",
+    kind: "Matching platform",
+    headline: "Platform for finding accounting services",
+    summary:
+      "A platform where businesses find, compare and contact accounting firms that fit their industry, size and needs, with firm profiles and reviews from past clients.",
+    metaTitle: "Gotax accounting service matching platform",
+    metaDescription:
+      "Gotax helps businesses find the right accounting firm with tailored matches, firm profiles, reviews and quote requests in one place. A Nextchain product.",
+    imageAlt: "Gotax accounting service matching platform",
+    platform: "Web application",
+    challenge:
+      "Let businesses find, compare and choose an accounting firm that fits their needs in one place, instead of researching and requesting quotes from each firm separately.",
+    solution:
+      "A central platform: businesses enter their requirements to get matches, review each firm's profile and ratings, then request a quote or book a consultation right on the site.",
+    features: [
+      { title: "Service matching", desc: "Matches businesses with accounting firms by industry, size and specific needs." },
+      { title: "Firm profiles", desc: "Expertise, experience and testimonials from past clients." },
+      { title: "Reviews and ratings", desc: "Businesses share their experience to help others choose." },
+      { title: "Contact and quotes", desc: "Ask about services, request quotes and book consultations on the platform." },
+      { title: "Resource center", desc: "Articles and guides on accounting, tax and financial management." },
+    ],
+    serviceName: "Custom Design",
+  },
+  nextapi: {
+    slug: "nextapi",
+    name: "NextAPI",
+    kind: "AI product",
+    headline: "Unified AI API management platform",
+    summary:
+      "A platform that gives developers access to multiple AI providers through one API, with API keys, usage, costs and credit top-ups managed from a single dashboard.",
+    metaTitle: "NextAPI: unified AI API management platform",
+    metaDescription:
+      "NextAPI brings multiple AI providers behind one API, with API key management, request and token analytics, cost tracking and credits. Built by Nextchain.",
+    imageAlt: "NextAPI AI API management dashboard",
+    platform: "Web application",
+    challenge:
+      "Every AI provider has its own API, authentication and billing. Development teams spent time maintaining each integration, comparing model costs and managing credentials across platforms.",
+    solution:
+      "A unified AI gateway: one endpoint and one dashboard to manage providers, API keys, usage, costs and credits for each project.",
+    features: [
+      { title: "Dashboard", desc: "API usage, credit balance, request statistics and recent activity at a glance." },
+      {
+        title: "AI provider management",
+        desc: "Configure several providers, manage credentials and switch models in one place.",
+      },
+      { title: "API key management", desc: "Create, scope and secure API keys for each project." },
+      { title: "Credits and billing", desc: "Buy credits, track the balance, review payments and estimate AI spending." },
+      { title: "Usage analytics", desc: "Track requests, token consumption, response performance and cost reports." },
+      { title: "Project management", desc: "Separate projects, environments and API usage by application." },
+    ],
+    serviceName: "Software Development",
+  },
+  partnerit: {
+    slug: "partnerit",
+    name: "PartnerIT",
+    kind: "AI product",
+    headline: "Matching businesses with government support programs",
+    summary:
+      "A platform that collects support program announcements from public agencies, scores how well each fits a company's profile and generates AI analysis reports.",
+    metaTitle: "PartnerIT: government support matching",
+    metaDescription:
+      "PartnerIT collects government support announcements, scores fit against each company profile and generates AI analysis reports. A project by Nextchain.",
+    imageAlt: "PartnerIT government support matching platform",
+    platform: "Web application",
+    challenge:
+      "Companies searched many government websites by hand and struggled to judge their eligibility. An earlier AI-only matching approach gave inaccurate results.",
+    solution:
+      "A platform that gathers announcements from several public sources, matches them with rule-based scoring and uses AI to write analysis reports. Admins approve companies and adjust recommendations in an admin panel.",
+    features: [
+      {
+        title: "Company profiles",
+        desc: "Technology capabilities, certifications, financials and business details used for matching.",
+      },
+      {
+        title: "Announcement management",
+        desc: "Collects announcements from multiple government sources, removes duplicates and keeps active ones.",
+      },
+      { title: "AI analysis reports", desc: "Suitability, strengths, recommendations and a summary for each announcement." },
+      { title: "Company approval", desc: "Admins review new companies before recommendations open up." },
+      { title: "Admin panel", desc: "Manage companies, announcements, AI reports, crawling status and manual adjustments." },
+      {
+        title: "Crawling and data processing",
+        desc: "Collects data from public APIs and crawlers and standardizes it to keep recommendations current.",
+      },
+    ],
+    serviceName: "Software Development",
+  },
+  bronto: {
+    slug: "bronto",
+    name: "Bronto",
+    kind: "Management software",
+    headline: "Survey project and respondent management platform",
+    summary:
+      "A platform for market research teams to run survey projects: clients, distribution partners, respondent quality screening and real-time result tracking in one place.",
+    metaTitle: "Bronto survey management platform project",
+    metaDescription:
+      "Bronto manages survey projects, partners, survey links, respondent pre-screening (Quality Gate) and real-time reporting. A project by Nextchain.",
+    imageAlt: "Bronto survey management dashboard",
+    platform: "Web application",
+    challenge:
+      "Survey projects were spread across tools, and survey links and respondents were tracked by hand, making it hard to see progress, partner performance and data quality.",
+    solution:
+      "A central admin system that generates survey links for each partner, connects to external survey systems via callback URLs, screens respondents before the survey and tracks status in real time.",
+    features: [
+      {
+        title: "Dashboard and reporting",
+        desc: "Project progress, respondent status, completion stats, LOI analytics and exportable reports.",
+      },
+      {
+        title: "Project management",
+        desc: "Create projects, assign clients and multiple partners and generate survey links from one screen.",
+      },
+      { title: "Partner management", desc: "Partner details, redirect URLs and dedicated survey links for tracking." },
+      {
+        title: "Quality Gate",
+        desc: "Custom screening questions, instant termination rules, Geo-IP checks and duplicate detection.",
+      },
+      {
+        title: "Respondent management",
+        desc: "Screening results, survey status, partner and duration, with search, filters and Excel export.",
+      },
+      { title: "User permissions", desc: "Role-based access so each account sees only its own work." },
+    ],
+    serviceName: "Software Development",
+  },
+  itembox: {
+    slug: "itembox",
+    name: "Itembox",
+    kind: "AI product",
+    headline: "AI product image editor for online sellers",
+    summary:
+      "A drag-and-drop editor with built-in AI that helps sellers and marketers create marketplace-ready product images: background removal, model swap, image generation and upscaling.",
+    metaTitle: "Itembox AI product image editor project",
+    metaDescription:
+      "Itembox is an AI product image editor with one-click background removal, model replacement, text-to-image generation and upscaling. A project by Nextchain.",
+    imageAlt: "Itembox AI product image editor",
+    platform: "Web application",
+    challenge:
+      "Editing product photos by hand took a long time, professional tools were hard to use, and results looked inconsistent across a single store's catalog.",
+    solution:
+      "An all-in-one editing platform combining a drag-and-drop editor with AI features, multilingual support, real-time saving and product image management.",
+    features: [
+      { title: "AI background removal", desc: "Remove a product photo's background with one click." },
+      { title: "Model replacement", desc: "Swap the model in product photos using AI-generated presets." },
+      { title: "AI image generation", desc: "Generate product images from text or a reference image." },
+      { title: "Upscaling", desc: "Sharpen low-resolution images while keeping quality." },
+      { title: "Product image management", desc: "Organize, search and manage every product image in one place." },
+      { title: "Real-time saving", desc: "Work is saved as you go so nothing is lost." },
+    ],
+    serviceName: "Software Development",
+  },
+  "schoolarflow-ai": {
+    slug: "schoolarflow-ai",
+    name: "SchoolarFlow AI",
+    kind: "AI product",
+    headline: "AI coding tutor with personal learning roadmaps",
+    summary:
+      "An AI learning platform for programming: enter a goal to get a personal roadmap, learn module by module, complete an assignment after each stage and finish with a final project.",
+    metaTitle: "SchoolarFlow AI: AI coding tutor",
+    metaDescription:
+      "SchoolarFlow AI builds programming roadmaps from your goal, splits them into modules, sets assignments after each stage and tracks progress. Built by Nextchain.",
+    imageAlt: "SchoolarFlow AI learning platform shown on a laptop",
+    platform: "Web application",
+    challenge:
+      "Self-taught programmers face plenty of scattered resources but little structure: what to learn first, how far to go and how to practice.",
+    solution:
+      "An AI tutor that builds a roadmap from the learner's goal, guides them through each module step by step, closes every stage with an assignment and ends with a final project.",
+    features: [
+      { title: "Personal learning roadmap", desc: "Enter a goal or task and get your own programming roadmap." },
+      { title: "Module-based learning", desc: "Content split into digestible modules." },
+      { title: "Assignment-driven flow", desc: "A small assignment after each module and a final project at the end." },
+      { title: "Progress tracking", desc: "See what you have finished and what comes next." },
+      { title: "AI content review", desc: "Admin tools to review, evaluate and approve AI-generated lessons." },
+    ],
+    serviceName: "Software Development",
+  },
+  nextpainter: {
+    slug: "nextpainter",
+    name: "NextPainter",
+    kind: "AI product",
+    headline: "AI background removal and image editing",
+    summary:
+      "A web service where you upload an image, AI removes the background in one step, a slider compares before and after, and you download the result. Available in Korean and English.",
+    metaTitle: "NextPainter: AI background removal tool",
+    metaDescription:
+      "NextPainter removes image backgrounds with AI, handles hair and soft edges well, and offers a before/after slider and drag-and-drop upload. A Nextchain product.",
+    imageAlt: "NextPainter AI background removal on a monitor and a phone",
+    platform: "Web application for desktop, tablet and mobile",
+    challenge:
+      "Most background removal tools sit behind subscriptions, are hard for beginners and do not serve Korean-speaking users well.",
+    solution:
+      "A one-click flow from upload to download, with AI background removal processed on the server to keep API keys safe, and a foundation for adding more editing tools.",
+    features: [
+      { title: "AI background removal", desc: "Uses the BRIA RMBG-1.4 model for hair, soft edges and complex outlines." },
+      { title: "Before/after slider", desc: "Compare the original and the result side by side." },
+      { title: "One-click workflow", desc: "From upload to download, easy enough for beginners." },
+      { title: "Drag-and-drop upload", desc: "Drag and drop or pick a file, with a size check before upload." },
+      { title: "Korean and English", desc: "Shows Korean or English automatically." },
+      { title: "Secure server processing", desc: "Sensitive API calls run on the server, never in the browser." },
+    ],
+    serviceName: "Software Development",
+  },
+  kevin: {
+    slug: "kevin",
+    name: "Kevin",
+    kind: "Management software",
+    headline: "Content management tool for Unity story games",
+    summary:
+      "An application for managing the content of story-driven Unity games: story items, characters, events and player choices, fed straight into the Unity project.",
+    metaTitle: "Kevin: Unity game content management tool",
+    metaDescription:
+      "Kevin is a content management tool for Unity story games covering story items, characters, events, choices and Unity integration. A project by Nextchain.",
+    imageAlt: "Kevin story management screen on a laptop",
+    platform: "Web application with Unity integration",
+    challenge:
+      "Build a flexible, easy-to-use content management tool for story-based Unity games so developers can focus on the content itself and reuse story content easily.",
+    solution:
+      "An intuitive interface to add, edit and delete game content, link characters to events and bring the data into Unity projects through ScriptableObjects.",
+    features: [
+      { title: "Story management", desc: "Create story items with text, images, sound and video and arrange their order." },
+      { title: "Characters and objects", desc: "Descriptions, images and technical details, linked to events and story items." },
+      {
+        title: "Events and choices",
+        desc: "Control the story flow and create choices and outcomes based on player decisions.",
+      },
+      { title: "Unity integration", desc: "Bring content into the Unity project for immediate use in the game." },
+    ],
+    serviceName: "Software Development",
+  },
+  "ai-smart-learning": {
+    slug: "ai-smart-learning",
+    name: "AI Smart Learning",
+    kind: "AI product",
+    headline: "AI-personalized online course platform",
+    summary:
+      "An online learning platform that uses AI to personalize the experience: paths that adapt to progress, level-based assessments, learning analytics and a learning community.",
+    metaTitle: "AI Smart Learning online course platform",
+    metaDescription:
+      "AI Smart Learning is an AI-personalized online course platform with adaptive learning paths, level-based assessments and progress analytics. A project by Nextchain.",
+    imageAlt: "AI Smart Learning online course platform",
+    platform: "Web application",
+    challenge:
+      "Deliver quality educational content in an interactive way, giving each learner an experience that fits their needs, pace, strengths and weaknesses.",
+    solution:
+      "An online course platform where AI recommends learning paths, generates level-appropriate assessments and analyzes progress, plus a space for learners, instructors and mentors to connect.",
+    features: [
+      { title: "AI-powered courses", desc: "AI personalizes courses to each learner's preferences, pace and performance." },
+      { title: "Adaptive learning paths", desc: "Paths adjust to progress, strengths and weak areas." },
+      {
+        title: "Interactive content and assessments",
+        desc: "Videos, quizzes, simulations and exercises, with level-based assessments and feedback.",
+      },
+      {
+        title: "Progress tracking and analytics",
+        desc: "Learners see their progress and results; AI highlights trends, strengths and weaknesses.",
+      },
+      { title: "Learning community", desc: "Discuss, share knowledge and connect with peers, instructors and mentors." },
+    ],
+    serviceName: "Software Development",
+  },
+  "24hagent-chat": {
+    slug: "24hagent-chat",
+    name: "24hagent.chat",
+    kind: "AI product",
+    headline: "Build your own AI chatbot from your documents",
+    summary:
+      "A tool for individuals and businesses to create a personal AI assistant: upload documents, and the system analyzes them and builds a chatbot that answers questions from that content.",
+    metaTitle: "24hagent.chat: AI chatbots from your docs",
+    metaDescription:
+      "24hagent.chat turns your documents, from text files to spreadsheets, into an AI chatbot that answers questions, with easy answer editing. A Nextchain product.",
+    imageAlt: "24hagent.chat AI chatbot builder",
+    platform: "Web application",
+    challenge:
+      "Building an AI assistant from scratch takes a lot of time and effort, especially when it has to answer accurately from your own documents.",
+    solution:
+      "Users just upload documents; AI and natural language processing analyze the content and create an assistant that answers questions, which users can refine by adding information and editing answers.",
+    features: [
+      { title: "Document import", desc: "Supports text files, spreadsheets and other formats." },
+      { title: "Automatic assistant creation", desc: "AI analyzes the documents and builds an assistant that answers questions." },
+      { title: "Personalization", desc: "Add information and edit answers to improve the assistant." },
+      { title: "Simple interface", desc: "Upload documents and manage assistants from one simple screen." },
+    ],
+    serviceName: "Software Development",
   },
 }

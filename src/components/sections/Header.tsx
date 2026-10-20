@@ -68,16 +68,19 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur border-b border-gray-200 z-50">
-      <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between gap-4 xl:gap-6">
         <Link
           href={localizePath("/", locale)}
           onClick={closeMenu}
           aria-label={`${SITE_NAME} - ${header.homeAria}`}
-          className={cn("w-[70px] h-[37px] md:w-[91px] md:h-[48px] relative", locale !== "vi" && "shrink-0")}>
+          className="w-[70px] h-[37px] md:w-[91px] md:h-[48px] relative shrink-0">
           <Image src={ImageLogo} alt={SITE_NAME} fill className="object-cover" priority />
         </Link>
 
-        <nav aria-label={header.mainNavAria} className="hidden xl:flex items-center gap-6 whitespace-nowrap">
+        {/* 1280–1535px: chữ và khoảng cách nhỏ lại một chút để 9 mục + chọn ngôn ngữ + CTA vừa khung 1200px. */}
+        <nav
+          aria-label={header.mainNavAria}
+          className="hidden xl:flex items-center gap-5 2xl:gap-6 text-[15px] 2xl:text-base whitespace-nowrap">
           {MENU_GROUPS.map((group) => (
             <div key={group.title} className="relative group/dd">
               <button
@@ -124,8 +127,8 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <LanguageSwitcher className="hidden xl:flex" />
+        <div className="flex items-center gap-2 shrink-0">
+          <LanguageSwitcher variant="menu" className="hidden xl:block" />
           <Button
             onClick={openModalClean}
             className="bg-blue-600 hover:bg-blue-600/90 text-white text-sm md:text-base px-5 md:px-6 rounded-lg font-medium transition-all shadow-md active:scale-95 hidden xl:block whitespace-nowrap">

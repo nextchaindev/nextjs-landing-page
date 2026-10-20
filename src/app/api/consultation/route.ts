@@ -4,58 +4,13 @@ import { checkConsultationRateLimit } from '@/lib/consultationRateLimit'
 import { SITE_URL } from '@/lib/site'
 import { ATTRIBUTION_KEYS } from '@/lib/attribution'
 import { LEAD_INDUSTRIES, LEAD_WEBSITE_TYPES, pickOption } from '@/content/leadOptions'
+import { buildLeadDiscordPayload } from '@/lib/leadDiscord'
 import { parsePhoneForLocale } from '@/lib/phone'
 import { DEFAULT_LOCALE, isLocale, type Locale } from '@/i18n/config'
-import { getDictionary } from '@/i18n/dictionaries'
 
 const ATTRIBUTION_FIELDS = [...ATTRIBUTION_KEYS, 'landing_page', 'referrer', 'captured_at', 'ga_client_id'] as const
 const DUPLICATE_WINDOW_MS = 24 * 60 * 60 * 1000
 const PREFERRED_CONTACTS = ['phone', 'email', 'kakao', 'whatsapp'] as const
-
-/** Nhãn hiển thị cho nhân viên: lead tiếng Hàn gửi về Discord của đội Hàn bằng tiếng Hàn. */
-function discordLabels(locale: Locale) {
-    if (locale === 'ko') {
-        return {
-            title: '새 상담 요청 (한국어 페이지)',
-            duplicateTitle: '고객이 다시 문의했습니다 (24시간 내 동일 연락처)',
-            industry: '업종',
-            need: '요청 서비스',
-            name: '이름',
-            email: '이메일',
-            phone: '연락처',
-            preferred: '희망 연락 방법',
-            message: '문의 내용',
-            source: '유입 경로',
-            noEmail: '미입력',
-            noMessage: '내용 없음',
-            direct: '직접 방문',
-            enteredFrom: '진입 페이지',
-        }
-    }
-    return {
-        // en: nhân viên nhận lead là đội Việt Nam nên giữ nhãn như tiếng Việt, chỉ đánh dấu ngôn ngữ trang.
-        title: locale === 'en' ? 'New Consultation Request (English page)' : 'New Consultation Request',
-        duplicateTitle: 'Khách gửi lại yêu cầu (trùng SĐT trong 24h)',
-        industry: 'Ngành',
-        need: 'Cần',
-        name: 'Name',
-        email: 'Email',
-        phone: 'Phone',
-        preferred: 'Liên hệ qua',
-        message: 'Message',
-        source: 'Nguồn',
-        noEmail: 'Không cung cấp',
-        noMessage: 'No message',
-        direct: 'Trực tiếp',
-        enteredFrom: 'vào từ',
-    }
-}
-
-/** Giá trị ngành/loại website lưu DB luôn là tiếng Việt; chỉ dịch cho đội Hàn (lead tiếng Hàn). Đội Việt Nam (vi, en) đọc nguyên bản. */
-function displayOption(value: string, options: readonly string[], labels: string[], locale: Locale) {
-    if (locale !== 'ko') return value
-    return labels[options.indexOf(value)] ?? value
-}
 
 /** Chỉ giữ các trường nguồn truy cập đã biết, dạng chuỗi ngắn. */
 function sanitizeAttribution(value: unknown): Record<string, string> | null {
@@ -177,6 +132,7 @@ export async function POST(request: Request) {
             .neq('status', 'closed')
             .limit(1)
         const isDuplicate = Boolean(recent && recent.length > 0)
+        const duplicateOf: string | number | undefined = recent?.[0]?.id
 
         // 1. Insert into Supabase
         const lead = {
@@ -213,39 +169,23 @@ export async function POST(request: Request) {
         const discordWebhookUrl =
             (locale === 'ko' && process.env.DISCORD_WEBHOOK_URL_KO) || process.env.DISCORD_WEBHOOK_URL
         if (discordWebhookUrl) {
-            const labels = discordLabels(locale)
-            const formLabels = getDictionary(locale).form
-            const contactMethodLabel = formLabels.contactMethods.find((method) => method.value === preferredContact)?.label
-            const discordPayload = {
-                embeds: [
-                    {
-                        title: isDuplicate ? labels.duplicateTitle : labels.title,
-                        color: isDuplicate ? 16753920 : 5763719,
-                        fields: [
-                            ...(industry ? [{ name: labels.industry, value: displayOption(industry, LEAD_INDUSTRIES, formLabels.industries, locale), inline: true }] : []),
-                            ...(websiteType ? [{ name: labels.need, value: displayOption(websiteType, LEAD_WEBSITE_TYPES, formLabels.websiteTypes, locale), inline: true }] : []),
-                            { name: labels.name, value: name, inline: true },
-                            { name: labels.email, value: typeof email === 'string' && email.trim() ? email.trim() : labels.noEmail, inline: true },
-                            { name: labels.phone, value: normalizedPhone, inline: true },
-                            ...(contactMethodLabel ? [{ name: labels.preferred, value: contactMethodLabel, inline: true }] : []),
-                            { name: labels.message, value: message || labels.noMessage },
-                            ...(attribution
-                                ? [{
-                                    name: labels.source,
-                                    value: [
-                                        attribution.utm_source && `utm: ${attribution.utm_source}/${attribution.utm_medium ?? '-'}/${attribution.utm_campaign ?? '-'}`,
-                                        attribution.gclid && 'Google Ads (gclid)',
-                                        attribution.fbclid && 'Facebook (fbclid)',
-                                        attribution.ttclid && 'TikTok Ads (ttclid)',
-                                        attribution.landing_page && `${labels.enteredFrom} ${attribution.landing_page}`,
-                                    ].filter(Boolean).join(' · ') || labels.direct,
-                                }]
-                                : []),
-                        ],
-                        timestamp: new Date().toISOString(),
-                    },
-                ],
-            }
+            const insertedId = (data as { id?: string | number }[] | null)?.[0]?.id
+            const discordPayload = buildLeadDiscordPayload(
+                {
+                    id: duplicateOf ?? insertedId,
+                    isDuplicate,
+                    locale,
+                    name,
+                    email: typeof email === 'string' ? email.trim() : '',
+                    phone: normalizedPhone,
+                    preferredContact,
+                    industry,
+                    websiteType,
+                    message,
+                    attribution,
+                },
+                request,
+            )
 
             try {
                 const webhookResponse = await fetch(discordWebhookUrl, {

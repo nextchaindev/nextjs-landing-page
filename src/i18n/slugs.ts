@@ -48,7 +48,26 @@ export const TEMPLATE_SLUGS: Record<string, string> = {
 }
 
 /** Dự án giữ nguyên slug (tên thương hiệu): /du-an/<slug> → /<locale>/projects/<slug> */
-export const PROJECT_SLUGS = ["kyunghyang", "yamicoco", "registry", "rc-sport", "imr", "hrd-data", "young-feel"]
+export const PROJECT_SLUGS = [
+  "kyunghyang",
+  "yamicoco",
+  "z2w",
+  "gotax",
+  "nextapi",
+  "registry",
+  "rc-sport",
+  "imr",
+  "hrd-data",
+  "young-feel",
+  "partnerit",
+  "bronto",
+  "itembox",
+  "schoolarflow-ai",
+  "nextpainter",
+  "kevin",
+  "ai-smart-learning",
+  "24hagent-chat",
+]
 
 /**
  * /blog/<slug> → /<locale>/blog/<slug>. Bài chưa dịch sang một ngôn ngữ thì không khai báo ngôn ngữ đó

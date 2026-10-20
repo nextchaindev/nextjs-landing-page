@@ -3,12 +3,14 @@ import { CheckCircle2 } from "lucide-react"
 import PageHeader from "@/components/marketing/PageHeader"
 import Section from "@/components/marketing/Section"
 import ProjectCards from "@/components/marketing/ProjectCards"
+import ProjectGallery from "@/components/marketing/ProjectGallery"
 import CtaBanner from "@/components/marketing/CtaBanner"
 import ContactButton from "@/components/marketing/ContactButton"
 import JsonLdScript from "@/components/marketing/JsonLdScript"
 import { pageMetadata } from "@/lib/seo"
 import { SITE_URL, absoluteUrl } from "@/lib/site"
-import { getProjectFor, getProjects } from "@/content/projects"
+import { PROJECT_CATEGORIES, PROJECT_CATEGORY_LABELS, getProjectFor, getProjects, relatedProjects } from "@/content/projects"
+import { CARD_TEXT } from "@/content/cardText"
 import { PROJECTS_COPY } from "@/content/pageCopy/projects"
 import { LANGUAGE_TAGS, type NonDefaultLocale } from "@/i18n/config"
 import { sectionPath } from "@/i18n/paths"
@@ -27,6 +29,7 @@ export function projectsIndexMetadata(locale: NonDefaultLocale) {
 export function ProjectsIndexPage({ locale }: { locale: NonDefaultLocale }) {
   const copy = PROJECTS_COPY[locale].index
   const path = sectionPath("projects", locale)
+  const projects = getProjects(locale)
 
   return (
     <>
@@ -35,7 +38,8 @@ export function ProjectsIndexPage({ locale }: { locale: NonDefaultLocale }) {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: copy.listName,
-          itemListElement: getProjects(locale).map((project, idx) => ({
+          numberOfItems: projects.length,
+          itemListElement: projects.map((project, idx) => ({
             "@type": "ListItem",
             position: idx + 1,
             url: absoluteUrl(sectionPath("projects", locale, project.slug)),
@@ -51,7 +55,11 @@ export function ProjectsIndexPage({ locale }: { locale: NonDefaultLocale }) {
         intro={copy.intro}
       />
       <Section>
-        <ProjectCards locale={locale} />
+        <ProjectGallery
+          projects={projects}
+          categories={PROJECT_CATEGORIES.map((id) => ({ id, label: PROJECT_CATEGORY_LABELS[locale][id] }))}
+          locale={locale}
+        />
       </Section>
       <CtaBanner
         locale={locale}
@@ -75,7 +83,7 @@ export function projectDetailMetadata(locale: NonDefaultLocale, slug: string) {
     title: project.metaTitle,
     description: project.metaDescription,
     path: sectionPath("projects", locale, project.slug),
-    ogImage: project.image.src,
+    ogImage: project.image,
     locale,
   })
 }
@@ -85,11 +93,7 @@ export function ProjectDetailPage({ locale, slug }: { locale: NonDefaultLocale; 
   if (!project) return null
   const copy = PROJECTS_COPY[locale].detail
   const path = sectionPath("projects", locale, project.slug)
-  const all = getProjects(locale)
-  const related = all.filter((p) => p.slug !== project.slug && p.serviceSlug === project.serviceSlug)
-  const others = (
-    related.length >= 3 ? related : [...related, ...all.filter((p) => p.slug !== project.slug && !related.includes(p))]
-  ).slice(0, 3)
+  const others = relatedProjects(getProjects(locale), project)
   // serviceSlug là slug tiếng Việt; dịch vụ này có thể chưa có bản dịch → khi đó bỏ nút/đích liên kết.
   const servicePath = localizeHref(`/dich-vu/${project.serviceSlug}`, locale)
 
@@ -105,6 +109,7 @@ export function ProjectDetailPage({ locale, slug }: { locale: NonDefaultLocale; 
           image: absoluteUrl(project.image.src),
           inLanguage: LANGUAGE_TAGS[locale],
           genre: project.kind,
+          keywords: project.tech.join(", "),
           creator: { "@id": `${SITE_URL}#organization` },
         }}
       />
@@ -114,7 +119,7 @@ export function ProjectDetailPage({ locale, slug }: { locale: NonDefaultLocale; 
           { name: PROJECTS_COPY[locale].index.crumb, path: sectionPath("projects", locale) },
           { name: project.name, path },
         ]}
-        eyebrow={project.kind}
+        eyebrow={project.ownProduct ? `${project.kind} · ${CARD_TEXT[locale].ownProduct}` : project.kind}
         title={`${project.name}: ${project.headline.charAt(0).toLowerCase()}${project.headline.slice(1)}`}
         intro={project.summary}
         image={project.image}

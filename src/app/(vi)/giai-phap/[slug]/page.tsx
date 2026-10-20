@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/giai-phap/[slug]"
     title: industry.metaTitle,
     description: industry.metaDescription,
     path: `/giai-phap/${industry.slug}`,
-    ogImage: industry.image.src,
+    ogImage: industry.image,
   })
 }
 

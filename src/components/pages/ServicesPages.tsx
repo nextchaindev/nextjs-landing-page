@@ -87,7 +87,7 @@ export function serviceDetailMetadata(locale: NonDefaultLocale, slug: string) {
     title: detail.metaTitle,
     description: detail.metaDescription,
     path: sectionPath("services", locale, detail.slug),
-    ogImage: detail.image.src,
+    ogImage: detail.image,
     locale,
   })
 }

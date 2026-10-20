@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import type { StaticImageData } from "next/image"
 import { SITE_NAME, absoluteUrl } from "@/lib/site"
 import { DEFAULT_LOCALE, ENABLED_LOCALES, OG_LOCALES, type Locale } from "@/i18n/config"
 import { alternateLanguages } from "@/i18n/routes"
@@ -10,8 +11,8 @@ interface PageMetadataInput {
   noindex?: boolean
   /** Use the title verbatim instead of the "%s | Nextchain.site" template. */
   absoluteTitle?: boolean
-  /** Ảnh OG riêng của trang (đường dẫn public, vd "/videos/xxx-poster.jpg"). */
-  ogImage?: string
+  /** Ảnh OG riêng của trang: đường dẫn public (coi là 1200×630, vd "/videos/xxx-poster.jpg") hoặc ảnh import (dùng kích thước thật). */
+  ogImage?: string | StaticImageData
   /** Ngôn ngữ của trang; ngôn ngữ chưa bật (NEXT_PUBLIC_ENABLED_LOCALES) tự noindex. */
   locale?: Locale
 }
@@ -50,7 +51,9 @@ export function pageMetadata({
   description = fitDescription(description, locale)
   const fullTitle = absoluteTitle ? title : `${title} | ${SITE_NAME}`
   const images = ogImage
-    ? [{ url: ogImage, width: 1200, height: 630, alt: title }]
+    ? typeof ogImage === "string"
+      ? [{ url: ogImage, width: 1200, height: 630, alt: title }]
+      : [{ url: ogImage.src, width: ogImage.width, height: ogImage.height, alt: title }]
     : [{ url: "/og-image-1200x630.jpg", width: 1200, height: 630, alt: SITE_NAME }]
   return {
     title: absoluteTitle ? { absolute: title } : title,
