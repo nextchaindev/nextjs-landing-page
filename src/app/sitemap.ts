@@ -3,11 +3,12 @@ import { absoluteUrl } from "@/lib/site"
 import { INDUSTRIES } from "@/content/industries"
 import { SERVICE_DETAILS } from "@/content/services"
 import { TEMPLATES, isTemplateIndexable } from "@/content/templates"
-import { BLOG_POSTS } from "@/content/blog"
 import { LEGAL_UPDATED_AT } from "@/content/legal"
 import { PROJECTS } from "@/content/projects"
 import { ENABLED_LOCALES, LOCALES, localizePath, type NonDefaultLocale } from "@/i18n/config"
-import { ROUTE_TRANSLATIONS, alternateLanguages } from "@/i18n/routes"
+import { ROUTE_TRANSLATIONS, alternateLanguages, languagesFromPaths } from "@/i18n/routes"
+import { sectionPath } from "@/i18n/paths"
+import { getAllPublishedPosts, postAlternates } from "@/lib/blog"
 
 /**
  * Date of the last substantive content change to the marketing pages.
@@ -32,7 +33,10 @@ const STATIC_PATHS = [
 
 const LEGAL_PATHS = ["/dieu-khoan", "/chinh-sach-bao-mat", "/chinh-sach-huy-dich-vu"]
 
-export default function sitemap(): MetadataRoute.Sitemap {
+// Bài blog lấy từ Supabase: sitemap dựng lại khi admin lưu bài (updateTag) và tối đa mỗi giờ.
+export const revalidate = 3600
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entry = (path: string, lastModified: string) => {
     const languages = alternateLanguages(path)
     return {
@@ -51,6 +55,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       }),
   )
 
+  // Bài blog (mọi ngôn ngữ đã bật), hreflang theo các bản dịch lưu trong DB.
+  const posts = (await getAllPublishedPosts()).filter((post) => post.locale === "vi" || ENABLED_LOCALES.includes(post.locale))
+  const viPosts = posts.filter((post) => post.locale === "vi")
+  const blogEntries = posts.map((post) => {
+    const languages = languagesFromPaths(postAlternates(post, posts))
+    return {
+      url: absoluteUrl(sectionPath("blog", post.locale, post.slug)),
+      lastModified: post.updatedAt ?? post.publishedAt,
+      ...(languages && { alternates: { languages } }),
+    }
+  })
+
   return [
     ...STATIC_PATHS.map((path) => entry(path, CONTENT_UPDATED_AT)),
     ...SERVICE_DETAILS.map((service) => entry(`/dich-vu/${service.slug}`, CONTENT_UPDATED_AT)),
@@ -59,15 +75,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...TEMPLATES.filter(isTemplateIndexable).map((template) =>
       entry(`/mau-website/${template.slug}`, CONTENT_UPDATED_AT),
     ),
-    ...(BLOG_POSTS.length > 0
-      ? [
-          entry(
-            "/blog",
-            BLOG_POSTS.map((post) => post.updatedAt ?? post.publishedAt).sort().at(-1)!,
-          ),
-        ]
+    ...(viPosts.length > 0
+      ? [entry("/blog", viPosts.map((post) => post.updatedAt ?? post.publishedAt).sort().at(-1)!)]
       : []),
-    ...BLOG_POSTS.map((post) => entry(`/blog/${post.slug}`, post.updatedAt ?? post.publishedAt)),
+    ...blogEntries,
     ...LEGAL_PATHS.map((path) => entry(path, LEGAL_UPDATED_AT)),
     ...translatedEntries,
   ]

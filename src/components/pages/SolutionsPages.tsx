@@ -11,7 +11,7 @@ import { pageMetadata, serviceSchema } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
 import { getIndustries, getIndustryFor } from "@/content/industries"
 import { getTemplates } from "@/content/templates"
-import { getBlogPosts } from "@/content/blog"
+import { getBlogPosts } from "@/lib/blog"
 import { getStartingPrice } from "@/content/plans"
 import { SOLUTIONS_COPY } from "@/content/pageCopy/solutions"
 import { getDictionary } from "@/i18n/dictionaries"
@@ -94,7 +94,7 @@ export function solutionDetailMetadata(locale: NonDefaultLocale, slug: string) {
   })
 }
 
-export function SolutionDetailPage({ locale, slug }: { locale: NonDefaultLocale; slug: string }) {
+export async function SolutionDetailPage({ locale, slug }: { locale: NonDefaultLocale; slug: string }) {
   const industry = getIndustryFor(locale, slug)
   if (!industry) return null
   const copy = SOLUTIONS_COPY[locale].detail
@@ -102,7 +102,7 @@ export function SolutionDetailPage({ locale, slug }: { locale: NonDefaultLocale;
   const viSlug = defaultIndustrySlug(locale, industry.slug)
   const template = getTemplates(locale).find((t) => t.industrySlug === viSlug)
   // Bài blog liên quan: bài có liên kết trỏ về trang giải pháp này (so khớp theo đường dẫn tiếng Việt).
-  const relatedPosts = getBlogPosts(locale).filter((post) =>
+  const relatedPosts = (await getBlogPosts(locale)).filter((post) =>
     post.relatedLinks.some((link) => viSlug !== undefined && link.href === `/giai-phap/${viSlug}`),
   )
   const short = industry.shortName.toLowerCase()

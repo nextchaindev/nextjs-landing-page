@@ -11,7 +11,7 @@ import { pageMetadata, serviceSchema } from "@/lib/seo"
 import { STARTING_PRICE } from "@/content/plans"
 import { INDUSTRIES, getIndustry } from "@/content/industries"
 import { TEMPLATES } from "@/content/templates"
-import { BLOG_POSTS } from "@/content/blog"
+import { getBlogPosts } from "@/lib/blog"
 
 export const dynamicParams = false
 
@@ -37,7 +37,7 @@ export default async function IndustryPage({ params }: PageProps<"/giai-phap/[sl
   if (!industry) notFound()
   const path = `/giai-phap/${industry.slug}`
   const template = TEMPLATES.find((t) => t.industrySlug === industry.slug)
-  const relatedPosts = BLOG_POSTS.filter((post) => post.relatedLinks.some((link) => link.href === path))
+  const relatedPosts = (await getBlogPosts("vi")).filter((post) => post.relatedLinks.some((link) => link.href === path))
 
   return (
     <>

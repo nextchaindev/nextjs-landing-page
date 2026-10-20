@@ -20,7 +20,7 @@ import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/ca
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
 import { GENERAL_FAQS } from "@/content/faqs"
-import { sortedPosts } from "@/content/blog"
+import { getBlogPosts } from "@/lib/blog"
 import { PROJECTS } from "@/content/projects"
 
 const FEATURED_PROJECTS = ["kyunghyang", "yamicoco", "rc-sport"]
@@ -54,8 +54,8 @@ const GROWTH_FEATURES = [
   },
 ]
 
-export default function HomePage() {
-  const latestPosts = sortedPosts().slice(0, 3)
+export default async function HomePage() {
+  const latestPosts = (await getBlogPosts("vi")).slice(0, 3)
 
   return (
     <div className="min-h-screen bg-white">

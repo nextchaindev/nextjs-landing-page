@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Clock } from "lucide-react"
-import type { BlogPost } from "@/content/blog"
+import type { BlogPost } from "@/lib/blog"
 import { CARD_TEXT } from "@/content/cardText"
 import { LANGUAGE_TAGS, type Locale } from "@/i18n/config"
 import { sectionPath } from "@/i18n/paths"
@@ -24,7 +24,7 @@ export default function BlogCard({ post, locale = "vi" }: { post: BlogPost; inde
         aria-hidden
         className="relative aspect-[16/9] p-5 flex items-end overflow-hidden">
         <Image
-          src={post.cover}
+          src={post.cover.src}
           alt=""
           fill
           sizes="(min-width: 768px) 380px, 100vw"

@@ -9,7 +9,6 @@ import {
   type NonDefaultLocale,
 } from "./config"
 import {
-  BLOG_SLUGS,
   INDUSTRY_SLUGS,
   LEGAL_SLUGS,
   MONTHLY_MANAGEMENT_SLUG,
@@ -49,7 +48,8 @@ function legalEntries(): RouteTable {
 /**
  * Bảng đối ứng đường dẫn giữa các ngôn ngữ, khóa là đường dẫn tiếng Việt (ngôn ngữ gốc).
  * Mỗi dòng ứng với một trang đã được dịch và công khai — bảng này cũng là nguồn cho hreflang và sitemap.
- * Đường dẫn ở đây KHÔNG gồm tiền tố ngôn ngữ. Slug nằm ở slugs.ts.
+ * Đường dẫn ở đây KHÔNG gồm tiền tố ngôn ngữ. Slug nằm ở slugs.ts. Bài blog không nằm ở đây: bản dịch lưu trong
+ * Supabase (src/lib/blog.ts), trang bài tự khai báo hreflang và LanguageSwitcher đọc thẻ hreflang đó.
  */
 export const ROUTE_TRANSLATIONS: RouteTable = {
   "/": sameForAll("/"),
@@ -61,12 +61,6 @@ export const ROUTE_TRANSLATIONS: RouteTable = {
   ...entriesFor("/solutions", "/giai-phap", INDUSTRY_SLUGS),
   ...entriesFor("/templates", "/mau-website", TEMPLATE_SLUGS),
   ...Object.fromEntries(PROJECT_SLUGS.map((slug) => [`/du-an/${slug}`, sameForAll(`/projects/${slug}`)])),
-  ...Object.fromEntries(
-    Object.entries(BLOG_SLUGS).map(([vi, slugs]) => [
-      `/blog/${vi}`,
-      Object.fromEntries(Object.entries(slugs).map(([locale, slug]) => [locale, `/blog/${slug}`])),
-    ]),
-  ),
   ...legalEntries(),
 }
 
@@ -79,21 +73,29 @@ function stripLocale(pathname: string): { locale: Locale; path: string } {
   return { locale: DEFAULT_LOCALE, path: pathname || "/" }
 }
 
-/** Đường dẫn của trang hiện tại ở ngôn ngữ `target`; không có bản dịch thì về trang chủ của ngôn ngữ đó. */
+function parentPath(path: string) {
+  const cut = path.lastIndexOf("/")
+  return cut <= 0 ? "/" : path.slice(0, cut)
+}
+
+/**
+ * Đường dẫn của trang hiện tại ở ngôn ngữ `target`. Trang chưa có bản dịch (hoặc không nằm trong bảng, vd bài blog)
+ * thì về trang cha gần nhất đã dịch: /blog/<bài> → /ko/blog, cuối cùng là trang chủ.
+ */
 export function alternatePath(pathname: string, target: Locale): string {
   const { locale: current, path } = stripLocale(pathname)
   if (current === target) return localizePath(path, target)
 
-  const viPath =
-    current === DEFAULT_LOCALE
-      ? path
-      : Object.entries(ROUTE_TRANSLATIONS).find(([, translations]) => translations[current as NonDefaultLocale] === path)?.[0]
-
-  if (viPath === undefined) return localizePath("/", target)
-  if (target === DEFAULT_LOCALE) return viPath
-
-  const translated = ROUTE_TRANSLATIONS[viPath]?.[target as NonDefaultLocale]
-  return localizePath(translated ?? "/", target)
+  for (let candidate = path; ; candidate = parentPath(candidate)) {
+    const viPath =
+      current === DEFAULT_LOCALE
+        ? candidate
+        : Object.entries(ROUTE_TRANSLATIONS).find(([, translations]) => translations[current as NonDefaultLocale] === candidate)?.[0]
+    const translated =
+      viPath === undefined ? undefined : target === DEFAULT_LOCALE ? viPath : ROUTE_TRANSLATIONS[viPath]?.[target as NonDefaultLocale]
+    if (translated !== undefined) return localizePath(translated, target)
+    if (candidate === "/") return localizePath("/", target)
+  }
 }
 
 /** Đường dẫn tiếng Việt (gốc) của một trang ở bất kỳ ngôn ngữ nào; undefined nếu trang đó không có bản gốc tương ứng. */
@@ -118,15 +120,23 @@ export function pathForLocale(viPath: string, locale: Locale): string | undefine
 export function alternateLanguages(pathname: string): Record<string, string> | undefined {
   const viPath = toDefaultPath(pathname)
   if (viPath === undefined) return undefined
+  return languagesFromPaths(Object.fromEntries(LOCALES.map((locale) => [locale, pathForLocale(viPath, locale)])))
+}
 
+/**
+ * Bản đồ hreflang từ đường dẫn (đã gồm tiền tố) của từng bản dịch — dùng cho trang không nằm trong ROUTE_TRANSLATIONS
+ * (bài blog lưu trong DB). Chỉ giữ ngôn ngữ đã bật; dưới hai ngôn ngữ thì không cần hreflang.
+ * x-default trỏ bản tiếng Việt, không có thì bản đầu tiên.
+ */
+export function languagesFromPaths(paths: Partial<Record<Locale, string | undefined>>): Record<string, string> | undefined {
   const languages: Record<string, string> = {}
   for (const locale of ENABLED_LOCALES) {
-    const path = pathForLocale(viPath, locale)
+    const path = paths[locale]
     if (path !== undefined) languages[locale] = absoluteUrl(path)
   }
-  if (Object.keys(languages).length < 2) return undefined
-
-  return { ...languages, "x-default": absoluteUrl(viPath) }
+  const enabled = Object.keys(languages)
+  if (enabled.length < 2) return undefined
+  return { ...languages, "x-default": languages[DEFAULT_LOCALE] ?? languages[enabled[0]] }
 }
 
 /**

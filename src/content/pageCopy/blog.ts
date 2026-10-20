@@ -1,4 +1,4 @@
-import type { NonDefaultLocale } from "@/i18n/config"
+import type { Locale } from "@/i18n/config"
 
 export interface BlogCopy {
   index: {
@@ -26,7 +26,34 @@ export interface BlogCopy {
   }
 }
 
-export const BLOG_COPY: Record<NonDefaultLocale, BlogCopy> = {
+export const BLOG_COPY: Record<Locale, BlogCopy> = {
+  vi: {
+    index: {
+      metaTitle: "Blog hướng dẫn làm website",
+      metaDescription:
+        "Kinh nghiệm làm website cho doanh nghiệp và cơ sở dịch vụ: chi phí landing page, so sánh landing page và website, website spa cần gì, gói tháng hay trả một lần.",
+      crumb: "Blog",
+      eyebrow: "Blog & Hướng dẫn",
+      title: "Kinh nghiệm làm website cho doanh nghiệp",
+      intro:
+        "Bài viết thực tế về chi phí, tính năng và cách chọn loại website phù hợp — trả lời thẳng vào câu hỏi, có bảng so sánh và checklist.",
+      emptyBefore: "Bài viết đầu tiên đang được biên soạn. Trong lúc chờ, xem ",
+      emptyLink: "các dịch vụ",
+      emptyAfter: ".",
+    },
+    post: {
+      updated: "Cập nhật ",
+      quickAnswer: "Trả lời nhanh",
+      keyTakeaways: "Ý chính",
+      toc: "Mục lục",
+      needHelp: "Cần tư vấn website?",
+      replyTime: "Nextchain phản hồi trong 24 giờ làm việc.",
+      contactNow: "Liên hệ ngay",
+      related: "Trang liên quan",
+      morePosts: "Bài viết khác",
+      sectionAnchor: "muc",
+    },
+  },
   ko: {
     index: {
       metaTitle: "웹사이트 제작 가이드 블로그",

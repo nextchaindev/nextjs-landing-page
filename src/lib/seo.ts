@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import type { StaticImageData } from "next/image"
 import { SITE_NAME, absoluteUrl } from "@/lib/site"
 import { DEFAULT_LOCALE, ENABLED_LOCALES, OG_LOCALES, type Locale } from "@/i18n/config"
-import { alternateLanguages } from "@/i18n/routes"
+import { alternateLanguages, languagesFromPaths } from "@/i18n/routes"
 
 interface PageMetadataInput {
   title: string
@@ -12,9 +12,11 @@ interface PageMetadataInput {
   /** Use the title verbatim instead of the "%s | Nextchain.site" template. */
   absoluteTitle?: boolean
   /** Ảnh OG riêng của trang: đường dẫn public (coi là 1200×630, vd "/videos/xxx-poster.jpg") hoặc ảnh import (dùng kích thước thật). */
-  ogImage?: string | StaticImageData
+  ogImage?: string | Pick<StaticImageData, "src" | "width" | "height">
   /** Ngôn ngữ của trang; ngôn ngữ chưa bật (NEXT_PUBLIC_ENABLED_LOCALES) tự noindex. */
   locale?: Locale
+  /** Đường dẫn các bản dịch của trang (trang không nằm trong ROUTE_TRANSLATIONS, vd bài blog lưu DB). */
+  alternates?: Partial<Record<Locale, string>>
 }
 
 const MAX_DESCRIPTION = 160
@@ -45,9 +47,10 @@ export function pageMetadata({
   absoluteTitle,
   ogImage,
   locale = DEFAULT_LOCALE,
+  alternates,
 }: PageMetadataInput): Metadata {
   const published = locale === DEFAULT_LOCALE || ENABLED_LOCALES.includes(locale)
-  const languages = alternateLanguages(path)
+  const languages = alternates ? languagesFromPaths(alternates) : alternateLanguages(path)
   description = fitDescription(description, locale)
   const fullTitle = absoluteTitle ? title : `${title} | ${SITE_NAME}`
   const images = ogImage

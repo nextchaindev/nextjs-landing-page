@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Check, ChevronDown, Globe } from "lucide-react"
 import { trackEvent } from "@/lib/analytics"
 import { cn } from "@/components/ui/utils"
@@ -24,15 +24,23 @@ function rememberLocale(locale: Locale) {
 /** Chuyển sang trang tương ứng ở ngôn ngữ khác; chưa có bản dịch thì về trang chủ ngôn ngữ đó. */
 export default function LanguageSwitcher({ className, onNavigate, variant = "inline" }: LanguageSwitcherProps) {
   const pathname = usePathname() ?? "/"
+  const router = useRouter()
   const locale = useLocale()
   const { header } = useDictionary()
 
   if (ENABLED_LOCALES.length < 2) return null
 
-  const choose = (target: Locale) => {
+  const choose = (event: React.MouseEvent<HTMLAnchorElement>, target: Locale) => {
     rememberLocale(target)
     trackEvent("language_switch", { from: locale, to: target })
     onNavigate?.()
+    // Trang không nằm trong bảng ROUTE_TRANSLATIONS (bài blog lưu DB) khai báo bản dịch qua thẻ hreflang — đi thẳng tới đó
+    // thay vì trang cha mà href dự phòng trỏ tới.
+    const alternate = document.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${target}"]`)?.href
+    if (alternate) {
+      event.preventDefault()
+      router.push(new URL(alternate).pathname)
+    }
   }
 
   if (variant === "menu") {
@@ -65,7 +73,7 @@ export default function LanguageSwitcher({ className, onNavigate, variant = "inl
                     href={alternatePath(pathname, target)}
                     hrefLang={target}
                     lang={target}
-                    onClick={() => choose(target)}
+                    onClick={(event) => choose(event, target)}
                     className="flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-orange-50 transition-colors">
                     {LOCALE_NAMES[target].full}
                     <span className="text-xs text-gray-400">{LOCALE_NAMES[target].short}</span>
@@ -96,7 +104,7 @@ export default function LanguageSwitcher({ className, onNavigate, variant = "inl
                 hrefLang={target}
                 lang={target}
                 title={LOCALE_NAMES[target].full}
-                onClick={() => choose(target)}
+                onClick={(event) => choose(event, target)}
                 className="px-1 text-gray-600 hover:text-gray-900">
                 {LOCALE_NAMES[target].short}
               </Link>
