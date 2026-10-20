@@ -5,6 +5,7 @@ import { CheckCircle2, Loader2, Mail, Phone, User, X } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
 import ReCAPTCHA from "react-google-recaptcha"
 import { LEAD_INDUSTRIES, LEAD_WEBSITE_TYPES } from "@/content/leadOptions"
+import { useDictionary } from "@/i18n/LocaleProvider"
 
 /** Tên miền thường gõ sai → gợi ý sửa ngay tại chỗ thay vì mất lead. */
 const EMAIL_DOMAIN_TYPOS: Record<string, string> = {
@@ -36,6 +37,7 @@ export default function ContactModal() {
     loadingSubmit,
     errors,
   } = useModal()
+  const { form } = useDictionary()
 
   const emailPart = formData.email.trim().split("@")
   const typoDomain = emailPart.length === 2 ? EMAIL_DOMAIN_TYPOS[emailPart[1].toLowerCase()] : undefined
@@ -82,14 +84,14 @@ export default function ContactModal() {
           <button
             onClick={handleCloseModal}
             className="absolute top-3 right-3 md:top-4 md:right-4 text-white/80 hover:text-white transition-colors"
-            aria-label="Đóng">
+            aria-label={form.closeAria}>
             <X className="w-5 h-5 md:w-6 md:h-6" />
           </button>
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
-            Nhận tư vấn miễn phí
+            {form.title}
           </h3>
           <p className="text-sm md:text-base text-blue-100">
-            Để lại thông tin, Nextchain sẽ phản hồi trong 24 giờ làm việc.
+            {form.subtitle}
           </p>
         </div>
 
@@ -111,7 +113,7 @@ export default function ContactModal() {
                 <label
                   htmlFor="name"
                   className="block text-sm font-semibold text-gray-700 mb-2">
-                  Họ và tên <span className="text-red-500">*</span>
+                  {form.name} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <User
@@ -128,7 +130,7 @@ export default function ContactModal() {
                         ? "border-red-200 focus:border-red-500 focus:ring-red-50"
                         : "border-gray-200 focus:border-blue-600 focus:ring-blue-100"
                     }`}
-                    placeholder="Nguyễn Văn A"
+                    placeholder={form.namePlaceholder}
                   />
                 </div>
                 {errors.name && (
@@ -143,7 +145,7 @@ export default function ContactModal() {
                 <label
                   htmlFor="email"
                   className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email <span className="font-normal text-gray-500">(không bắt buộc)</span>
+                  {form.email} <span className="font-normal text-gray-500">{form.optional}</span>
                 </label>
                 <div className="relative">
                   <Mail
@@ -160,7 +162,7 @@ export default function ContactModal() {
                         ? "border-red-200 focus:border-red-500 focus:ring-red-50"
                         : "border-gray-200 focus:border-blue-600 focus:ring-blue-100"
                     }`}
-                    placeholder="email@example.com"
+                    placeholder={form.emailPlaceholder}
                   />
                 </div>
                 {errors.email && (
@@ -170,7 +172,7 @@ export default function ContactModal() {
                 )}
                 {typoDomain && !errors.email && (
                   <p className="mt-1 text-xs text-gray-600">
-                    Ý bạn là{" "}
+                    {form.emailSuggestPrefix}{" "}
                     <button
                       type="button"
                       onClick={() =>
@@ -182,7 +184,7 @@ export default function ContactModal() {
                       className="font-semibold text-blue-600 underline underline-offset-2">
                       {emailPart[0]}@{typoDomain}
                     </button>
-                    ?
+                    {form.emailSuggestSuffix}
                   </p>
                 )}
               </div>
@@ -192,7 +194,7 @@ export default function ContactModal() {
                 <label
                   htmlFor="phone"
                   className="block text-sm font-semibold text-gray-700 mb-2">
-                  Số điện thoại <span className="text-red-500">*</span>
+                  {form.phone} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <Phone
@@ -209,11 +211,11 @@ export default function ContactModal() {
                         ? "border-red-200 focus:border-red-500 focus:ring-red-50"
                         : "border-gray-200 focus:border-blue-600 focus:ring-blue-100"
                     }`}
-                    placeholder="0901 234 567"
+                    placeholder={form.phonePlaceholder}
                   />
                 </div>
                 <p className="mt-1 text-xs text-gray-500">
-                  Bắt buộc để nhân viên gọi lại tư vấn — không dùng cho mục đích khác.
+                  {form.phoneNote}
                 </p>
                 {errors.phone && (
                   <p className="mt-1 text-xs text-red-500 font-medium">
@@ -224,8 +226,8 @@ export default function ContactModal() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 {[
-                  { id: "industry", label: "Ngành kinh doanh", options: LEAD_INDUSTRIES },
-                  { id: "websiteType", label: "Bạn cần", options: LEAD_WEBSITE_TYPES },
+                  { id: "industry", label: form.industry, options: LEAD_INDUSTRIES, labels: form.industries },
+                  { id: "websiteType", label: form.websiteType, options: LEAD_WEBSITE_TYPES, labels: form.websiteTypes },
                 ].map((field) => (
                   <div key={field.id}>
                     <label htmlFor={field.id} className="block text-sm font-semibold text-gray-700 mb-2">
@@ -237,10 +239,10 @@ export default function ContactModal() {
                       value={formData[field.id as "industry" | "websiteType"]}
                       onChange={handleInputChange}
                       className="w-full px-3 py-2.5 md:py-3 border-2 border-gray-200 rounded-xl bg-white text-gray-900 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all">
-                      <option value="">Chọn (không bắt buộc)</option>
-                      {field.options.map((option) => (
+                      <option value="">{form.selectPlaceholder}</option>
+                      {field.options.map((option, idx) => (
                         <option key={option} value={option}>
-                          {option}
+                          {field.labels[idx] ?? option}
                         </option>
                       ))}
                     </select>
@@ -248,12 +250,33 @@ export default function ContactModal() {
                 ))}
               </div>
 
+              {form.contactMethods.length > 0 && (
+                <div>
+                  <label htmlFor="preferredContact" className="block text-sm font-semibold text-gray-700 mb-2">
+                    {form.contactMethod}
+                  </label>
+                  <select
+                    id="preferredContact"
+                    name="preferredContact"
+                    value={formData.preferredContact}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2.5 md:py-3 border-2 border-gray-200 rounded-xl bg-white text-gray-900 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all">
+                    <option value="">{form.selectPlaceholder}</option>
+                    {form.contactMethods.map((method) => (
+                      <option key={method.value} value={method.value}>
+                        {method.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               {/* Message Field */}
               <div>
                 <label
                   htmlFor="message"
                   className="block text-sm font-semibold text-gray-700 mb-2">
-                  Nội dung cần tư vấn
+                  {form.message}
                 </label>
                 <div className="relative">
                   <textarea
@@ -263,7 +286,7 @@ export default function ContactModal() {
                     value={formData.message}
                     onChange={handleInputChange}
                     className="w-full px-4 py-2.5 md:py-3 border-2 border-gray-200 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all resize-none"
-                    placeholder="Mô tả ngắn gọn về dự án của bạn..."
+                    placeholder={form.messagePlaceholder}
                   />
                 </div>
               </div>
@@ -272,15 +295,15 @@ export default function ContactModal() {
               <div className="bg-blue-50 rounded-xl p-3 md:p-4 space-y-2">
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Tư vấn miễn phí 100%</span>
+                  <span>{form.trust[0]}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Thông tin chỉ dùng để liên hệ tư vấn</span>
+                  <span>{form.trust[1]}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Phản hồi trong 24 giờ làm việc</span>
+                  <span>{form.trust[2]}</span>
                 </div>
               </div>
             </div>
@@ -295,7 +318,7 @@ export default function ContactModal() {
                   sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
                   onChange={(token) => setRecaptchaToken(token)}
                   onExpired={() => setRecaptchaToken(null)}
-                  hl="vi"
+                  hl={form.recaptchaLang}
                 />
               </div>
 
@@ -303,7 +326,7 @@ export default function ContactModal() {
               type="submit"
               disabled={loadingSubmit}
               className="flex-1 flex flex-row items-center gap-1 justify-center px-6 py-2.5 md:py-3 bg-linear-to-r from-orange-600 to-orange-400 text-white rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100">
-              <span>Gửi yêu cầu</span>
+              <span>{form.submit}</span>
               {loadingSubmit && <Loader2 className="w-4 h-4 animate-spin" />}
             </button>
           </div>

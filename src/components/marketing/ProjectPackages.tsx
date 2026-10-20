@@ -4,14 +4,17 @@ import { motion } from "motion/react"
 import { CheckCircle2, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useModal } from "@/context/ModalContext"
-import { colorClasses, projectServices, type ProjectServiceKey } from "@/content/projectPricing"
+import { colorClasses, getProjectServices, type ProjectServiceKey } from "@/content/projectPricing"
+import { useDictionary, useLocale } from "@/i18n/LocaleProvider"
 import { staggerContainer, staggerItem } from "@/hooks/useScrollAnimation"
 import { cn } from "@/components/ui/utils"
 
 /** Basic / Premium / Professional project packages for one larger service. */
 export default function ProjectPackages({ serviceKey }: { serviceKey: ProjectServiceKey }) {
   const { openModal } = useModal()
-  const service = projectServices[serviceKey]
+  const locale = useLocale()
+  const { projectPricing } = useDictionary()
+  const service = getProjectServices(locale)[serviceKey]
   const theme = colorClasses[service.color]
 
   return (
@@ -35,7 +38,7 @@ export default function ProjectPackages({ serviceKey }: { serviceKey: ProjectSer
             )}>
             {popular && (
               <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-linear-to-r from-[#FFB900] to-[#FF8904] text-white text-xs font-semibold px-6 py-2 rounded-full uppercase tracking-widest shadow-lg whitespace-nowrap">
-                Phổ biến nhất
+                {projectPricing.popular}
               </div>
             )}
             <div className="mb-8 flex flex-col gap-2 items-center text-center">
@@ -57,7 +60,10 @@ export default function ProjectPackages({ serviceKey }: { serviceKey: ProjectSer
             <Button
               onClick={() =>
                 openModal({
-                  message: `Tôi quan tâm đến gói ${service.name} - ${pkg.name} (${pkg.price}). `,
+                  message: projectPricing.interest
+                    .replace("{service}", service.name)
+                    .replace("{package}", pkg.name)
+                    .replace("{price}", pkg.price),
                 })
               }
               className={cn(
@@ -66,7 +72,7 @@ export default function ProjectPackages({ serviceKey }: { serviceKey: ProjectSer
                   ? `${theme.bg} ${theme.hover} text-white shadow-xl`
                   : `${theme.text} bg-white hover:bg-white ${theme.border}`,
               )}>
-              Tư vấn ngay
+              {projectPricing.cta}
             </Button>
           </motion.div>
         )

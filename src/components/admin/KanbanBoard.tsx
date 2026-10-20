@@ -16,7 +16,7 @@ import {
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { Column } from './KanbanColumn'
 import { Card } from './KanbanCard'
-import { updateConsultationStatus } from '@/app/admin/actions'
+import { updateConsultationStatus } from '@/app/(vi)/admin/actions'
 import { toast } from 'sonner'
 import { ConsultationDetail } from './ConsultationDetail'
 
@@ -31,6 +31,8 @@ export type Consultation = {
     memo?: string
     industry?: string | null
     website_type?: string | null
+    locale?: string | null
+    preferred_contact?: string | null
     attribution?: Record<string, string> | null
 }
 
@@ -43,6 +45,11 @@ export function KanbanBoard({ initialData }: KanbanBoardProps) {
     const [activeId, setActiveId] = useState<string | null>(null)
     const [selectedConsultation, setSelectedConsultation] = useState<Consultation | null>(null)
     const [isDetailOpen, setIsDetailOpen] = useState(false)
+    const [localeFilter, setLocaleFilter] = useState<string>('all')
+
+    // Chỉ hiện bộ lọc ngôn ngữ khi đã có lead từ ngôn ngữ khác tiếng Việt.
+    const locales = Array.from(new Set(items.map((item) => item.locale || 'vi')))
+    const visibleItems = localeFilter === 'all' ? items : items.filter((item) => (item.locale || 'vi') === localeFilter)
 
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -136,10 +143,28 @@ export function KanbanBoard({ initialData }: KanbanBoardProps) {
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
             >
+                {locales.length > 1 && (
+                    <div className="mb-3 flex items-center gap-2 text-sm" role="group" aria-label="Language filter">
+                        {['all', ...locales].map((value) => (
+                            <button
+                                key={value}
+                                type="button"
+                                onClick={() => setLocaleFilter(value)}
+                                aria-pressed={localeFilter === value}
+                                className={`rounded-full border px-3 py-1 font-medium uppercase transition-colors ${
+                                    localeFilter === value
+                                        ? 'border-indigo-600 bg-indigo-600 text-white'
+                                        : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                                }`}>
+                                {value}
+                            </button>
+                        ))}
+                    </div>
+                )}
                 <div className="flex h-full gap-4 overflow-x-auto pb-4">
                     {columns.map((status) => (
-                        <Column key={status} id={status} title={columnLabels[status] ?? status} count={items.filter(i => i.status === status).length}>
-                            {items
+                        <Column key={status} id={status} title={columnLabels[status] ?? status} count={visibleItems.filter(i => i.status === status).length}>
+                            {visibleItems
                                 .filter((item) => item.status === status)
                                 .map((item) => (
                                     <div key={item.id} onClick={() => handleCardClick(item)}>

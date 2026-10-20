@@ -6,7 +6,10 @@ import Link from "next/link"
 import { AnimatePresence, motion } from "motion/react"
 import { ArrowRight, Eye } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
-import { TEMPLATES, TEMPLATE_CATEGORIES, type TemplateCategory } from "@/content/templates"
+import { getTemplates, TEMPLATE_CATEGORIES, TEMPLATE_CATEGORY_LABELS, type TemplateCategory } from "@/content/templates"
+import { CARD_TEXT } from "@/content/cardText"
+import { sectionPath } from "@/i18n/paths"
+import { useLocale } from "@/i18n/LocaleProvider"
 import { cn } from "@/components/ui/utils"
 import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
 
@@ -17,19 +20,22 @@ type Filter = TemplateCategory | "all"
 export default function TemplateGallery({ limit, carousel }: { limit?: number; carousel?: boolean }) {
   const [filter, setFilter] = useState<Filter>("all")
   const { openModal } = useModal()
+  const locale = useLocale()
+  const text = CARD_TEXT[locale]
 
-  const visible = TEMPLATES.filter((template) => filter === "all" || template.category === filter).slice(
+  const visible = getTemplates(locale).filter((template) => filter === "all" || template.category === filter).slice(
     0,
     limit,
   )
   const categoryLabel = (id: TemplateCategory) =>
-    TEMPLATE_CATEGORIES.find((category) => category.id === id)?.label
+    locale === "vi" ? TEMPLATE_CATEGORIES.find((category) => category.id === id)?.label : TEMPLATE_CATEGORY_LABELS[locale][id]
+  const categories = TEMPLATE_CATEGORIES.map((category) => ({ id: category.id, label: categoryLabel(category.id) }))
 
   return (
     <div>
       <div className="w-full overflow-x-auto scrollbar-hide mb-8">
         <div className="flex md:flex-wrap md:justify-center gap-3 w-max md:w-full mx-auto">
-          {[{ id: "all" as const, label: "Tất cả" }, ...TEMPLATE_CATEGORIES].map((category) => (
+          {[{ id: "all" as const, label: text.all }, ...categories].map((category) => (
             <motion.button
               key={category.id}
               type="button"
@@ -72,7 +78,7 @@ export default function TemplateGallery({ limit, carousel }: { limit?: number; c
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent" />
                 <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 text-xs font-semibold text-gray-800">
-                  Mẫu tham khảo
+                  {text.sampleBadge}
                 </span>
                 <span className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-primary text-xs font-semibold text-white">
                   {categoryLabel(template.category)}
@@ -85,9 +91,9 @@ export default function TemplateGallery({ limit, carousel }: { limit?: number; c
                 <div className="mt-5 flex items-center justify-between gap-3">
                   {template.industrySlug ? (
                     <Link
-                      href={`/mau-website/${template.slug}`}
+                      href={sectionPath("templates", locale, template.slug)}
                       className="inline-flex items-center gap-2 text-sm font-semibold text-primary after:absolute after:inset-0">
-                      Xem chi tiết <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      {text.viewDetails} <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   ) : (
                     <span />
@@ -98,14 +104,14 @@ export default function TemplateGallery({ limit, carousel }: { limit?: number; c
                       target="_blank"
                       rel="noopener"
                       className="relative z-10 inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-sm font-semibold text-gray-700 hover:border-primary hover:text-primary transition-colors">
-                      <Eye className="w-4 h-4" /> Xem bản demo
+                      <Eye className="w-4 h-4" /> {text.viewDemo}
                     </Link>
                   ) : (
                     <button
                       type="button"
-                      onClick={() => openModal({ message: `Tôi muốn tư vấn bố cục tham khảo "${template.name}". ` })}
+                      onClick={() => openModal({ message: text.consultMessage.replace("{name}", template.name) })}
                       className="relative z-10 inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-sm font-semibold text-gray-700 hover:border-primary hover:text-primary transition-colors cursor-pointer">
-                      <Eye className="w-4 h-4" /> Tư vấn bố cục
+                      <Eye className="w-4 h-4" /> {text.consultLayout}
                     </button>
                   )}
                 </div>

@@ -11,10 +11,11 @@ import {
   staggerItem,
   useScrollAnimation,
 } from "@/hooks/useScrollAnimation"
-import { projectServices as services, colorClasses } from "@/content/projectPricing"
+import { getProjectServices, colorClasses } from "@/content/projectPricing"
 import { SERVICE_DETAILS } from "@/content/services"
 
 import { useModal } from "@/context/ModalContext"
+import { useDictionary, useLocale } from "@/i18n/LocaleProvider"
 
 interface ServicesProps {
   title?: string
@@ -22,10 +23,12 @@ interface ServicesProps {
 }
 
 /** Tabbed project pricing (Basic/Premium/Professional) for the larger services. */
-export default function Services({
-  title = "Bảng giá dự án cho doanh nghiệp",
-  desc = "Website và phần mềm quy mô lớn hơn được báo giá theo dự án",
-}: ServicesProps) {
+export default function Services({ title, desc }: ServicesProps) {
+  const locale = useLocale()
+  const { projectPricing } = useDictionary()
+  const services = getProjectServices(locale)
+  title ??= projectPricing.defaultTitle
+  desc ??= projectPricing.defaultDesc
   const { openModal, keyService, setKeyService } = useModal()
   const pricingCarouselRef = useRef<HTMLDivElement>(null)
   const { ref: servicesRef, isVisible: servicesVisible } = useScrollAnimation(0.1)
@@ -36,16 +39,23 @@ export default function Services({
     price: string,
   ) => {
     openModal({
-      message: `Tôi quan tâm đến gói ${serviceName} - ${packageName} (${price}). `,
+      message: projectPricing.interest
+        .replace("{service}", serviceName)
+        .replace("{package}", packageName)
+        .replace("{price}", price),
     })
   }
 
   const currentService = services[keyService as keyof typeof services] ?? services.corporate
-  const detailPath = `/dich-vu/${
-    SERVICE_DETAILS.find(
-      (detail) => detail.pricing.model === "project" && detail.pricing.key === keyService,
-    )?.slug ?? ""
-  }`
+  // Trang chi tiết dịch vụ chỉ có bản tiếng Việt cho tới khi được dịch (issue #26).
+  const detailPath =
+    locale === "vi"
+      ? `/dich-vu/${
+          SERVICE_DETAILS.find(
+            (detail) => detail.pricing.model === "project" && detail.pricing.key === keyService,
+          )?.slug ?? ""
+        }`
+      : null
   const colorTheme =
     colorClasses[currentService.color as keyof typeof colorClasses]
 
@@ -195,7 +205,7 @@ export default function Services({
                       variants={staggerItem}>
                       {pkg.popular && (
                         <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-linear-to-r from-[#FFB900] to-[#FF8904] text-white text-[10px] md:text-xs font-semibold px-6 py-2 rounded-full uppercase tracking-widest shadow-lg whitespace-nowrap">
-                          Phổ biến nhất
+                          {projectPricing.popular}
                         </div>
                       )}
 
@@ -248,7 +258,7 @@ export default function Services({
                               pkg.price,
                             )
                           }>
-                          Tư vấn ngay
+                          {projectPricing.cta}
                         </Button>
                       </motion.div>
                     </motion.div>
@@ -258,14 +268,15 @@ export default function Services({
             </AnimatePresence>
           </div>
         </div>
-        <p className="text-center mt-4">
-          <Link href={detailPath} className={`font-semibold hover:underline ${colorTheme.text}`}>
-            Tìm hiểu chi tiết dịch vụ {currentService.name} →
-          </Link>
-        </p>
+        {detailPath && (
+          <p className="text-center mt-4">
+            <Link href={detailPath} className={`font-semibold hover:underline ${colorTheme.text}`}>
+              {projectPricing.detailLink.replace("{service}", currentService.name)}
+            </Link>
+          </p>
+        )}
         <p className="text-center text-[16px] text-gray-600 mt-4">
-          Các gói giá trên là mức tham khảo. Liên hệ với chúng tôi để được tư
-          vấn chi tiết và báo giá chính xác cho dự án của bạn.
+          {projectPricing.note}
         </p>
       </div>
     </section>

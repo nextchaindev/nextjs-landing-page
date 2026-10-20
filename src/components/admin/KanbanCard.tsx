@@ -29,7 +29,14 @@ export function Card({ item, isOverlay }: CardProps) {
                 } ${isOverlay ? 'cursor-grabbing shadow-xl ring-2 ring-indigo-500' : ''}`}
         >
             <div className="flex items-start justify-between">
-                <h4 className="font-medium text-gray-900">{item.name}</h4>
+                <h4 className="font-medium text-gray-900">
+                    {item.name}
+                    {item.locale && item.locale !== 'vi' && (
+                        <span className="ml-2 rounded bg-blue-50 px-1.5 py-0.5 align-middle text-[11px] font-semibold uppercase text-blue-700">
+                            {item.locale}
+                        </span>
+                    )}
+                </h4>
                 <span className="text-xs text-gray-400" suppressHydrationWarning>
                     {new Date(item.created_at).toLocaleDateString('vi-VN')}
                 </span>

@@ -2,12 +2,17 @@ import { CheckCircle2, Info } from "lucide-react"
 import ContactButton from "@/components/marketing/ContactButton"
 import Reveal from "@/components/marketing/Reveal"
 import { MOBILE_CAROUSEL, MOBILE_CAROUSEL_ITEM } from "@/components/marketing/carousel"
-import { PLANS, formatVnd } from "@/content/plans"
+import { formatPrice, getDailyPrice, getPlans } from "@/content/plans"
 import { cn } from "@/components/ui/utils"
+import { getDictionary } from "@/i18n/dictionaries"
+import type { Locale } from "@/i18n/config"
 
 /** Monthly plans for landing pages & small businesses. Pass `planIds` to show a subset. */
-export default function PricingCards({ planIds }: { planIds?: string[] }) {
-  const plans = planIds ? PLANS.filter((plan) => planIds.includes(plan.id)) : PLANS
+export default function PricingCards({ planIds, locale = "vi" }: { planIds?: string[]; locale?: Locale }) {
+  const { pricing } = getDictionary(locale)
+  const allPlans = getPlans(locale)
+  const plans = planIds ? allPlans.filter((plan) => planIds.includes(plan.id)) : allPlans
+  const price = (value: number) => formatPrice(value, locale)
 
   return (
     <>
@@ -22,21 +27,21 @@ export default function PricingCards({ planIds }: { planIds?: string[] }) {
               )}>
               {plan.popular && (
                 <span className="absolute -top-5 left-1/2 -translate-x-1/2 bg-linear-to-r from-[#FFB900] to-[#FF8904] text-white text-xs font-semibold px-6 py-2 rounded-full uppercase tracking-widest shadow-lg whitespace-nowrap">
-                  Phổ biến nhất
+                  {pricing.popular}
                 </span>
               )}
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-gray-900">Gói {plan.name}</h3>
+                <h3 className="text-2xl font-bold text-gray-900">{pricing.planTitle.replace("{name}", plan.name)}</h3>
                 <p className="mt-2 text-sm text-gray-500 font-medium">{plan.tagline}</p>
                 <p className="mt-5">
-                  <span className="text-3xl lg:text-4xl font-bold text-primary">{formatVnd(plan.monthlyPrice)}</span>
-                  <span className="text-gray-500 font-medium">/tháng</span>
+                  <span className="text-3xl lg:text-4xl font-bold text-primary">{price(plan.monthlyPrice)}</span>
+                  <span className="text-gray-500 font-medium">{pricing.perMonth}</span>
                 </p>
                 <p className="mt-1 text-sm text-gray-500">
-                  khoảng {formatVnd(Math.ceil(plan.monthlyPrice / 30 / 100) * 100)} mỗi ngày
+                  {pricing.perDay.replace("{price}", price(getDailyPrice(plan.monthlyPrice, locale)))}
                 </p>
                 <p className="mt-2 inline-block rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-gray-700">
-                  Trả theo tháng · chưa gồm VAT
+                  {pricing.terms}
                 </p>
               </div>
 
@@ -56,9 +61,9 @@ export default function PricingCards({ planIds }: { planIds?: string[] }) {
               </ul>
 
               <ContactButton
-                label={`Đăng ký gói ${plan.name}`}
+                label={pricing.register.replace("{name}", plan.name)}
                 variant={plan.popular ? "primary" : "outline"}
-                context={`gói ${plan.name} ${formatVnd(plan.monthlyPrice)}/tháng`}
+                context={pricing.interest.replace("{name}", plan.name).replace("{price}", price(plan.monthlyPrice))}
                 className="mt-8 w-full"
               />
             </article>
@@ -66,9 +71,10 @@ export default function PricingCards({ planIds }: { planIds?: string[] }) {
         ))}
       </div>
       <p className="mt-10 text-center text-sm md:text-base text-gray-600">
-        <strong className="text-gray-900">Không phí khởi tạo.</strong> Thanh toán theo tháng, không ràng buộc thời hạn tối thiểu. Giá chưa gồm VAT.
+        <strong className="text-gray-900">{pricing.noSetupFee}</strong>
+        {pricing.footerLine1}
         <br />
-        Bạn xem và duyệt thiết kế, nội dung trước khi website lên mạng.
+        {pricing.footerLine2}
       </p>
     </>
   )

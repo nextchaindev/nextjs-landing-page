@@ -1,19 +1,29 @@
 import Link from "next/link"
 import ContactButton from "@/components/marketing/ContactButton"
+import { getDictionary } from "@/i18n/dictionaries"
+import type { Locale } from "@/i18n/config"
 
 interface CtaBannerProps {
   title?: string
   desc?: string
   secondaryHref?: string
   secondaryLabel?: string
+  locale?: Locale
 }
 
 export default function CtaBanner({
-  title = "Sẵn sàng có website cho cơ sở của bạn?",
-  desc = "Gửi nhu cầu của bạn. Nextchain sẽ phản hồi trong 24 giờ làm việc để trao đổi phương án phù hợp.",
-  secondaryHref = "/bang-gia",
-  secondaryLabel = "Xem bảng giá",
+  locale = "vi",
+  title,
+  desc,
+  secondaryHref,
+  secondaryLabel,
 }: CtaBannerProps) {
+  const defaults = getDictionary(locale).ctaBanner
+  title ??= defaults.title
+  desc ??= defaults.desc
+  secondaryHref ??= defaults.secondaryHref
+  secondaryLabel ??= defaults.secondaryLabel
+
   return (
     <section className="py-16 md:py-24 px-4 md:px-6 bg-[#F9FAFB]">
       <div className="max-w-[1000px] mx-auto bg-white border border-gray-100 rounded-[32px] p-6 md:p-14 shadow-xl text-center">

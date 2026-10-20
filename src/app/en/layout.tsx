@@ -1,0 +1,25 @@
+import { Be_Vietnam_Pro } from "next/font/google"
+import "../globals.css"
+import SiteShell from "@/components/layout/SiteShell"
+import { rootMetadata, rootViewport } from "@/lib/rootMetadata"
+
+const beVietnamPro = Be_Vietnam_Pro({
+  variable: "--font-be-vietnam-pro",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+})
+
+export const metadata = rootMetadata("en")
+export const viewport = rootViewport
+
+export default function EnRootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <SiteShell locale="en" fontClassName={beVietnamPro.variable}>
+      {children}
+    </SiteShell>
+  )
+}

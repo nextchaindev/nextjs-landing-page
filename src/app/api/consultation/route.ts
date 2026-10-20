@@ -4,9 +4,13 @@ import { checkConsultationRateLimit } from '@/lib/consultationRateLimit'
 import { SITE_URL } from '@/lib/site'
 import { ATTRIBUTION_KEYS } from '@/lib/attribution'
 import { LEAD_INDUSTRIES, LEAD_WEBSITE_TYPES, pickOption } from '@/content/leadOptions'
+import { buildLeadDiscordPayload } from '@/lib/leadDiscord'
+import { parsePhoneForLocale } from '@/lib/phone'
+import { DEFAULT_LOCALE, isLocale, type Locale } from '@/i18n/config'
 
 const ATTRIBUTION_FIELDS = [...ATTRIBUTION_KEYS, 'landing_page', 'referrer', 'captured_at', 'ga_client_id'] as const
 const DUPLICATE_WINDOW_MS = 24 * 60 * 60 * 1000
+const PREFERRED_CONTACTS = ['phone', 'email', 'kakao', 'whatsapp'] as const
 
 /** Chỉ giữ các trường nguồn truy cập đã biết, dạng chuỗi ngắn. */
 function sanitizeAttribution(value: unknown): Record<string, string> | null {
@@ -45,6 +49,8 @@ export async function POST(request: Request) {
         }
         const { name, email, phone, message, recaptchaToken } = body
         const attribution = sanitizeAttribution(body.attribution)
+        const locale: Locale = typeof body.locale === 'string' && isLocale(body.locale) ? body.locale : DEFAULT_LOCALE
+        const preferredContact = pickOption(PREFERRED_CONTACTS, body.preferredContact)
         const industry = pickOption(LEAD_INDUSTRIES, body.industry)
         const websiteType = pickOption(LEAD_WEBSITE_TYPES, body.websiteType)
 
@@ -59,7 +65,7 @@ export async function POST(request: Request) {
             typeof name !== 'string' || !name.trim() || name.length > 150 ||
             (email !== undefined && typeof email !== 'string') ||
             (typeof email === 'string' && (email.length > 254 || (email.trim() !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())))) ||
-            typeof phone !== 'string' || !/^(0|\+84)[35789][0-9]{8}$/.test(phone.replace(/\s/g, '')) ||
+            !parsePhoneForLocale(phone, locale) ||
             typeof message !== 'string' || message.length > 5000
         ) {
             return NextResponse.json({ error: 'Invalid consultation details' }, { status: 400 })
@@ -101,7 +107,9 @@ export async function POST(request: Request) {
             )
         }
 
-        const normalizedPhone = phone.replace(/\s/g, '')
+        // validate ở trên đã đảm bảo parse được
+        const parsedPhone = parsePhoneForLocale(phone, locale)!
+        const normalizedPhone = parsedPhone.normalized
         try {
             if (!await checkConsultationRateLimit(normalizedPhone, request)) {
                 return NextResponse.json({ error: 'Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau 10 phút.' }, {
@@ -124,6 +132,7 @@ export async function POST(request: Request) {
             .neq('status', 'closed')
             .limit(1)
         const isDuplicate = Boolean(recent && recent.length > 0)
+        const duplicateOf: string | number | undefined = recent?.[0]?.id
 
         // 1. Insert into Supabase
         const lead = {
@@ -134,6 +143,8 @@ export async function POST(request: Request) {
             status: 'new',
         }
         const extras = {
+            locale,
+            ...(preferredContact && { preferred_contact: preferredContact }),
             ...(attribution && { attribution }),
             ...(industry && { industry }),
             ...(websiteType && { website_type: websiteType }),
@@ -143,8 +154,8 @@ export async function POST(request: Request) {
         if (!isDuplicate) {
             ;({ data, error } = await supabaseAdmin.from('consultations').insert([{ ...lead, ...extras }]).select())
             // Cột mới chưa được tạo (chưa chạy file SQL): lưu lead cơ bản thay vì làm hỏng form.
-            if (error && /attribution|industry|website_type/.test(error.message)) {
-                console.error('consultations columns missing; run supabase_attribution.sql and supabase_lead_details.sql')
+            if (error && /attribution|industry|website_type|locale|preferred_contact/.test(error.message)) {
+                console.error('consultations columns missing; run supabase_attribution.sql, supabase_lead_details.sql and supabase_lead_locale.sql')
                 ;({ data, error } = await supabaseAdmin.from('consultations').insert([lead]).select())
             }
         }
@@ -154,38 +165,27 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: error.message }, { status: 500 })
         }
 
-        // 2. Send Discord Webhook
-        const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL
+        // 2. Send Discord Webhook — lead tiếng Hàn đi kênh của đội Hàn (nếu đã cấu hình), còn lại kênh mặc định.
+        const discordWebhookUrl =
+            (locale === 'ko' && process.env.DISCORD_WEBHOOK_URL_KO) || process.env.DISCORD_WEBHOOK_URL
         if (discordWebhookUrl) {
-            const discordPayload = {
-                embeds: [
-                    {
-                        title: isDuplicate ? 'Khách gửi lại yêu cầu (trùng SĐT trong 24h)' : 'New Consultation Request',
-                        color: isDuplicate ? 16753920 : 5763719,
-                        fields: [
-                            ...(industry ? [{ name: 'Ngành', value: industry, inline: true }] : []),
-                            ...(websiteType ? [{ name: 'Cần', value: websiteType, inline: true }] : []),
-                            { name: 'Name', value: name, inline: true },
-                            { name: 'Email', value: typeof email === 'string' && email.trim() ? email.trim() : 'Không cung cấp', inline: true },
-                            { name: 'Phone', value: phone, inline: true },
-                            { name: 'Message', value: message || 'No message' },
-                            ...(attribution
-                                ? [{
-                                    name: 'Nguồn',
-                                    value: [
-                                        attribution.utm_source && `utm: ${attribution.utm_source}/${attribution.utm_medium ?? '-'}/${attribution.utm_campaign ?? '-'}`,
-                                        attribution.gclid && 'Google Ads (gclid)',
-                                        attribution.fbclid && 'Facebook (fbclid)',
-                                        attribution.ttclid && 'TikTok Ads (ttclid)',
-                                        attribution.landing_page && `vào từ ${attribution.landing_page}`,
-                                    ].filter(Boolean).join(' · ') || 'Trực tiếp',
-                                }]
-                                : []),
-                        ],
-                        timestamp: new Date().toISOString(),
-                    },
-                ],
-            }
+            const insertedId = (data as { id?: string | number }[] | null)?.[0]?.id
+            const discordPayload = buildLeadDiscordPayload(
+                {
+                    id: duplicateOf ?? insertedId,
+                    isDuplicate,
+                    locale,
+                    name,
+                    email: typeof email === 'string' ? email.trim() : '',
+                    phone: normalizedPhone,
+                    preferredContact,
+                    industry,
+                    websiteType,
+                    message,
+                    attribution,
+                },
+                request,
+            )
 
             try {
                 const webhookResponse = await fetch(discordWebhookUrl, {

@@ -20,6 +20,48 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Đa ngôn ngữ (vi / ko / en)
+
+> English version below: [Multi-language support](#multi-language-support-vi--ko--en--english-summary). Tài liệu liên quan: [`GOLIVE.md`](./GOLIVE.md), [`ANALYTICS.md`](./ANALYTICS.md), [`PRODUCT.md`](./PRODUCT.md), [`supabase_lead_locale.sql`](./supabase_lead_locale.sql) — xem bảng [Documentation](#documentation).
+
+- Tiếng Việt là mặc định, URL không có tiền tố; `/ko/...` và `/en/...` là bản dịch (mỗi ngôn ngữ một root layout, `<html lang>` tĩnh).
+- Cấu trúc: `src/i18n/` (config, từ điển UI, slug, bảng đối ứng đường dẫn), `src/content/{ko,en}/` (nội dung dịch, giá cố định theo thị trường), `src/components/pages/` (trang dùng chung cho ko/en), `src/content/pageCopy/` và `src/content/pages.ts` (chữ cố định của từng trang).
+- Bật ngôn ngữ bằng biến môi trường `NEXT_PUBLIC_ENABLED_LOCALES=vi,ko,en` (mặc định chỉ `vi`: trang `/ko`, `/en` tự `noindex`, không có trong sitemap/hreflang). Biến khác: `NEXT_PUBLIC_KAKAO_CHANNEL_URL`, `NEXT_PUBLIC_WHATSAPP_URL`, `DISCORD_WEBHOOK_URL_KO`, `NEXT_PUBLIC_LEGAL_REVIEWED_LOCALES` (xem [`GOLIVE.md`](./GOLIVE.md)).
+- Tự chuyển ngôn ngữ theo vị trí (`src/i18n/detect.ts`, chạy trong `src/proxy.ts`): lần mở trang tiếng Việt, khách ở Hàn Quốc (hoặc trình duyệt tiếng Hàn) → `/ko/...`, ngoài Việt Nam/Hàn Quốc → `/en/...` (307). Chỉ với ngôn ngữ đã bật và trang đã có bản dịch; không chuyển bot, không chuyển khỏi `/ko`, `/en`; lựa chọn ở bộ chuyển ngôn ngữ lưu cookie `NEXT_LOCALE` và luôn được ưu tiên.
+- Thêm một trang đã dịch: tạo route mỏng trong `src/app/<locale>/...`, thêm slug vào `src/i18n/slugs.ts` (nếu cần), rồi chạy `npm run build && npm run i18n:check` và `npm run seo:check` (kiểm tra hreflang hai chiều).
+- Thêm ngôn ngữ mới: `LOCALES` trong `src/i18n/config.ts`, từ điển `dictionaries/<locale>.ts`, root layout `src/app/<locale>/layout.tsx`, nội dung `content/<locale>/*`.
+
+## Multi-language support (vi / ko / en) — English summary
+
+- Vietnamese is the default and has no URL prefix. `/ko/...` (Korean) and `/en/...` (English) are translations. Each locale has its own root layout, so `<html lang>` is static and pages stay statically rendered.
+- Layout of the code:
+  - `src/i18n/` — locale config, UI dictionaries, slug maps (`slugs.ts`) and the route table (`routes.ts`) that drives the language switcher, hreflang and the sitemap
+  - `src/content/{ko,en}/` — translated content and fixed per-market prices (KRW for ko, USD for en; never converted by exchange rate)
+  - `src/content/pages.ts`, `src/content/pageCopy/` — fixed copy of each translated page
+  - `src/components/pages/` — page components shared by ko and en; `src/app/{ko,en}/` only holds thin route files
+- **Turn a language on** with `NEXT_PUBLIC_ENABLED_LOCALES=vi,ko,en` (default `vi` only). Until a locale is listed, its pages are `noindex` and excluded from the sitemap, hreflang and `llms.txt`.
+- **Location-based redirect** (`src/i18n/detect.ts`, called from `src/proxy.ts`): on a full page load of a Vietnamese URL, visitors in South Korea (or with a Korean browser) go to `/ko/...` and visitors outside Vietnam/Korea go to `/en/...` (307, country from `x-vercel-ip-country`). Only for enabled locales and pages that have a translation; bots are never redirected, `/ko` and `/en` URLs are never redirected away, and a choice made in the language switcher is stored in the `NEXT_LOCALE` cookie and always wins.
+- Other environment variables: `NEXT_PUBLIC_KAKAO_CHANNEL_URL` (ko), `NEXT_PUBLIC_WHATSAPP_URL` (en), `DISCORD_WEBHOOK_URL_KO` (Korean leads), `NEXT_PUBLIC_LEGAL_REVIEWED_LOCALES` (publishes the translated legal pages; leave unset until a lawyer has reviewed them). Details: [`GOLIVE.md`](./GOLIVE.md).
+- **Add a translated page:** create a thin route in `src/app/<locale>/...`, add its slug to `src/i18n/slugs.ts` if needed, then run `bun run build && bun run i18n:check` (fails if Vietnamese text or VND prices leak into ko/en pages) and `bun run seo:check` against a running build (checks `<html lang>` and two-way hreflang).
+- **Add a new locale:** add it to `LOCALES` in `src/i18n/config.ts`, create `dictionaries/<locale>.ts` and `src/app/<locale>/layout.tsx`, then add content under `src/content/<locale>/`.
+- Leads from translated pages store the locale (`consultations.locale`, `preferred_contact`): run [`supabase_lead_locale.sql`](./supabase_lead_locale.sql) first.
+
+## Documentation
+
+| Document | What it covers |
+| --- | --- |
+| [`GOLIVE.md`](./GOLIVE.md) | Go-live checklist: environment variables, Search Console, post-deploy checks, enabling ko/en |
+| [`ANALYTICS.md`](./ANALYTICS.md) | GA4 events and conversions, including `lead_locale` and `language_switch` |
+| [`PRODUCT.md`](./PRODUCT.md) | Audience, brand voice and tone per language (vi / ko / en), hard rules |
+| [`supabase_schema.sql`](./supabase_schema.sql) | Base `consultations` table |
+| [`supabase_lead_details.sql`](./supabase_lead_details.sql), [`supabase_attribution.sql`](./supabase_attribution.sql) | Industry / website type and traffic-source columns |
+| [`supabase_lead_locale.sql`](./supabase_lead_locale.sql) | Lead language and preferred contact method (needed for ko/en) |
+| [`supabase_consultation_rate_limit.sql`](./supabase_consultation_rate_limit.sql) | Shared rate limit for the consultation form |
+| [`scripts/seo-check.mjs`](./scripts/seo-check.mjs) | `bun run seo:check` — technical SEO and hreflang checks on a running site |
+| [`scripts/i18n-check.mjs`](./scripts/i18n-check.mjs) | `bun run i18n:check` — checks the build for untranslated Vietnamese text |
+| [`scripts/backlinks-check.mjs`](./scripts/backlinks-check.mjs) | `bun run backlinks:check` |
+| Issue [#20](https://github.com/nextchaindev/nextjs-landing-page/issues/20) · PR [#30](https://github.com/nextchaindev/nextjs-landing-page/pull/30) | Multi-language plan, decisions and implementation notes |
+
 ## Form tư vấn và chống spam
 
 Form yêu cầu số điện thoại, email tùy chọn. Honeypot và reCAPTCHA v2 được xác minh ở API trước khi lưu lead. Giới hạn chia sẻ giữa các instance qua Supabase: tối đa 3 yêu cầu mỗi số điện thoại và 10 yêu cầu mỗi IP trong 10 phút. CAPTCHA và giới hạn tần suất chỉ giảm spam, không chặn tuyệt đối bot hoặc lead không hợp lệ.
