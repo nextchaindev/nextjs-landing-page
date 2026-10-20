@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
 import { KanbanBoard } from "@/components/admin/KanbanBoard"
-import { logout } from "../actions"
+import AdminHeader from "@/components/admin/AdminHeader"
 
 export const revalidate = 0
 
@@ -25,20 +25,7 @@ export default async function AdminConsultationsPage() {
 
     return (
         <div className="flex h-screen flex-col bg-gray-50">
-            <header className="flex items-center justify-between border-b bg-white px-6 py-4 shadow-sm">
-                <h1 className="text-2xl font-bold text-gray-900">Consultation Board</h1>
-                <div className="flex items-center gap-4">
-                    <span className="text-sm text-gray-500">{user.email}</span>
-                    <a href="/admin/users" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                        Manage Users
-                    </a>
-                    <form action={logout}>
-                        <button type="submit" className="text-sm font-medium text-red-600 hover:text-red-500">
-                            Logout
-                        </button>
-                    </form>
-                </div>
-            </header>
+            <AdminHeader active="/admin/consultations" email={user.email} />
 
             <main className="flex-1 overflow-hidden p-6">
                 <KanbanBoard initialData={consultations || []} />

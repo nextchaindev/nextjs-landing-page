@@ -2,7 +2,8 @@ import { BlogPostPage, blogPostMetadata, blogStaticParams } from "@/components/p
 
 type Props = { params: Promise<{ slug: string }> }
 
-export const dynamicParams = false
+// Bài mới đăng sau lần build vẫn mở được (dynamicParams mặc định true), rồi được cache như trang tĩnh.
+export const revalidate = 3600
 
 export function generateStaticParams() {
   return blogStaticParams("en")

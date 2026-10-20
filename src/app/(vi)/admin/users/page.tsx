@@ -12,6 +12,7 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import AdminHeader from '@/components/admin/AdminHeader'
 
 export const revalidate = 0
 
@@ -37,6 +38,8 @@ export default async function AdminUsersPage() {
     const { data: { users }, error } = await supabaseAdmin.auth.admin.listUsers()
 
     return (
+        <>
+        <AdminHeader active="/admin/users" email={user.email} />
         <div className="container mx-auto py-10">
             <h1 className="text-3xl font-bold mb-6">Admin User Management</h1>
 
@@ -94,5 +97,6 @@ export default async function AdminUsersPage() {
                 </Card>
             </div>
         </div>
+        </>
     )
 }

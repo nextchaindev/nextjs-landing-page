@@ -1,5 +1,8 @@
 import type { NextConfig } from "next"
 
+// Ảnh bìa blog upload ở /admin/blog nằm trong bucket "blog" của Supabase Storage.
+const supabaseHost = process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname : undefined
+
 const nextConfig: NextConfig = {
   turbopack: { root: process.cwd() },
 
@@ -14,6 +17,9 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
+    remotePatterns: supabaseHost
+      ? [{ protocol: "https", hostname: supabaseHost, pathname: "/storage/v1/object/public/blog/**" }]
+      : [],
   },
 
   // Đổi hoặc xóa slug của trang đã public: thêm một dòng ở đây (308 vĩnh viễn),

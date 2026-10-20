@@ -62,6 +62,13 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 | [`scripts/backlinks-check.mjs`](./scripts/backlinks-check.mjs) | `bun run backlinks:check` |
 | Issue [#20](https://github.com/nextchaindev/nextjs-landing-page/issues/20) · PR [#30](https://github.com/nextchaindev/nextjs-landing-page/pull/30) | Multi-language plan, decisions and implementation notes |
 
+## Blog (Supabase + /admin/blog)
+
+- Bài viết lưu trong bảng `blog_posts` (Supabase), soạn ở `/admin/blog`: bài mới, bản dịch ko/en (nút "+ Translate"), nháp, hẹn giờ đăng (ngày đăng ở tương lai), xem trước, ảnh bìa upload lên Storage (bucket `blog`, tự nén WebP ≤1600px).
+- Cài đặt: chạy `supabase_blog.sql` rồi `supabase_blog_seed.sql` trong Supabase SQL Editor trước khi deploy. Thiếu bảng thì `next build` dừng (không deploy một blog trống).
+- Trang blog vẫn là trang tĩnh: dữ liệu đọc qua `unstable_cache` (tag `blog`, `src/lib/blog.ts`); lưu/xóa bài ở admin gọi `updateTag("blog")` nên trang bài, danh sách, trang chủ, trang giải pháp và sitemap cập nhật ngay; ngoài ra tự làm mới mỗi giờ.
+- Bản dịch của một bài gom theo `translation_key`: hreflang, sitemap và bộ chuyển ngôn ngữ tự trỏ đúng bản dịch. "Trang liên quan" ghi theo đường dẫn tiếng Việt, tự đổi sang ngôn ngữ của bài.
+
 ## Form tư vấn và chống spam
 
 Form yêu cầu số điện thoại, email tùy chọn. Honeypot và reCAPTCHA v2 được xác minh ở API trước khi lưu lead. Giới hạn chia sẻ giữa các instance qua Supabase: tối đa 3 yêu cầu mỗi số điện thoại và 10 yêu cầu mỗi IP trong 10 phút. CAPTCHA và giới hạn tần suất chỉ giảm spam, không chặn tuyệt đối bot hoặc lead không hợp lệ.

@@ -6,6 +6,7 @@ Cập nhật: 2026-10-14. Chạy theo thứ tự; tick xong mục nào ghi ngày
 
 ## 1. Trước deploy
 
+- [ ] Blog lưu trong Supabase: chạy `supabase_blog.sql` rồi `supabase_blog_seed.sql` (chuyển 8 bài + bản ko/en hiện có) trong SQL Editor **trước khi deploy** — thiếu bảng thì build dừng có chủ ý. Kiểm tra Authentication → Email: tắt "Allow new users to sign up" (mọi tài khoản đăng nhập đều sửa được blog). Soạn bài ở `/admin/blog`.
 - [ ] Đặt biến môi trường production (hosting/Vercel):
   - `RECAPTCHA_SECRET_KEY`, `NEXT_PUBLIC_RECAPTCHA_SITE_KEY`
   - Supabase service key (đang dùng cho lưu lead)
