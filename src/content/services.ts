@@ -42,6 +42,8 @@ export interface ServiceDetail {
   pricing: ServicePricing
   faqs: Faq[]
   related: { href: string; label: string }[]
+  /** Slug mẫu website (content/templates.ts) có bản demo để khách xem thử. */
+  demoTemplates?: string[]
 }
 
 export const SERVICE_DETAILS: ServiceDetail[] = [
@@ -165,6 +167,7 @@ export const SERVICE_DETAILS: ServiceDetail[] = [
       { href: "/blog/landing-page-khac-website-doanh-nghiep", label: "Landing page hay website doanh nghiệp?" },
       { href: "/dich-vu/quan-tri-website-theo-thang", label: "Quản trị website theo tháng" },
     ],
+    demoTemplates: ["logistics", "ke-toan-thue", "sua-ong-nuoc"],
   },
   {
     slug: "thiet-ke-website-ban-hang",
@@ -385,7 +388,7 @@ export function getServiceBySlug(slug: string) {
 }
 
 /** Phần chữ của một dịch vụ ở ngôn ngữ khác (ảnh, icon, màu, cách tính giá dùng chung với bản gốc). Khóa: slug tiếng Việt. */
-export type ServiceText = Omit<ServiceDetail, "icon" | "accent" | "image" | "pricing">
+export type ServiceText = Omit<ServiceDetail, "icon" | "accent" | "image" | "pricing" | "demoTemplates">
 export type ServiceTexts = Record<string, ServiceText>
 
 const SERVICE_TEXTS: Record<NonDefaultLocale, ServiceTexts> = { ko: KO_SERVICE_TEXTS, en: EN_SERVICE_TEXTS }

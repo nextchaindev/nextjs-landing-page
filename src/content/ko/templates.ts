@@ -135,4 +135,22 @@ export const KO_TEMPLATE_TEXTS: TemplateTexts = {
     ],
     imageAlt: "교육 센터 웹사이트 템플릿",
   },
+  logistics: {
+    name: "물류·수출입",
+    style: "클래식하고 신뢰감 있는 느낌",
+    description: "통관, 해상·항공 운송 서비스, 항목별로 나눈 참고 요금, 화물 정보 접수 폼을 갖춘 구성입니다.",
+    imageAlt: "물류·수출입 회사 웹사이트 템플릿",
+  },
+  "ke-toan-thue": {
+    name: "세무·회계 사무소",
+    style: "전문적이고 이해하기 쉬운 구성",
+    description: "3단계 진행 방식, 회계 담당 팀, 세금 신고·기장 요금, 상담 신청 폼을 갖춘 구성입니다.",
+    imageAlt: "세무·회계 사무소 웹사이트 템플릿",
+  },
+  "sua-ong-nuoc": {
+    name: "배관 수리·막힘 해결",
+    style: "명확한 가격, 빠른 전화 연결",
+    description: "출장 수리 서비스, 작업 전 정액 견적, 서비스 지역, 할인 혜택, 견적 요청 폼을 갖춘 구성입니다.",
+    imageAlt: "배관 수리 서비스 웹사이트 템플릿",
+  },
 }

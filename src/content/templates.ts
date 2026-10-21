@@ -9,6 +9,9 @@ import imageDental from "@/assets/stock/dental.jpg"
 import imageYoga from "@/assets/stock/yoga.jpg"
 import imageFashion from "@/assets/stock/fashion.jpg"
 import imageEcommerce from "@/assets/stock/ecommerce.jpg"
+import imageLogistics from "@/assets/stock/logistics.jpg"
+import imageAccounting from "@/assets/stock/accounting.jpg"
+import imagePlumbing from "@/assets/stock/plumbing.jpg"
 import imageRestaurant from "@/assets/project-1.png"
 import imageEducation from "@/assets/project-3.png"
 import imageRealEstate from "@/assets/project-4.png"
@@ -244,6 +247,36 @@ export const TEMPLATES: Template[] = [
     industrySlug: "landing-page-khoa-hoc",
     demoUrl: "https://api-portal.nextchain.site/preview/ejbovui6fbkjpetrmg84/v/1?owner=55c2085ac65f4c01979fbfe9266629cc",
   },
+  {
+    slug: "logistics",
+    name: "Logistics & xuất nhập khẩu",
+    category: "doanh-nghiep",
+    style: "Cổ điển, đáng tin cậy",
+    description: "Dịch vụ hải quan, vận chuyển đường biển và hàng không, phí tham khảo ghi rõ từng khoản và form gửi thông tin lô hàng.",
+    image: imageLogistics,
+    imageAlt: "Mẫu website công ty logistics xuất nhập khẩu",
+    demoUrl: "https://api-portal.nextchain.site/preview/hdahbv82j7r6vvr62dak/v/1?owner=cb31926fc67a458c84afc958febd1280",
+  },
+  {
+    slug: "ke-toan-thue",
+    name: "Kế toán & dịch vụ thuế",
+    category: "doanh-nghiep",
+    style: "Chuyên nghiệp, dễ hiểu",
+    description: "Quy trình làm việc 3 bước, đội ngũ kế toán, bảng phí khai thuế và sổ sách, form đặt lịch tư vấn.",
+    image: imageAccounting,
+    imageAlt: "Mẫu website văn phòng kế toán thuế",
+    demoUrl: "https://api-portal.nextchain.site/preview/iuokavtkamgujwvmv2h6/v/1?owner=068a0d974cc64ca7a73de79bb8725ee4",
+  },
+  {
+    slug: "sua-ong-nuoc",
+    name: "Sửa ống nước & thông tắc",
+    category: "doanh-nghiep",
+    style: "Rõ giá, gọi nhanh",
+    description: "Dịch vụ sửa chữa tại nhà, báo giá trọn gói trước khi làm, khu vực phục vụ, ưu đãi và form yêu cầu báo giá.",
+    image: imagePlumbing,
+    imageAlt: "Mẫu website dịch vụ sửa ống nước",
+    demoUrl: "https://api-portal.nextchain.site/preview/28ancrwym8wa9nr3zv2u/v/1?owner=d7f794584aa04758bd185b7c719acece",
+  },
 ]
 
 export function getTemplate(slug: string) {
@@ -291,11 +324,21 @@ export type TemplateTexts = Record<string, TemplateText>
 
 const TEMPLATE_TEXTS: Record<NonDefaultLocale, TemplateTexts> = { ko: KO_TEMPLATE_TEXTS, en: EN_TEMPLATE_TEXTS }
 
-export function getTemplates(locale: Locale = "vi"): Template[] {
-  if (locale === "vi") return TEMPLATES
-  const texts = TEMPLATE_TEXTS[locale]
+function localizeTemplate(base: Template, locale: Locale): Template | undefined {
+  if (locale === "vi") return base
+  const text = TEMPLATE_TEXTS[locale][base.slug]
   // Slug trang chi tiết dùng slug tiếng Anh (i18n/slugs.ts); khóa nội dung vẫn là slug tiếng Việt.
-  return TEMPLATES.flatMap((base) =>
-    texts[base.slug] ? [{ ...base, ...texts[base.slug], slug: TEMPLATE_SLUGS[base.slug] ?? base.slug }] : [],
-  )
+  return text && { ...base, ...text, slug: TEMPLATE_SLUGS[base.slug] ?? base.slug }
+}
+
+export function getTemplates(locale: Locale = "vi"): Template[] {
+  return TEMPLATES.flatMap((base) => localizeTemplate(base, locale) ?? [])
+}
+
+/** Mẫu có bản demo, theo slug tiếng Việt và đúng thứ tự truyền vào. */
+export function getDemoTemplates(locale: Locale, slugs: string[]): Template[] {
+  return slugs.flatMap((slug) => {
+    const base = getTemplate(slug)
+    return (base?.demoUrl && localizeTemplate(base, locale)) || []
+  })
 }

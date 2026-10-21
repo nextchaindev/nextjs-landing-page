@@ -135,4 +135,22 @@ export const EN_TEMPLATE_TEXTS: TemplateTexts = {
     ],
     imageAlt: "Training center website template",
   },
+  logistics: {
+    name: "Logistics & import-export",
+    style: "Classic and trustworthy",
+    description: "Customs, sea and air freight services, reference fees itemized line by line, and a shipment details form.",
+    imageAlt: "Logistics and import-export company website template",
+  },
+  "ke-toan-thue": {
+    name: "Tax & accounting firm",
+    style: "Professional and plain-spoken",
+    description: "A 3-step process, the accounting team, fees for tax returns and bookkeeping, and a consultation request form.",
+    imageAlt: "Tax and accounting firm website template",
+  },
+  "sua-ong-nuoc": {
+    name: "Plumbing & drain service",
+    style: "Clear prices, quick calls",
+    description: "Home repair services, flat-rate quotes before work starts, the service area, a current offer and an estimate request form.",
+    imageAlt: "Plumbing service website template",
+  },
 }
