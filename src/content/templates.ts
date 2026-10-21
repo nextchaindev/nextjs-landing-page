@@ -1,5 +1,4 @@
 import type { StaticImageData } from "next/image"
-import { getIndustry } from "@/content/industries"
 import imageSpa from "@/assets/stock/spa.jpg"
 import imageSalon from "@/assets/stock/salon.jpg"
 import imageHomestay from "@/assets/stock/homestay.jpg"
@@ -25,7 +24,8 @@ import { EN_TEMPLATE_TEXTS } from "./en/templates"
  * Mẫu website tham khảo. Đây không phải danh sách giới hạn — mỗi website
  * được thiết kế riêng; mẫu chỉ giúp khách hình dung bố cục theo ngành.
  *
- * - `industrySlug`: có trang giải pháp riêng → có trang chi tiết mẫu.
+ * - Có trang chi tiết mẫu khi có `industrySlug` (trang giải pháp riêng) hoặc `highlights`.
+ * - `serviceSlug`: mẫu không có trang giải pháp thì trang chi tiết trỏ sang trang dịch vụ này.
  * - `demoUrl`: URL bản demo BÊN NGOÀI (web do Nextchain chuẩn bị sẵn,
  *   tách khỏi site marketing). Chưa có → nút "Tư vấn bố cục".
  */
@@ -51,6 +51,8 @@ export interface Template {
   image: StaticImageData
   imageAlt: string
   industrySlug?: string
+  /** Slug dịch vụ tiếng Việt (content/services.ts), dùng khi không có `industrySlug`. */
+  serviceSlug?: string
   /** URL demo bên ngoài (https://...). Bỏ trống khi chưa có bản demo. */
   demoUrl?: string
 }
@@ -253,8 +255,17 @@ export const TEMPLATES: Template[] = [
     category: "doanh-nghiep",
     style: "Cổ điển, đáng tin cậy",
     description: "Dịch vụ hải quan, vận chuyển đường biển và hàng không, phí tham khảo ghi rõ từng khoản và form gửi thông tin lô hàng.",
+    highlights: [
+      "Hero nêu rõ giải pháp xuất nhập khẩu, nút “Nhận báo giá” và số điện thoại trên header",
+      "Sáu dịch vụ: hải quan, đường biển FCL/LCL, hàng không, ủy thác, C/O, kho bãi",
+      "Quy trình 3 bước từ gửi thông tin lô hàng đến thông quan và giao kho",
+      "Bảng phí tham khảo theo tờ khai, theo lô và theo % giá trị lô hàng",
+      "Lý do chọn: báo giá từng khoản, kiểm tra mã HS trước khi khai, một người phụ trách lô hàng",
+      "Hỏi đáp và form gửi thông tin lô hàng để nhận báo giá",
+    ],
     image: imageLogistics,
     imageAlt: "Mẫu website công ty logistics xuất nhập khẩu",
+    serviceSlug: "thiet-ke-website-doanh-nghiep",
     demoUrl: "https://api-portal.nextchain.site/preview/hdahbv82j7r6vvr62dak/v/1?owner=cb31926fc67a458c84afc958febd1280",
   },
   {
@@ -263,8 +274,17 @@ export const TEMPLATES: Template[] = [
     category: "doanh-nghiep",
     style: "Chuyên nghiệp, dễ hiểu",
     description: "Quy trình làm việc 3 bước, đội ngũ kế toán, bảng phí khai thuế và sổ sách, form đặt lịch tư vấn.",
+    highlights: [
+      "Hero nêu dịch vụ khai thuế và ghi sổ cho cá nhân, doanh nghiệp nhỏ kèm nút đặt lịch tư vấn",
+      "Bốn lý do chọn: giải thích dễ hiểu, danh sách giấy tờ rõ ràng, lịch hẹn linh hoạt, văn phòng gần khách",
+      "Bảng so sánh làm cùng kế toán với tự khai bằng phần mềm",
+      "Quy trình 3 bước: gửi chứng từ, gọi rà soát và báo giá, nộp hồ sơ và nhắc hạn năm sau",
+      "Giới thiệu đội ngũ kế toán kèm chứng chỉ và kinh nghiệm",
+      "Bảng phí khai thuế, ghi sổ hằng tháng và form đặt lịch tư vấn có chọn dịch vụ cần làm",
+    ],
     image: imageAccounting,
     imageAlt: "Mẫu website văn phòng kế toán thuế",
+    serviceSlug: "thiet-ke-website-doanh-nghiep",
     demoUrl: "https://api-portal.nextchain.site/preview/iuokavtkamgujwvmv2h6/v/1?owner=068a0d974cc64ca7a73de79bb8725ee4",
   },
   {
@@ -273,8 +293,17 @@ export const TEMPLATES: Template[] = [
     category: "doanh-nghiep",
     style: "Rõ giá, gọi nhanh",
     description: "Dịch vụ sửa chữa tại nhà, báo giá trọn gói trước khi làm, khu vực phục vụ, ưu đãi và form yêu cầu báo giá.",
+    highlights: [
+      "Thanh báo dịch vụ khẩn cấp 24/7 và nút gọi luôn ở đầu trang",
+      "Ưu đãi thông tắc hiển thị ngay sau phần hero",
+      "Sáu dịch vụ có ảnh: sửa rò rỉ, thông tắc, máy nước nóng, thay ống, sự cố khẩn cấp, thiết bị vệ sinh",
+      "Ca sửa chữa mẫu kể theo tình huống, cách xử lý và kết quả",
+      "Khu vực phục vụ và quy trình 3 bước, báo giá trọn gói trước khi làm",
+      "Bảng giá trọn gói từng hạng mục và form yêu cầu báo giá có địa chỉ sửa chữa",
+    ],
     image: imagePlumbing,
     imageAlt: "Mẫu website dịch vụ sửa ống nước",
+    serviceSlug: "thiet-ke-website-doanh-nghiep",
     demoUrl: "https://api-portal.nextchain.site/preview/28ancrwym8wa9nr3zv2u/v/1?owner=d7f794584aa04758bd185b7c719acece",
   },
 ]
@@ -283,19 +312,12 @@ export function getTemplate(slug: string) {
   return TEMPLATES.find((template) => template.slug === slug)
 }
 
-/** Templates that have their own detail page (linked to an industry solution page). */
+export function hasTemplateDetail(template: Template) {
+  return Boolean(template.industrySlug || template.highlights)
+}
+
 export function templatesWithDetail() {
-  return TEMPLATES.filter((template) => template.industrySlug)
-}
-
-export function isTemplateIndexable(template: Template) {
-  return Boolean(template.industrySlug)
-}
-
-export function templateIndustry(template: Template) {
-  const industry = template.industrySlug ? getIndustry(template.industrySlug) : undefined
-  if (!industry) throw new Error(`Template ${template.slug} has no industry page`)
-  return industry
+  return TEMPLATES.filter(hasTemplateDetail)
 }
 
 /** Tên nhóm mẫu website ở các ngôn ngữ khác. */

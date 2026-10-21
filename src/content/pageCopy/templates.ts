@@ -35,6 +35,8 @@ export interface TemplatesCopy {
     solutionPageStrong: string
     solutionPageRest: string
     solutionLink: string
+    servicePageStrong: string
+    serviceLink: string
     solutionMid: string
     pricingLink: string
     solutionEnd: string
@@ -83,6 +85,8 @@ export const TEMPLATES_COPY: Record<NonDefaultLocale, TemplatesCopy> = {
       solutionPageStrong: "솔루션 페이지는",
       solutionPageRest: " 구매 전 궁금한 점에 답합니다. 어떤 플랜이 맞는지, 비용은 얼마인지, 넥스트체인이 무엇을 하고 고객님이 무엇을 확인하는지 알려 드립니다. ",
       solutionLink: "{name} 솔루션",
+      servicePageStrong: "서비스 페이지는",
+      serviceLink: "{name} 서비스",
       solutionMid: " 또는 ",
       pricingLink: "요금 안내",
       solutionEnd: "를 확인해 보세요.",
@@ -129,6 +133,8 @@ export const TEMPLATES_COPY: Record<NonDefaultLocale, TemplatesCopy> = {
       solutionPageStrong: "The solution page",
       solutionPageRest: " answers the buying questions: which plan fits, what it costs, what Nextchain does and what you approve. See ",
       solutionLink: "the {name} solution",
+      servicePageStrong: "The service page",
+      serviceLink: "the {name} service",
       solutionMid: " or ",
       pricingLink: "pricing",
       solutionEnd: ".",

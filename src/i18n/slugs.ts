@@ -30,9 +30,8 @@ export const INDUSTRY_SLUGS: Record<string, string> = {
 }
 
 /**
- * /mau-website/<slug> → /<locale>/templates/<slug>. Chỉ những mẫu có trang chi tiết (có `industrySlug` trong
- * content/templates.ts) — mẫu limousine, yoga, thời trang, mỹ phẩm, logistics, kế toán, sửa ống nước chỉ hiện trong
- * thư viện, không có trang riêng.
+ * /mau-website/<slug> → /<locale>/templates/<slug>. Chỉ những mẫu có trang chi tiết (hasTemplateDetail trong
+ * content/templates.ts) — mẫu limousine, yoga, thời trang, mỹ phẩm chỉ hiện trong thư viện, không có trang riêng.
  */
 export const TEMPLATE_SLUGS: Record<string, string> = {
   spa: "spa",
@@ -44,6 +43,9 @@ export const TEMPLATE_SLUGS: Record<string, string> = {
   "nha-khoa": "dental",
   "bat-dong-san": "real-estate",
   "giao-duc": "education",
+  logistics: "logistics",
+  "ke-toan-thue": "tax-accounting",
+  "sua-ong-nuoc": "plumbing",
 }
 
 /** Dự án giữ nguyên slug (tên thương hiệu): /du-an/<slug> → /<locale>/projects/<slug> */

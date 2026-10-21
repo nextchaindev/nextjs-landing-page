@@ -6,7 +6,13 @@ import Link from "next/link"
 import { AnimatePresence, motion } from "motion/react"
 import { ArrowRight, Eye } from "lucide-react"
 import { useModal } from "@/context/ModalContext"
-import { getTemplates, TEMPLATE_CATEGORIES, TEMPLATE_CATEGORY_LABELS, type TemplateCategory } from "@/content/templates"
+import {
+  getTemplates,
+  hasTemplateDetail,
+  TEMPLATE_CATEGORIES,
+  TEMPLATE_CATEGORY_LABELS,
+  type TemplateCategory,
+} from "@/content/templates"
 import { CARD_TEXT } from "@/content/cardText"
 import { sectionPath } from "@/i18n/paths"
 import { useLocale } from "@/i18n/LocaleProvider"
@@ -89,7 +95,7 @@ export default function TemplateGallery({ limit, carousel }: { limit?: number; c
                 <p className="mt-1 text-sm text-primary font-medium">{template.style}</p>
                 <p className="mt-3 text-sm text-gray-600 leading-relaxed flex-1">{template.description}</p>
                 <div className="mt-5 flex items-center justify-between gap-3">
-                  {template.industrySlug ? (
+                  {hasTemplateDetail(template) ? (
                     <Link
                       href={sectionPath("templates", locale, template.slug)}
                       className="inline-flex items-center gap-2 text-sm font-semibold text-primary after:absolute after:inset-0">
