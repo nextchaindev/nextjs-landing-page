@@ -20,6 +20,8 @@ export interface ServicesCopy {
     seePricing: string
     summary: string
     whyTitle: string
+    demoTitle: string
+    demoDesc: string
     subscriptionTitle: string
     subscriptionDesc: string
     comparePlans: string
@@ -76,6 +78,8 @@ export const SERVICES_COPY: Record<NonDefaultLocale, ServicesCopy> = {
       seePricing: "요금 보기",
       summary: "요약",
       whyTitle: "넥스트체인의 {name} 서비스가 좋은 이유",
+      demoTitle: "데모 직접 보기",
+      demoDesc: "넥스트체인이 미리 만든 샘플 웹사이트입니다. 휴대폰이나 PC에서 열어 레이아웃, 서비스 페이지, 문의 폼을 확인해 보세요.",
       subscriptionTitle: "월 구독 요금",
       subscriptionDesc:
         "초기 제작비가 없습니다. 디자인, 호스팅, SSL, 콘텐츠 수정이 모두 포함된 금액입니다. 넥스트체인의 무료 주소를 쓰거나 보유하신 도메인을 연결하실 수 있습니다.",
@@ -153,6 +157,8 @@ export const SERVICES_COPY: Record<NonDefaultLocale, ServicesCopy> = {
       seePricing: "See pricing",
       summary: "Summary",
       whyTitle: "Why choose Nextchain's {name} service?",
+      demoTitle: "See a live demo",
+      demoDesc: "Sample websites built by Nextchain. Open one on your phone or computer to see the layout, service pages and contact form.",
       subscriptionTitle: "Monthly plan pricing",
       subscriptionDesc:
         "No setup fee. The price includes design, hosting, SSL and content updates. Use Nextchain's free address or connect your own domain.",

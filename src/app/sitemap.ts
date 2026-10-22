@@ -2,7 +2,7 @@ import { MetadataRoute } from "next"
 import { absoluteUrl } from "@/lib/site"
 import { INDUSTRIES } from "@/content/industries"
 import { SERVICE_DETAILS } from "@/content/services"
-import { TEMPLATES, isTemplateIndexable } from "@/content/templates"
+import { templatesWithDetail } from "@/content/templates"
 import { LEGAL_UPDATED_AT } from "@/content/legal"
 import { PROJECTS } from "@/content/projects"
 import { ENABLED_LOCALES, LOCALES, localizePath, type NonDefaultLocale } from "@/i18n/config"
@@ -15,7 +15,7 @@ import { getAllPublishedPosts, postAlternates } from "@/lib/blog"
  * Bump only when page content actually changes — Google ignores lastmod
  * values that move on every deploy.
  */
-const CONTENT_UPDATED_AT = "2026-10-15"
+const CONTENT_UPDATED_AT = "2026-10-21"
 
 const STATIC_PATHS = [
   "/",
@@ -72,7 +72,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...SERVICE_DETAILS.map((service) => entry(`/dich-vu/${service.slug}`, CONTENT_UPDATED_AT)),
     ...INDUSTRIES.map((industry) => entry(`/giai-phap/${industry.slug}`, CONTENT_UPDATED_AT)),
     ...PROJECTS.map((project) => entry(`/du-an/${project.slug}`, CONTENT_UPDATED_AT)),
-    ...TEMPLATES.filter(isTemplateIndexable).map((template) =>
+    ...templatesWithDetail().map((template) =>
       entry(`/mau-website/${template.slug}`, CONTENT_UPDATED_AT),
     ),
     ...(viPosts.length > 0

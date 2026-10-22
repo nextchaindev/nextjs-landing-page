@@ -7,6 +7,7 @@ import Reveal from "@/components/marketing/Reveal"
 import PricingCards from "@/components/marketing/PricingCards"
 import ProjectPackages from "@/components/marketing/ProjectPackages"
 import ProcessList from "@/components/marketing/ProcessList"
+import DemoCards from "@/components/marketing/DemoCards"
 import FaqSection from "@/components/marketing/FaqSection"
 import CtaBanner from "@/components/marketing/CtaBanner"
 import ContactButton from "@/components/marketing/ContactButton"
@@ -126,6 +127,14 @@ export default async function ServicePage({ params }: PageProps<"/dich-vu/[slug]
           ))}
         </div>
       </Section>
+
+      {detail.demoTemplates && (
+        <Section
+          title="Xem bản demo thực tế"
+          desc="Website mẫu do Nextchain dựng sẵn. Mở trên điện thoại hoặc máy tính để xem bố cục, trang dịch vụ và form liên hệ.">
+          <DemoCards slugs={detail.demoTemplates} />
+        </Section>
+      )}
 
       {detail.pricing.model === "subscription" ? (
         <Section

@@ -7,11 +7,13 @@ import TemplateGallery from "@/components/marketing/TemplateGallery"
 import CtaBanner from "@/components/marketing/CtaBanner"
 import ContactButton from "@/components/marketing/ContactButton"
 import { pageMetadata } from "@/lib/seo"
-import { getTemplates } from "@/content/templates"
+import { getTemplates, hasTemplateDetail } from "@/content/templates"
 import { getIndustryFor } from "@/content/industries"
+import { getServiceBySlugFor } from "@/content/services"
 import { TEMPLATES_COPY } from "@/content/pageCopy/templates"
 import { sectionPath } from "@/i18n/paths"
 import { localizeHref } from "@/i18n/routes"
+import { SERVICE_SLUGS } from "@/i18n/slugs"
 import type { NonDefaultLocale } from "@/i18n/config"
 
 export function templatesIndexMetadata(locale: NonDefaultLocale) {
@@ -76,16 +78,15 @@ export function TemplatesIndexPage({ locale }: { locale: NonDefaultLocale }) {
   )
 }
 
-/** Chỉ mẫu có trang giải pháp riêng mới có trang chi tiết (giống bản tiếng Việt). */
 export function templateStaticParams(locale: NonDefaultLocale) {
   return getTemplates(locale)
-    .filter((template) => template.industrySlug)
+    .filter(hasTemplateDetail)
     .map((template) => ({ slug: template.slug }))
 }
 
 function findTemplate(locale: NonDefaultLocale, slug: string) {
   const template = getTemplates(locale).find((t) => t.slug === slug)
-  return template?.industrySlug ? template : undefined
+  return template && hasTemplateDetail(template) ? template : undefined
 }
 
 export function templateDetailMetadata(locale: NonDefaultLocale, slug: string) {
@@ -106,8 +107,10 @@ export function TemplateDetailPage({ locale, slug }: { locale: NonDefaultLocale;
   const copy = TEMPLATES_COPY[locale].detail
   const path = sectionPath("templates", locale, template.slug)
 
-  // industrySlug là slug tiếng Việt của giải pháp ngành; tìm bản dịch tương ứng để lấy tên/đường dẫn.
-  const industry = findIndustryForTemplate(locale, template.industrySlug!)
+  // industrySlug/serviceSlug là slug tiếng Việt; tìm bản dịch tương ứng để lấy tên/đường dẫn.
+  const industry = template.industrySlug ? findIndustryForTemplate(locale, template.industrySlug) : undefined
+  const service =
+    !industry && template.serviceSlug ? getServiceBySlugFor(locale, SERVICE_SLUGS[template.serviceSlug]) : undefined
   const name = template.name.toLowerCase()
 
   return (
@@ -155,19 +158,27 @@ export function TemplateDetailPage({ locale, slug }: { locale: NonDefaultLocale;
           <p>
             <strong className="text-gray-900">{copy.thisPageStrong}</strong>
             {copy.thisPageRest}
-            {template.demoUrl && industry && (
+            {template.demoUrl && (
               <>
                 {copy.demoBefore}
                 <a href={template.demoUrl} target="_blank" rel="noopener" className="text-primary underline">
-                  {copy.demoLink.replace("{short}", industry.shortName.toLowerCase())}
+                  {copy.demoLink.replace("{short}", (industry?.shortName ?? template.name).toLowerCase())}
                 </a>
                 {copy.demoAfter}
               </>
             )}
           </p>
           <p>
-            <strong className="text-gray-900">{copy.solutionPageStrong}</strong>
+            <strong className="text-gray-900">{industry ? copy.solutionPageStrong : copy.servicePageStrong}</strong>
             {copy.solutionPageRest}
+            {service && (
+              <>
+                <Link href={sectionPath("services", locale, service.slug)} className="text-primary underline">
+                  {copy.serviceLink.replace("{name}", service.name.toLowerCase())}
+                </Link>
+                {copy.solutionMid}
+              </>
+            )}
             {industry && (
               <>
                 <Link href={sectionPath("solutions", locale, industry.slug)} className="text-primary underline">

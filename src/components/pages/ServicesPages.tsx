@@ -8,6 +8,7 @@ import IndustryCards from "@/components/marketing/IndustryCards"
 import PricingCards from "@/components/marketing/PricingCards"
 import ProjectPackages from "@/components/marketing/ProjectPackages"
 import ProcessList from "@/components/marketing/ProcessList"
+import DemoCards from "@/components/marketing/DemoCards"
 import FaqSection from "@/components/marketing/FaqSection"
 import CtaBanner from "@/components/marketing/CtaBanner"
 import ContactButton from "@/components/marketing/ContactButton"
@@ -189,6 +190,12 @@ export function ServiceDetailPage({ locale, slug }: { locale: NonDefaultLocale; 
           ))}
         </div>
       </Section>
+
+      {detail.demoTemplates && (
+        <Section title={copy.demoTitle} desc={copy.demoDesc}>
+          <DemoCards slugs={detail.demoTemplates} locale={locale} />
+        </Section>
+      )}
 
       {pricing.model === "subscription" ? (
         <Section id="bang-gia" title={copy.subscriptionTitle} desc={copy.subscriptionDesc} muted>

@@ -6,12 +6,9 @@ import Section from "@/components/marketing/Section"
 import CtaBanner from "@/components/marketing/CtaBanner"
 import ContactButton from "@/components/marketing/ContactButton"
 import { pageMetadata } from "@/lib/seo"
-import {
-  getTemplate,
-  templatesWithDetail,
-  isTemplateIndexable,
-  templateIndustry,
-} from "@/content/templates"
+import { getTemplate, hasTemplateDetail, templatesWithDetail } from "@/content/templates"
+import { getIndustry } from "@/content/industries"
+import { getServiceBySlug } from "@/content/services"
 
 export const dynamicParams = false
 
@@ -22,20 +19,20 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/mau-website/[slug]">) {
   const { slug } = await params
   const template = getTemplate(slug)
-  if (!template?.industrySlug) return {}
+  if (!template || !hasTemplateDetail(template)) return {}
   return pageMetadata({
     title: `Mẫu website ${template.name.toLowerCase()}`,
     description: `${template.description} Xem bố cục và các trang chính; liên hệ để được tư vấn website phù hợp.`,
     path: `/mau-website/${template.slug}`,
-    noindex: !isTemplateIndexable(template),
   })
 }
 
 export default async function TemplatePage({ params }: PageProps<"/mau-website/[slug]">) {
   const { slug } = await params
   const template = getTemplate(slug)
-  if (!template?.industrySlug) notFound()
-  const industry = templateIndustry(template)
+  if (!template || !hasTemplateDetail(template)) notFound()
+  const industry = template.industrySlug ? getIndustry(template.industrySlug) : undefined
+  const service = !industry && template.serviceSlug ? getServiceBySlug(template.serviceSlug) : undefined
   const path = `/mau-website/${template.slug}`
 
   return (
@@ -88,19 +85,31 @@ export default async function TemplatePage({ params }: PageProps<"/mau-website/[
                   target="_blank"
                   rel="noopener"
                   className="text-primary underline">
-                  bản demo {industry.shortName.toLowerCase()}
+                  bản demo {(industry?.shortName ?? template.name).toLowerCase()}
                 </a>{" "}
                 để xem nguyên một trang hoàn chỉnh.
               </>
             )}
           </p>
           <p>
-            <strong className="text-gray-900">Trang giải pháp</strong> trả lời câu hỏi mua hàng: gói nào phù hợp,
-            phí bao nhiêu, Nextchain làm những gì và bạn cần duyệt gì. Xem tại{" "}
-            <Link href={`/giai-phap/${industry.slug}`} className="text-primary underline">
-              giải pháp {industry.name.toLowerCase()}
-            </Link>{" "}
-            hoặc xem{" "}
+            <strong className="text-gray-900">{industry ? "Trang giải pháp" : "Trang dịch vụ"}</strong> trả lời câu
+            hỏi mua hàng: gói nào phù hợp, phí bao nhiêu, Nextchain làm những gì và bạn cần duyệt gì. Xem tại{" "}
+            {industry && (
+              <>
+                <Link href={`/giai-phap/${industry.slug}`} className="text-primary underline">
+                  giải pháp {industry.name.toLowerCase()}
+                </Link>{" "}
+                hoặc xem{" "}
+              </>
+            )}
+            {service && (
+              <>
+                <Link href={`/dich-vu/${service.slug}`} className="text-primary underline">
+                  dịch vụ {service.name.toLowerCase()}
+                </Link>{" "}
+                hoặc xem{" "}
+              </>
+            )}
             <Link href="/bang-gia" className="text-primary underline">
               bảng giá
             </Link>
